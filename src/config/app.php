@@ -156,6 +156,12 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /**
+         * DragonKnight
+         * Ref at: https://github.com/intrip/laravel-authentication-acl/blob/1.3/docs/index.md
+         */
+        LaravelAcl\Authentication\AuthenticationServiceProvider::class,
+
     ],
 
     /*

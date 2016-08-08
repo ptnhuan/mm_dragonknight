@@ -49,5 +49,14 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Foundation\Http\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        /**
+         * DragonKnight
+         * Step 6
+         * Ref at: https://github.com/intrip/laravel-authentication-acl/blob/1.3/docs/index.md
+         */
+        'admin_logged' => \LaravelAcl\Http\Middleware\AdminLogged::class,
+        'logged' => \LaravelAcl\Http\Middleware\Logged::class,
+        'can_see' => \LaravelAcl\Http\Middleware\CanSee::class,
+        'has_perm' => \LaravelAcl\Http\Middleware\HasPerm::class,
     ];
 }
