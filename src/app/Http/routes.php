@@ -63,5 +63,25 @@ Route::group(['middleware' => ['web']], function () {
                 'uses' => 'StatusesController@deleteStatus'
         ]);
         
+        /**
+         * Catagories
+         */
+        Route::get('/admin/categories/list', [
+                'as'   => 'categories.list',
+                'uses' => 'CategoriesController@getList'
+        ]);
+        Route::get('/admin/categories/edit', [
+                'as'   => 'categories.edit',
+                'uses' => 'CategoriesController@editCategory'
+        ]);
+        Route::post('/admin/categories/edit', [
+                'as'   => 'categories.edit',
+                'uses' => 'CategoriesController@postEditCategory'
+        ]);
+        Route::get('/admin/categories/delete', [
+                'as'   => 'categories.delete',
+                'uses' => 'CategoriesController@deleteCategory'
+        ]);
+        
     });
 });

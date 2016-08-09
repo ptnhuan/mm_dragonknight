@@ -85,5 +85,11 @@ return [
             "link" => '/admin/statuses/list',
             "permissions" => ["_superadmin", "_statuses-admin"]
         ],
+        [
+            "name" => "Categories",
+            "route" => "categories",
+            "link" => '/admin/categories/list',
+            "permissions" => ["_superadmin", "_categories-admin"]
+        ],
     ]
 ];

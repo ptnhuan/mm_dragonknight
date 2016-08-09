@@ -163,6 +163,7 @@ return [
         LaravelAcl\Authentication\AuthenticationServiceProvider::class,
         App\Http\ViewComposers\TasksServiceProvider::class,
         App\Http\ViewComposers\StatusesServiceProvider::class,
+        App\Http\ViewComposers\CategoriesServiceProvider::class,
 
     ],
 
