@@ -165,6 +165,7 @@ return [
         App\Http\ViewComposers\StatusesServiceProvider::class,
         App\Http\ViewComposers\CategoriesServiceProvider::class,
         App\Http\ViewComposers\LevelsServiceProvider::class,
+        App\Http\ViewComposers\FaqsServiceProvider::class,
 
     ],
 

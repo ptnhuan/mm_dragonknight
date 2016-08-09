@@ -103,5 +103,25 @@ Route::group(['middleware' => ['web']], function () {
                 'uses' => 'LevelsController@deleteLevel'
         ]);
         
+        /**
+         * Faqs
+         */
+        Route::get('/admin/faqs/list', [
+                'as'   => 'faqs.list',
+                'uses' => 'FaqsController@getList'
+        ]);
+        Route::get('/admin/faqs/edit', [
+                'as'   => 'faqs.edit',
+                'uses' => 'FaqsController@editFaq'
+        ]);
+        Route::post('/admin/faqs/edit', [
+                'as'   => 'faqs.edit',
+                'uses' => 'FaqsController@postEditFaq'
+        ]);
+        Route::get('/admin/faqs/delete', [
+                'as'   => 'faqs.delete',
+                'uses' => 'FaqsController@deleteFaq'
+        ]);
+        
     });
 });

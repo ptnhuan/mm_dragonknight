@@ -97,5 +97,11 @@ return [
             "link" => '/admin/levels/list',
             "permissions" => ["_superadmin", "_levels-admin"]
         ],
+        [
+            "name" => "Faqs",
+            "route" => "faqs",
+            "link" => '/admin/faqs/list',
+            "permissions" => ["_superadmin", "_faqs-admin"]
+        ],
     ]
 ];
