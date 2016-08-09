@@ -1,0 +1,1 @@
+mysqldump -uroot -p mm_dragonknight > mm_dragonknight.sql
