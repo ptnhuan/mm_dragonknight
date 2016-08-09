@@ -83,5 +83,25 @@ Route::group(['middleware' => ['web']], function () {
                 'uses' => 'CategoriesController@deleteCategory'
         ]);
         
+         /**
+         * Levels
+         */
+        Route::get('/admin/levels/list', [
+                'as'   => 'levels.list',
+                'uses' => 'LevelsController@getList'
+        ]);
+        Route::get('/admin/levels/edit', [
+                'as'   => 'levels.edit',
+                'uses' => 'LevelsController@editLevel'
+        ]);
+        Route::post('/admin/levels/edit', [
+                'as'   => 'levels.edit',
+                'uses' => 'LevelsController@postEditLevel'
+        ]);
+        Route::get('/admin/levels/delete', [
+                'as'   => 'levels.delete',
+                'uses' => 'LevelsController@deleteLevel'
+        ]);
+        
     });
 });
