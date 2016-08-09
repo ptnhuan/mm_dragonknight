@@ -25,12 +25,12 @@
                     <h3 class="panel-title bariol-thin"><i class="fa fa-group"></i> {!! 1 ? 'Search results:' : 'Groups' !!}</h3>
                 </div>
                 <div class="panel-body">
-                    @include('laravel-authentication-acl::admin.tasks.list-item')
+                    @include('laravel-authentication-acl::admin.statuses.list-statuses-item')
                </div>
            </div>
         </div>
         <div class="col-md-4">
-            @include('laravel-authentication-acl::admin.group.search')
+            @include('laravel-authentication-acl::admin.statuses.search-statuses')
         </div>
     </div>
 </div>

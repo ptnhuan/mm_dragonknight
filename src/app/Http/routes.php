@@ -42,5 +42,26 @@ Route::group(['middleware' => ['web']], function () {
                 'uses' => 'TasksController@deleteTask'
         ]);
 
+        
+        /**
+         * statuses
+         */
+        Route::get('/admin/statuses/list', [
+                'as'   => 'statuses.list',
+                'uses' => 'StatusesController@getList'
+        ]);
+        Route::get('/admin/statuses/edit', [
+                'as'   => 'statuses.edit',
+                'uses' => 'StatusesController@editStatus'
+        ]);
+        Route::post('/admin/statuses/edit', [
+                'as'   => 'statuses.edit',
+                'uses' => 'StatusesController@postEditStatus'
+        ]);
+        Route::get('/admin/statuses/delete', [
+                'as'   => 'statuses.delete',
+                'uses' => 'StatusesController@deleteStatus'
+        ]);
+        
     });
 });

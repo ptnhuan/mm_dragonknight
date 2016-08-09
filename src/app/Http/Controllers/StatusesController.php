@@ -12,8 +12,9 @@ use View, Request;
  * Models
  */
 use App\Http\Models\Tasks;
+use App\Http\Models\Statuses;
 
-class TasksController extends Controller
+class StatusesController extends Controller
 {
 
     public $data = array();
@@ -21,17 +22,15 @@ class TasksController extends Controller
      *
      */
     public function getList(Request $request){
-
-
-        $obj_tasks = new Tasks();
-        $tasks = $obj_tasks->getList();
-
+        $obj_statuses = new Statuses();
+        
+        $statuses = $obj_statuses->getList();
         $data = array_merge($this->data, array(
-            'tasks' => $tasks,
+            'statuses' => $statuses,
             'request' => $request,
         ));
 
-        return View::make('laravel-authentication-acl::admin.tasks.list-tasks')->with(['data' => $data]);
+        return View::make('laravel-authentication-acl::admin.statuses.list-statuses')->with(['data' => $data]);
     }
 
      /**

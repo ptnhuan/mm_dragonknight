@@ -79,5 +79,11 @@ return [
             "link" => '/admin/tasks/list',
             "permissions" => ["_superadmin", "_task-admin"]
         ],
+        [
+            "name" => "Statuses",
+            "route" => "statuses",
+            "link" => '/admin/statuses/list',
+            "permissions" => ["_superadmin", "_statuses-admin"]
+        ],
     ]
 ];

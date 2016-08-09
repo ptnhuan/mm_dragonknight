@@ -17,7 +17,11 @@
         @foreach($tasks as $task)
         <tr>
             <td style="width:90%">{!! $task->task_title !!}</td>
-
+            <td style="width:10%">
+                <a href="{!! URL::route('tasks.edit', ['id' => $task->id]) !!}"><i class="fa fa-edit fa-2x"></i></a>
+                <a href="{!! URL::route('tasks.delete',['id' => $task->id, '_token' => csrf_token()]) !!}" class="margin-left-5 delete"><i class="fa fa-trash-o fa-2x"></i></a>
+                <span class="clearfix"></span>
+            </td>
         </tr>
         @endforeach
     </tbody>
