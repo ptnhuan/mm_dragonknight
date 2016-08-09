@@ -18,8 +18,8 @@
         <tr>
             <td style="width:90%">{!! $status->status_title !!}</td>
             <td style="width:10%">
-                <a href="{!! URL::route('statuses.edit', ['id' => $status->id]) !!}"><i class="fa fa-edit fa-2x"></i></a>
-                <a href="{!! URL::route('statuses.delete',['id' => $status->id, '_token' => csrf_token()]) !!}" class="margin-left-5 delete"><i class="fa fa-trash-o fa-2x"></i></a>
+                <a href="{!! URL::route('statuses.edit', ['id' => $status->status_id]) !!}"><i class="fa fa-edit fa-2x"></i></a>
+                <a href="{!! URL::route('statuses.delete',['id' => $status->status_id, '_token' => csrf_token()]) !!}" class="margin-left-5 delete"><i class="fa fa-trash-o fa-2x"></i></a>
                 <span class="clearfix"></span>
             </td>
         </tr>

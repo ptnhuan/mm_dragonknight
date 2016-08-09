@@ -48,10 +48,10 @@ class Statuses extends Model {
      * @status: REVIEWED
      */
 
-    public function findRealEstateId($id) {
-        $real_estate = self::where('real_estate_id', $id)
+    public function findStatusId($id) {
+        $status = self::where('status_id', $id)
                 ->first();
-        return $real_estate;
+        return $status;
     }
 
     /*     * ********************************************

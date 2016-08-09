@@ -6,8 +6,8 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesResources;
 
-use View, Request;
-
+use View;
+use Illuminate\Http\Request;
 /**
  * Models
  */
