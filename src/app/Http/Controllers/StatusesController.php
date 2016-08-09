@@ -40,8 +40,7 @@ class StatusesController extends Controller {
     public function editStatus(Request $request) {
         $obj_statuses = new Statuses();
 
-        $status_id = $request->get('id');
-
+        $status_id = $request->get('id'); 
         $status = $obj_statuses->findStatusId($status_id);
         if ($status) {
             $data = array_merge($this->data, array(

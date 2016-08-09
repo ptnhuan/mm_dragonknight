@@ -6,7 +6,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesResources;
 
-use View;
+use View,Redirect;
 use Illuminate\Http\Request;
 /**
  * Models
@@ -37,9 +37,20 @@ class TasksController extends Controller
      /**
      *
      */
-    public function editTask(){
-        echo 'editTask';
-
+    public function editTask(Request $request){
+        $obj_tasks = new Tasks();
+        
+        $task_id = $request->get('id');
+        $task = $obj_tasks->findTaskId($task_id);
+        if ($task) {
+            $data = array_merge($this->data, array(
+                'task' => $task,
+                'request' => $request,
+            ));
+            return View::make('laravel-authentication-acl::admin.tasks.form-task')->with(['data' => $data]);
+        } else {
+            return Redirect::route("tasks.list")->withMessage(trans('re.not_found'));
+        }
     }
 
      /**

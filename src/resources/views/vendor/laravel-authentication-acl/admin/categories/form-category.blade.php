@@ -7,7 +7,7 @@ Admin area: edit group
 @section('content')
 
 <?php 
-$category = @$data['status'];
+$category = @$data['category'];
 ?>
 
 <div class="row">
@@ -26,34 +26,34 @@ $category = @$data['status'];
                 
                 <div class="panel-heading">
                     <h3 class="panel-title bariol-thin">
-                        {!! isset($status->status_id) ? '<i class="fa fa-pencil"></i> '.trans("positions.edit") : '<i class="fa fa-plus"></i> '.trans("positions.add") !!}
+                        {!! isset($category->category_id) ? '<i class="fa fa-pencil"></i> '.trans("positions.edit") : '<i class="fa fa-plus"></i> '.trans("positions.add") !!}
                     </h3>
                 </div>
                 
                 <div class="panel-body">
-                    {!! Form::open(['route'=>['statuses.edit'],'method' => 'post'])  !!}
+                    {!! Form::open(['route'=>['categories.edit'],'method' => 'post'])  !!}
 
                     <!-- title text field -->
                     <div class="form-group">
                         
                         {!! Form::label('title',trans('positions.title'),': *') !!}
-                        {!! Form::text('title',  $status->status_title, ['class' => 'form-control', 'placeholder' =>trans('positions.title')]) !!}
+                        {!! Form::text('title',  $category->category_title, ['class' => 'form-control', 'placeholder' =>trans('positions.title')]) !!}
                        
                         <span class="text-danger">{!! $errors->first('title') !!}</span>
                         
                     </div>
 
 
-                    {!! Form::hidden('id', $status->status_id) !!}
-                    @if($status->status_title != null)
+                    {!! Form::hidden('id', $category->category_id) !!}
+                    @if($category->category_title != null)
                     
-                        <a href="{!! URL::route('statuses.delete',['id' => $status->status_title, '_token' => csrf_token()]) !!}" class="btn btn-danger pull-right margin-left-5 delete">
+                        <a href="{!! URL::route('categories.delete',['id' => $category->category_title, '_token' => csrf_token()]) !!}" class="btn btn-danger pull-right margin-left-5 delete">
                             {!!trans('positions.delete')!!}
                         </a>
                     
                     @else
                     
-                        <a href="{!! URL::route('statuses.list') !!}" class="btn btn-danger pull-right margin-left-5">
+                        <a href="{!! URL::route('categories.list') !!}" class="btn btn-danger pull-right margin-left-5">
                             {!!trans('positions.cancel')!!}
                         </a>
 

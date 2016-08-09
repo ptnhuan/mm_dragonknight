@@ -11,64 +11,43 @@ $status = @$data['status'];
 ?>
 
 <div class="row">
-    
     <div class="col-md-12">
-        
-        <div class="col-sm-12">
-            
-            <?php $message = Session::get('message'); ?>
-            
-            @if( isset($message) )
-                <div class="alert alert-success">{{$message}}</div>
-            @endif
-            
-            <div class="panel panel-info">
-                
-                <div class="panel-heading">
-                    <h3 class="panel-title bariol-thin">
-                        {!! isset($status->status_id) ? '<i class="fa fa-pencil"></i> '.trans("positions.edit") : '<i class="fa fa-plus"></i> '.trans("positions.add") !!}
-                    </h3>
-                </div>
-                
-                <div class="panel-body">
-                    {!! Form::open(['route'=>['statuses.edit'],'method' => 'post'])  !!}
+        {{-- model general errors from the form --}}
+        @if($errors->has('model') )
+        <div class="alert alert-danger">{!! $errors->first('model') !!}</div>
+        @endif
 
-                    <!-- title text field -->
-                    <div class="form-group">
-                        
-                        {!! Form::label('title',trans('positions.title'),': *') !!}
-                        {!! Form::text('title',  $status->status_title, ['class' => 'form-control', 'placeholder' =>trans('positions.title')]) !!}
-                       
-                        <span class="text-danger">{!! $errors->first('title') !!}</span>
-                        
-                    </div>
-
-
-                    {!! Form::hidden('id', $status->status_id) !!}
-                    @if($status->status_title != null)
-                    
-                        <a href="{!! URL::route('statuses.delete',['id' => $status->status_title, '_token' => csrf_token()]) !!}" class="btn btn-danger pull-right margin-left-5 delete">
-                            {!!trans('positions.delete')!!}
-                        </a>
-                    
-                    @else
-                    
-                        <a href="{!! URL::route('statuses.list') !!}" class="btn btn-danger pull-right margin-left-5">
-                            {!!trans('positions.cancel')!!}
-                        </a>
-
-                    @endif
-                    
-                    {!! Form::submit(trans('positions.save'), array("class"=>"btn btn-info pull-right ")) !!}
-
-                    {!! Form::close() !!}
-                </div>
-                
+        {{-- successful message --}}
+        <?php $message = Session::get('message'); ?>
+        @if( isset($message) )
+        <div class="alert alert-success">{{$message}}</div>
+        @endif
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                    <h3 class="panel-title bariol-thin">{!! isset($status->id) ? '<i class="fa fa-pencil"></i> Edit' : '<i class="fa fa-users"></i> Create' !!} group</h3>
             </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12 col-xs-12">
+                        {{-- group base form --}}
+                        <h4>General data</h4>
+                        {!! Form::model($status, [ 'url' => [URL::route('statuses.edit'), $status->status_id], 'method' => 'post'] ) !!}
+                        <!-- name text field -->
+                        <div class="form-group">
+                            {!! Form::label('name','Name: *') !!}
+                            {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'group name']) !!}
+                        </div>
+                        <span class="text-danger">{!! $errors->first('name') !!}</span>
+                        {!! Form::hidden('id') !!}
+                        <a href="{!! URL::route('statuses.delete',['id' => $status->status_id, '_token' => csrf_token()]) !!}" class="btn btn-danger pull-right margin-left-5 delete">Delete</a>
+                        {!! Form::submit('Save', array("class"=>"btn btn-info pull-right ")) !!}
+                        {!! Form::close() !!}
+                    </div> 
+                    
+                </div>
+           </div>
         </div>
-        
     </div>
-    
 </div>
 @stop
 

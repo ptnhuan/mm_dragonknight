@@ -59,10 +59,10 @@ class Tasks extends Model {
      * @status: REVIEWED
      */
 
-    public function findRealEstateId($id) {
-        $real_estate = self::where('real_estate_id', $id)
+    public function findTaskId($id) {
+        $task = self::where('task_id', $id)
                 ->first();
-        return $real_estate;
+        return $task;
     }
 
     /*     * ********************************************
