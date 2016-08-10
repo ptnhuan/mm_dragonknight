@@ -27,11 +27,11 @@ class TasksServiceProvider extends ServiceProvider {
         //Testimonials
         View::composer(['laravel-authentication-acl::admin.tasks.*'], function ($view) {
             $view->with('sidebar_items', [
-                "List" => [
+                trans('tasks.task_list') => [
                     "url" => URL::route('tasks.list'),
                     "icon" => '<i class="fa fa-list"></i>'
                 ],
-                "Add testimonial" => [
+                trans('tasks.task_add') => [
                     "url" => URL::route('tasks.edit'),
                     "icon" => '<i class="fa fa-plus"></i>'
                 ]

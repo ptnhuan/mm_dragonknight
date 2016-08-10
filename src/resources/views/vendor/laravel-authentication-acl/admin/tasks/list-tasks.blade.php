@@ -1,7 +1,7 @@
 @extends('laravel-authentication-acl::admin.layouts.base-2cols')
 
 @section('title')
-    Admin area: Groups list
+<?php echo trans('tasks.task_list_page_title') ?>
 @stop
 
 @section('content')
@@ -22,7 +22,7 @@
             @endif
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h3 class="panel-title bariol-thin"><i class="fa fa-group"></i> {!! 1 ? 'Search results:' : 'Groups' !!}</h3>
+                    <h3 class="panel-title bariol-thin"><i class="fa fa-group"></i> {!! $data['request']->all() ? trans('tasks.task_page_search') : trans('tasks.task_page') !!}:</h3>
                 </div>
                 <div class="panel-body">
                     @include('laravel-authentication-acl::admin.tasks.list-tasks-item')
@@ -39,7 +39,7 @@
 @section('footer_scripts')
     <script>
         $(".delete").click(function(){
-            return confirm("Are you sure to delete this item?");
+            return confirm("<?php echo trans('tasks.task_delete_confirm') ?>");
         });
     </script>
 @stop
