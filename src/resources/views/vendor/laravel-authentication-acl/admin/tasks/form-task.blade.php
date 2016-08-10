@@ -7,7 +7,7 @@
 @section('content')
 
 <?php
-    $task = @$data['task'];
+$task = @$data['task'];
 ?>
 
 <div class="row">
@@ -47,8 +47,9 @@
                         </div>
                         <!-- TASK STATUS -->
                         <div class="form-group">
-                            {!! Form::label('task_statusss', trans('tasks.task_status').':') !!}
-                            {!! Form::select('task_stssatus', @$data['statuses'], @$task->status_id, ['class' => 'form-control', 'placeholder' => trans('tasks.task_status').'']) !!}
+                            {!! Form::label('task_status', trans('tasks.task_status').':') !!}
+                            {!! Form::select('task_status', @$data['statuses'], @$task->task_id, ['class' => 'form-control']) !!}
+
                             <span class="text-danger">{!! $errors->first('task_status') !!}</span>
                         </div>
 
