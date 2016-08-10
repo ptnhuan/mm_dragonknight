@@ -31,8 +31,8 @@ class Tasks extends Model {
     ];
     protected $guarded = ["task_id"];
 
-    /*     * ********************************************
-     * listRealEstate
+    /*********************************************
+     * getList
      *
      * @author: Kang
      * @date: 26/6/2016
@@ -44,8 +44,13 @@ class Tasks extends Model {
         $this->config_reader = App::make('config');
         $results_per_page = $this->config_reader->get('dragonknight.tasks_admin_per_page');
 
-        $tasks = self::orderBy('task_id', 'ASC')
-                ->paginate($results_per_page);
+        $eloquent = self::orderBy('tasks.task_id', 'DESC');
+
+        if (!empty($params['task_title'])) {
+            $eloquent->where('tasks.task_title', 'LIKE', '%'.$params['task_title'].'%');
+        }
+
+        $tasks = $eloquent->paginate($results_per_page);
 
         return $tasks;
     }
