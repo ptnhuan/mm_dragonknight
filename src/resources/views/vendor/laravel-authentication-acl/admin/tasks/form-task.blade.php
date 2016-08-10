@@ -71,7 +71,7 @@ $task = @$data['task'];
 @section('footer_scripts')
 <script>
     $(".delete").click(function () {
-        return confirm("Are you sure to delete this item?");
+        return confirm("<?php  echo trans('tasks.task_delete_confirm')?>");
     });
 </script>
 @stop
