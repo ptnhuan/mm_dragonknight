@@ -47,14 +47,14 @@ $task = @$data['task'];
                         </div>
                         <!-- TASK STATUS -->
                         <div class="form-group">
-                            {!! Form::label('task_status', trans('tasks.task_status').':') !!}
-                            {!! Form::select('task_status', @$data['statuses'], @$task->task_id, ['class' => 'form-control']) !!}
+                            {!! Form::label('status_id', trans('tasks.task_status').':') !!}
+                            {!! Form::select('status_id', @$data['statuses'], @$task->status_id, ['class' => 'form-control']) !!}
 
-                            <span class="text-danger">{!! $errors->first('task_status') !!}</span>
+                            <span class="text-danger">{!! $errors->first('status_id') !!}</span>
                         </div>
 
                         <!-- TASK ID HIDDEN -->
-                        {!! Form::hidden('id') !!}
+                        {!! Form::hidden('id',@$task->task_id) !!}
                         <a href="{!! URL::route('tasks.delete',['id' => @$task->task_id, '_token' => csrf_token()]) !!}" class="btn btn-danger pull-right margin-left-5 delete"><?php echo trans('tasks.task_delete') ?></a>
                         {!! Form::submit(trans('tasks.task_save').'', array("class"=>"btn btn-info pull-right ")) !!}
                         {!! Form::close() !!}
