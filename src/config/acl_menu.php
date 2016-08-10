@@ -103,5 +103,6 @@ return [
             "link" => '/admin/faqs/list',
             "permissions" => ["_superadmin", "_faqs-admin"]
         ],
+        
     ]
 ];

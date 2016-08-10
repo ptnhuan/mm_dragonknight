@@ -12,10 +12,20 @@ class Faqs extends Model {
     protected $primaryKey = 'faqs_id';
     public $timestamps = false;
     protected $fillable = [
-       "faq_id",       
-       "faq_title",       
-       "faq_description",
-        "faq_image"
+      "create_by_user_id",
+      "level_id",
+      "category_id",
+      "faqs_title",
+      "faqs_overview",
+      "faqs_description",
+      "faqs_views",
+      "faqs_like",
+      "faqs_cache_page",
+      "faqs_status",
+      "faqs_created_at",
+      "faqs_updated_at",
+      "updated_at",
+      "created_at",
     ];
 
     protected $guarded = ["faq_id"];

@@ -3,9 +3,9 @@
         <a href="{!! URL::route('groups.edit') !!}" class="btn btn-info pull-right"><i class="fa fa-plus"></i> Add New</a>
     </div>
 </div>
-<?php $tasks = @$data['tasks']; ?>
+<?php $posts = @$data['posts']; ?>
 
-@if( ! $tasks->isEmpty() )
+@if( ! $posts->isEmpty() )
 <table class="table table-hover">
     <thead>
         <tr>
@@ -14,12 +14,12 @@
         </tr>
     </thead>
     <tbody>
-        @foreach($tasks as $task)
+        @foreach($posts as $post)
         <tr>
-            <td style="width:90%">{!! $task->task_title !!}</td>
+            <td style="width:90%">{!! $post->post_title !!}</td>
             <td style="width:10%">
-                <a href="{!! URL::route('tasks.edit', ['id' => $task->task_id]) !!}"><i class="fa fa-edit fa-2x"></i></a>
-                <a href="{!! URL::route('tasks.delete',['id' => $task->task_id, '_token' => csrf_token()]) !!}" class="margin-left-5 delete"><i class="fa fa-trash-o fa-2x"></i></a>
+                <a href="{!! URL::route('posts.edit', ['id' => $post->post_id]) !!}"><i class="fa fa-edit fa-2x"></i></a>
+                <a href="{!! URL::route('posts.delete',['id' => $post->post_id, '_token' => csrf_token()]) !!}" class="margin-left-5 delete"><i class="fa fa-trash-o fa-2x"></i></a>
                 <span class="clearfix"></span>
             </td>
         </tr>

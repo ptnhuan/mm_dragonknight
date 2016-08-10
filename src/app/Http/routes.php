@@ -26,102 +26,102 @@ Route::group(['middleware' => ['web']], function () {
          * tasks
          */
         Route::get('/admin/tasks/list', [
-                'as'   => 'tasks.list',
-                'uses' => 'TasksController@getList'
+            'as' => 'tasks.list',
+            'uses' => 'TasksController@getList'
         ]);
         Route::get('/admin/tasks/edit', [
-                'as'   => 'tasks.edit',
-                'uses' => 'TasksController@editTask'
+            'as' => 'tasks.edit',
+            'uses' => 'TasksController@editTask'
         ]);
         Route::post('/admin/tasks/edit', [
-                'as'   => 'tasks.edit',
-                'uses' => 'TasksController@postEditTask'
+            'as' => 'tasks.edit',
+            'uses' => 'TasksController@postEditTask'
         ]);
         Route::get('/admin/tasks/delete', [
-                'as'   => 'tasks.delete',
-                'uses' => 'TasksController@deleteTask'
+            'as' => 'tasks.delete',
+            'uses' => 'TasksController@deleteTask'
         ]);
 
-        
+
         /**
          * statuses
          */
         Route::get('/admin/statuses/list', [
-                'as'   => 'statuses.list',
-                'uses' => 'StatusesController@getList'
+            'as' => 'statuses.list',
+            'uses' => 'StatusesController@getList'
         ]);
         Route::get('/admin/statuses/edit', [
-                'as'   => 'statuses.edit',
-                'uses' => 'StatusesController@editStatus'
+            'as' => 'statuses.edit',
+            'uses' => 'StatusesController@editStatus'
         ]);
         Route::post('/admin/statuses/edit', [
-                'as'   => 'statuses.edit',
-                'uses' => 'StatusesController@postEditStatus'
+            'as' => 'statuses.edit',
+            'uses' => 'StatusesController@postEditStatus'
         ]);
         Route::get('/admin/statuses/delete', [
-                'as'   => 'statuses.delete',
-                'uses' => 'StatusesController@deleteStatus'
+            'as' => 'statuses.delete',
+            'uses' => 'StatusesController@deleteStatus'
         ]);
-        
+
         /**
          * Catagories
          */
         Route::get('/admin/categories/list', [
-                'as'   => 'categories.list',
-                'uses' => 'CategoriesController@getList'
+            'as' => 'categories.list',
+            'uses' => 'CategoriesController@getList'
         ]);
         Route::get('/admin/categories/edit', [
-                'as'   => 'categories.edit',
-                'uses' => 'CategoriesController@editCategory'
+            'as' => 'categories.edit',
+            'uses' => 'CategoriesController@editCategory'
         ]);
         Route::post('/admin/categories/edit', [
-                'as'   => 'categories.edit',
-                'uses' => 'CategoriesController@postEditCategory'
+            'as' => 'categories.edit',
+            'uses' => 'CategoriesController@postEditCategory'
         ]);
         Route::get('/admin/categories/delete', [
-                'as'   => 'categories.delete',
-                'uses' => 'CategoriesController@deleteCategory'
+            'as' => 'categories.delete',
+            'uses' => 'CategoriesController@deleteCategory'
         ]);
-        
-         /**
+
+        /**
          * Levels
          */
         Route::get('/admin/levels/list', [
-                'as'   => 'levels.list',
-                'uses' => 'LevelsController@getList'
+            'as' => 'levels.list',
+            'uses' => 'LevelsController@getList'
         ]);
         Route::get('/admin/levels/edit', [
-                'as'   => 'levels.edit',
-                'uses' => 'LevelsController@editLevel'
+            'as' => 'levels.edit',
+            'uses' => 'LevelsController@editLevel'
         ]);
         Route::post('/admin/levels/edit', [
-                'as'   => 'levels.edit',
-                'uses' => 'LevelsController@postEditLevel'
+            'as' => 'levels.edit',
+            'uses' => 'LevelsController@postEditLevel'
         ]);
         Route::get('/admin/levels/delete', [
-                'as'   => 'levels.delete',
-                'uses' => 'LevelsController@deleteLevel'
+            'as' => 'levels.delete',
+            'uses' => 'LevelsController@deleteLevel'
         ]);
-        
+
+
         /**
          * Faqs
          */
         Route::get('/admin/faqs/list', [
-                'as'   => 'faqs.list',
-                'uses' => 'FaqsController@getList'
+            'as' => 'faqs.list',
+            'uses' => 'FaqsController@getList'
         ]);
         Route::get('/admin/faqs/edit', [
-                'as'   => 'faqs.edit',
-                'uses' => 'FaqsController@editFaq'
+            'as' => 'faqs.edit',
+            'uses' => 'FaqsController@editFaq'
         ]);
         Route::post('/admin/faqs/edit', [
-                'as'   => 'faqs.edit',
-                'uses' => 'FaqsController@postEditFaq'
+            'as' => 'faqs.edit',
+            'uses' => 'FaqsController@postEditFaq'
         ]);
         Route::get('/admin/faqs/delete', [
-                'as'   => 'faqs.delete',
-                'uses' => 'FaqsController@deleteFaq'
+            'as' => 'faqs.delete',
+            'uses' => 'FaqsController@deleteFaq'
         ]);
-        
     });
 });

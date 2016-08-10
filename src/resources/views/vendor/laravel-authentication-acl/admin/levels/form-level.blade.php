@@ -7,7 +7,7 @@ Admin area: edit group
 @section('content')
 
 <?php
-$level = @$data['status'];
+$level = @$data['level'];
 ?>
 
 <div class="row">
