@@ -8,206 +8,90 @@ use DB;
 
 class Levels extends Model {
 
-    protected $table = 'Levels';
+    protected $table = 'levels';
     protected $primaryKey = 'level_id';
     public $timestamps = false;
     protected $fillable = [
         "level_id",
+        "level_points",
         "level_title",
+        "level_overview",
         "level_description",
-        "level_image"
+        "level_notes",
+        "level_image",
+        "level_images",
+        "level_status",
+        "level_created_at",
+        "level_updated_at",
+        "created_at",
+        "updated_at",
     ];
-
     protected $guarded = ["level_id"];
-    /*     * ********************************************
-     * listRealEstate
-     *
-     * @author: Kang
-     * @date: 26/6/2016
-     *
-     * @category: REVIEWED
+
+    /*     * *******************************************
+     * getList
      */
 
     public function getList($params = array()) {
         $this->config_reader = App::make('config');
-        $results_per_page = $this->config_reader->get('dragonknight.tasks_admin_per_page');
+        $results_per_page = $this->config_reader->get('dragonknight.levels_admin_per_page');
 
-        $levels = self::orderBy('level_id', 'DESC')
-                ->paginate($results_per_page);
+        $eloquent = self::orderBy('levels.level_id', 'DESC');
 
+        //Search by level title
+        if (!empty($params['level_title'])) {
+            $eloquent->where('levels.level_title', 'LIKE', '%' . $params['level_title'] . '%');
+        }
+        $levels = $eloquent->paginate($results_per_page);
         return $levels;
     }
 
     /*     * ********************************************
-     * findRealEstateId
-     *
-     * @author: Kang
-     * @web: http://tailieuweb.com
-     * @date: 26/6/2016
-     *
-     * @category: REVIEWED
+     * findLevelById
      */
 
-    public function findStatusId($id) {
+    public function findLevelById($id) {
+        
         $level = self::where('level_id', $id)
                 ->first();
         return $level;
     }
 
     /*     * ********************************************
-     * updateRealEstate
-     *
-     * @author: Kang
-     * @web: http://tailieuweb.com
-     * @date: 26/6/2016
-     *
-     * @status: REVIEWED
+     * updatedataLevel
      */
 
-    public function updateRealEstate($input) {
-        $real_estate = self::find($input['id']);
-        if (!empty($real_estate)) {
+    public function updateLevel($input) {
+        $level = self::find($input['id']);
+        if (!empty($level)) {
 
-            $real_estate_images = $this->encodeImages($input);
-
-            $real_estate->real_estate_title = $input['title'];
-            $real_estate->real_estate_level_id = $input['datacat'];
-            $real_estate->real_estate_description = $input['description'];
-            $real_estate->real_estate_bedroom = $input['bedroom'];
-            $real_estate->real_estate_bathroom = $input['bathroom'];
-            $real_estate->real_estate_sq = $input['sq'];
-            $real_estate->real_estate_year_build = $input['build_year'];
-
-            $real_estate->real_estate_cost = (double)$input['cost'];
-
-            $real_estate->real_estate_image = $input['filename'];
-            $real_estate->real_estate_images = $real_estate_images;
-
-            $real_estate->real_estate_map_address = $input['map-address'];
-            $real_estate->real_estate_map_marker_lat = $input['map-marker-lat'];
-            $real_estate->real_estate_map_marker_lng = $input['map-marker-lng'];
-            $real_estate->real_estate_map_center_lat = $input['map-center-lat'];
-            $real_estate->real_estate_map_center_lng = $input['map-center-lng'];
-            $real_estate->real_estate_map_zoom = $input['map-zoom'];
-
-            $real_estate->save();
+            $level->level_title = $input['level_title'];
+            $level->save();
         } else {
-
+            
         }
     }
 
     /*     * ********************************************
-     * addRealEstate
-     *
-     * @author: Kang
-     * @web: http://tailieuweb.com
-     * @date: 26/6/2016
-     *
-     * @status: REVIEWED
+     * addLevel
      */
 
-    public function addRealEstate($input) {
+    public function addLevel($input) {
 
-        $real_estate_images = $this->encodeImages($input);
-
-        $real_estate = self::create([
-
-                    'real_estate_title' => $input['title'],
-                    'real_estate_level_id' => $input['datacat'],
-                    'real_estate_description' => $input['description'],
-                    'real_estate_bedroom' => $input['bedroom'],
-                    'real_estate_bathroom' => $input['bathroom'],
-                    'real_estate_sq' => $input['sq'],
-                    'real_estate_year_build' => $input['build_year'],
-                    'real_estate_image' => $input['filename'],
-                    'real_estate_images' => $real_estate_images,
-                    'real_estate_cost' => @$input['cost'],
-                    'real_estate_map_address' => $input['map-address'],
-                    'real_estate_map_marker_lat' => $input['map-marker-lat'],
-                    'real_estate_map_marker_lng' => $input['map-marker-lng'],
-                    'real_estate_map_center_lat' => $input['map-center-lat'],
-                    'real_estate_map_center_lng' => $input['map-center-lng'],
-                    'real_estate_map_zoom' => $input['map-zoom'],
+        $level = self::create([
+                    'level_title' => $input['level_title'],
         ]);
-        return $real_estate;
+        return $level;
     }
 
     /*     * ********************************************
-     * deleteRealEstate
-     *
-     * @author: Kang
-     * @web: http://tailieuweb.com
-     * @date: 26/6/2016
-     *
-     * @status: REVIEWED
+     * deleteLevelById
      */
 
-    public function deleteRealEstate($input) {
-
-        $real_estate = self::find($input['id']);
-
-        return $real_estate->delete();
+    public function deleteLevelById($level_id) {
+        
+        $level = self::find($level_id);
+        return $level->delete();
     }
 
-    /*     * ********************************************
-     * viewRe
-     *
-     * @author: Kang
-     * @web: http://tailieuweb.com
-     * @date: 26/6/2016
-     *
-     * @status: REVIEWED
-     */
-
-    public function viewRe($params = array()) {
-
-        $real_estate = self::where('real_estate_id', $params['real_estate_id'])
-                ->first();
-
-        return $real_estate;
-    }
-
-    public function encodeImages($input){
-        $json_images = array();
-
-        if (!empty($input['images_name'])) {
-            foreach ($input['images_name'] as $index => $image_name) {
-                $json_images[] = array(
-                    'name' => $image_name,
-                    'info' => @$input['images_info'][$index]
-                );
-            }
-        }
-
-        if ($input['filename'] && !$input['set_to']) {
-            $json_images[] = array_merge($json_images, array(
-                'name' => $input['filename'],
-                'info' => ''
-            ));
-        }
-        return json_encode($json_images);
-    }
-    public function decodeImages($json_images){
-
-    }
-
-
-    /***************************************************************************
-    /***************************************************************************
-    /*****************************USER FRONT PAGE*******************************
-    /***************************************************************************
-    /***************************************************************************
-     * getHighlightRe
-     *
-     * @author: Kang
-     * @web: http://tailieuweb.com
-     * @date: 04/08/2016
-     *
-     * @status: TODO: RE-CODE
-     */
-
-    public function getHighlightRe() {
-         $real_estate = self::first();
-         return $real_estate;
-    }
 }

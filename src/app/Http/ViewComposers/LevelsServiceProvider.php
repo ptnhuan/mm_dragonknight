@@ -20,18 +20,17 @@ class LevelsServiceProvider extends ServiceProvider {
     /**
      * Register bindings in the container.
      *
-     * @return void
      */
     public function boot() {
 
         //Testimonials
         View::composer(['laravel-authentication-acl::admin.levels.*'], function ($view) {
             $view->with('sidebar_items', [
-                "List" => [
+                trans('levels.level_list') => [
                     "url" => URL::route('levels.list'),
                     "icon" => '<i class="fa fa-list"></i>'
                 ],
-                "Add testimonial" => [
+                trans('levels.level_add') => [
                     "url" => URL::route('levels.edit'),
                     "icon" => '<i class="fa fa-plus"></i>'
                 ]
