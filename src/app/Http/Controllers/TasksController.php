@@ -37,9 +37,9 @@ class TasksController extends Controller
      /**
      *
      */
-    public function editTask(Request $request){
+    public function editTask(Request $request) {
         $obj_tasks = new Tasks();
-        
+
         $task_id = $request->get('id');
         $task = $obj_tasks->findTaskId($task_id);
         if ($task) {
@@ -48,12 +48,22 @@ class TasksController extends Controller
                 'request' => $request,
             ));
             return View::make('laravel-authentication-acl::admin.tasks.form-task')->with(['data' => $data]);
+
+        } else if (is_null($task_id)) {
+
+            $data = array_merge($this->data, array(
+                'task' => null,
+                'request' => $request,
+            ));
+            return View::make('laravel-authentication-acl::admin.tasks.form-task')->with(['data' => $data]);
+
         } else {
+
             return Redirect::route("tasks.list")->withMessage(trans('re.not_found'));
         }
     }
 
-     /**
+    /**
      *
      */
     public function postEditTask(){

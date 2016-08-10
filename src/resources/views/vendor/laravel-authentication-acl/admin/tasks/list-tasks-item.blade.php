@@ -1,6 +1,6 @@
 <div class="row margin-bottom-12">
     <div class="col-md-12">
-        <a href="{!! URL::route('groups.edit') !!}" class="btn btn-info pull-right"><i class="fa fa-plus"></i> Add New</a>
+        <a href="{!! URL::route('tasks.edit') !!}" class="btn btn-info pull-right"><i class="fa fa-plus"></i><?php echo trans('tasks.task_add') ?></a>
     </div>
 </div>
 <?php $tasks = @$data['tasks']; ?>
@@ -9,8 +9,8 @@
 <table class="table table-hover">
     <thead>
         <tr>
-            <th>Group name</th>
-            <th>Operations</th>
+            <th><?php echo trans('tasks.task_title') ?></th>
+            <th><?php echo trans('tasks.task_action') ?></th>
         </tr>
     </thead>
     <tbody>
