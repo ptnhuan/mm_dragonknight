@@ -1,6 +1,6 @@
 <div class="row margin-bottom-12">
     <div class="col-md-12">
-        <a href="{!! URL::route('categories.edit') !!}" class="btn btn-info pull-right"><i class="fa fa-plus"></i><?php echo trans('categories.categories_add') ?></a>
+        <a href="{!! URL::route('categories.edit') !!}" class="btn btn-info pull-right"><i class="fa fa-plus"></i><?php echo trans('categories.category_add') ?></a>
     </div>
 </div>
 <?php $categories = @$data['categories'];  ?>
@@ -9,10 +9,10 @@
 <table class="table table-hover">
     <thead>
         <tr>
-          <th style="width: 5%"><?php echo trans('categories.categories_order') ?></th>
-            <th style="width: 40%"><?php echo trans('categories.categories_title') ?></th>
-            <th style="width: 15%"><?php echo trans('categories.categories_status') ?></th>
-            <th><?php echo trans('categories.categories_action') ?></th>
+          <th style="width: 5%"><?php echo trans('categories.category_order') ?></th>
+            <th style="width: 40%"><?php echo trans('categories.category_title') ?></th>
+            <th style="width: 15%"><?php echo trans('categories.category_status') ?></th>
+            <th><?php echo trans('categories.category_action') ?></th>
         </tr>
     </thead>
     <tbody>

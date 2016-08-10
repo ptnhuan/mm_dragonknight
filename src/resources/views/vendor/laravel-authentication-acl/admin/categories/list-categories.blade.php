@@ -1,7 +1,7 @@
 @extends('laravel-authentication-acl::admin.layouts.base-2cols')
 
 @section('title')
-    <?php echo trans('categories.categories_list_page_title') ?>
+    <?php echo trans('categories.category_list_page_title') ?>
 @stop
 
 @section('content')
@@ -22,7 +22,7 @@
             @endif
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h3 class="panel-title bariol-thin"><i class="fa fa-group"></i> <?php echo trans('categories.categories_page'); ?>:</h3>
+                    <h3 class="panel-title bariol-thin"><i class="fa fa-group"></i> <?php echo trans('categories.category_page'); ?>:</h3>
                 </div>
                 <div class="panel-body">
                     @include('laravel-authentication-acl::admin.categories.list-categories-item')
@@ -39,7 +39,7 @@
 @section('footer_scripts')
     <script>
         $(".delete").click(function(){
-            return confirm("<?php echo trans('categories.categories_delete_confirm') ?>");
+            return confirm("<?php echo trans('categories.category_delete_confirm') ?>");
         });
     </script>
 @stop

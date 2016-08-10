@@ -7,7 +7,8 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesResources;
-use View, Redirect;
+use View,
+    Redirect;
 use Illuminate\Http\Request;
 /**
  * Models
@@ -15,7 +16,6 @@ use Illuminate\Http\Request;
 use App\Http\Models\Tasks;
 use App\Http\Models\Statuses;
 use App\Http\Models\Categories;
-
 
 class CategoriesController extends Controller {
 
@@ -26,13 +26,13 @@ class CategoriesController extends Controller {
      */
     public function getList(Request $request) {
         $obj_categories = new Categories();
-
+        $obj_statuses = new Statuses;
         $categories = $obj_categories->getList();
         $data = array_merge($this->data, array(
             'categories' => $categories,
+            'statuses' => $obj_statuses->pushSelectBox(),
             'request' => $request,
-        ));
-
+        )); 
         return View::make('laravel-authentication-acl::admin.categories.list-categories')->with(['data' => $data]);
     }
 
@@ -41,21 +41,23 @@ class CategoriesController extends Controller {
      */
     public function editCategory(Request $request) {
         $obj_categories = new Categories();
+        $obj_statuses = new Statuses;
+        $category_id = $request->get('id');
 
-        $category_id = $request->get('id');  
-        
         $category = $obj_categories->findCategoryId($category_id);
-         
+
         if ($category) {
             $data = array_merge($this->data, array(
                 'category' => $category,
+                'statuses' => $obj_statuses->pushSelectBox(),
                 'request' => $request,
             ));
             return View::make('laravel-authentication-acl::admin.categories.form-category')->with(['data' => $data]);
-       } else if (is_null($category_id)) {
+        } else if (is_null($category_id)) {
 
             $data = array_merge($this->data, array(
-                'category' => null, 
+                'category' => null,
+                'statuses' => $obj_statuses->pushSelectBox(),
                 'request' => $request,
             ));
             return View::make('laravel-authentication-acl::admin.categories.form-category')->with(['data' => $data]);
@@ -70,24 +72,22 @@ class CategoriesController extends Controller {
      */
     public function postEditCategory(Request $request) {
         $obj_category = new Categories();
-      
+
         $input = $request->all();
-        
+
         $category_id = $request->get('id');
-        
- 
+
+
         $category = $obj_category->findCategoryId($category_id);
 
         if ($category) {
             //edit
             $obj_category->updateCategory($input);
             return Redirect::route("categories.list")->withMessage(trans('categories.categories_edit_successful'));
-
         } elseif (empty($category_id)) {
             //add
             $obj_category->addCategory($input);
             return Redirect::route("categories.list")->withMessage(trans('categories.categories_edit_successful'));
-            
         } else {
             //error
         }
