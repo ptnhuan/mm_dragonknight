@@ -62,6 +62,7 @@ class TasksController extends Controller {
 
             $data = array_merge($this->data, array(
                 'task' => null,
+                'statuses' => $obj_statuses->pushSelectBox(),
                 'request' => $request,
             ));
             return View::make('laravel-authentication-acl::admin.tasks.form-task')->with(['data' => $data]);

@@ -6,7 +6,9 @@
 
 @section('content')
 
-<?php $task = @$data['task']; ?>
+<?php
+    $task = @$data['task'];
+?>
 
 <div class="row">
     <div class="col-md-12">
@@ -20,7 +22,7 @@
         @if( isset($message) )
         <div class="alert alert-success">{{$message}}</div>
         @endif
-        
+
         <div class="panel panel-info">
             <div class="panel-heading">
                 <h3 class="panel-title bariol-thin">{!! !empty(@$task->task_id) ? '<i class="fa fa-pencil"></i> Edit' : '<i class="fa fa-users"></i> Create ' !!} <?php echo trans('tasks.task_name') ?></h3>
@@ -31,9 +33,9 @@
 
                     <!--FORM TASK-->
                     <div class="col-md-12 col-xs-12">
-                        
-                        {{-- group base form --}} 
-                        
+
+                        {{-- group base form --}}
+
                         {!! Form::model($task, [ 'url' => [URL::route('tasks.edit'), @$task->task_id], 'method' => 'post'] ) !!}
 
 
@@ -41,8 +43,13 @@
                         <div class="form-group">
                             {!! Form::label('task_title', trans('tasks.task_title').':') !!}
                             {!! Form::text('task_title', @$task->task_title, ['class' => 'form-control', 'placeholder' => trans('tasks.task_title').'']) !!}
-                            <span class="text-danger">{!! $errors->first('name') !!}</span>
-
+                            <span class="text-danger">{!! $errors->first('task_title') !!}</span>
+                        </div>
+                        <!-- TASK STATUS -->
+                        <div class="form-group">
+                            {!! Form::label('task_statusss', trans('tasks.task_status').':') !!}
+                            {!! Form::select('task_stssatus', @$data['statuses'], @$task->status_id, ['class' => 'form-control', 'placeholder' => trans('tasks.task_status').'']) !!}
+                            <span class="text-danger">{!! $errors->first('task_status') !!}</span>
                         </div>
 
                         <!-- TASK ID HIDDEN -->
