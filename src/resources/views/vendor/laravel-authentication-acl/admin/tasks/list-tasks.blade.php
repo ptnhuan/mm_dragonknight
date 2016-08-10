@@ -1,7 +1,7 @@
 @extends('laravel-authentication-acl::admin.layouts.base-2cols')
 
 @section('title')
-    Admin area: Groups list
+<?php echo trans('tasks.task_list_page_title') ?>
 @stop
 
 @section('content')
