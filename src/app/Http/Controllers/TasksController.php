@@ -28,14 +28,15 @@ class TasksController extends Controller {
         $obj_tasks = new Tasks();
         $obj_statuses = new Statuses;
 
+        $search = $request->all();
 
-        $tasks = $obj_tasks->getList();
+        $tasks = $obj_tasks->getList($search);
         $statuses = $obj_statuses->pushSelectBox();
 
 
         $data = array_merge($this->data, array(
             'tasks' => $tasks,
-            'statuses' => $statuses->toArray(),
+            'statuses' => array_merge(array(0=> 'None'), $statuses->toArray()),
             'request' => $request,
         ));
 
@@ -82,7 +83,7 @@ class TasksController extends Controller {
         $input = $request->all();
 
         $task_id = $request->get('id');
- 
+
         $task = $obj_tasks->findTaskId($task_id);
 
         if ($task) {
@@ -94,7 +95,7 @@ class TasksController extends Controller {
             //add
             $obj_tasks->addTask($input);
             return Redirect::route("tasks.list")->withMessage(trans('tasks.task_edit_successful'));
-            
+
         } else {
             //error
         }
