@@ -69,7 +69,6 @@ class Categories extends Model {
         if (!empty($category)) {
 
             $category->category_title = $input['category_title'];
-            
 
             $category->save();
         } else {

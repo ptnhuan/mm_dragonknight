@@ -11,7 +11,7 @@
         <tr>
           <th style="width: 5%"><?php echo trans('categories.category_order') ?></th>
             <th style="width: 40%"><?php echo trans('categories.category_title') ?></th>
-            <th style="width: 15%"><?php echo trans('categories.category_status') ?></th>
+           
             <th><?php echo trans('categories.category_action') ?></th>
         </tr>
     </thead>
@@ -33,11 +33,7 @@
                 {!! $category->category_title !!}
             </td>
             
-            <!--STATUS-->
-            <td>
-                {!! @$data['statuses'][$category->status_id] !!}
-            </td>
-            
+          
              <!--ACTION-->
             <td style="width:10%">
                 <a href="{!! URL::route('categories.edit', ['id' => $category->category_id]) !!}"><i class="fa fa-edit fa-2x"></i></a>

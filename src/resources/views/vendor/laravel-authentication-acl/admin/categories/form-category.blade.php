@@ -45,13 +45,7 @@ $category = @$data['category'];
                             {!! Form::text('category_title', @$category->category_title, ['class' => 'form-control', 'placeholder' => trans('categories.category_title').'']) !!}
                             <span class="text-danger">{!! $errors->first('category_title') !!}</span>
                         </div>
-                        <!-- TASK STATUS -->
-                        <div class="form-group">
-                            {!! Form::label('status_id', trans('categories.category_status').':') !!}
-                            {!! Form::select('status_id', @$data['statuses'], @$category->status_id, ['class' => 'form-control']) !!}
-
-                            <span class="text-danger">{!! $errors->first('status_id') !!}</span>
-                        </div>
+                      
 
                         <!-- TASK ID HIDDEN -->
                         {!! Form::hidden('id',@$category->category_id) !!}
