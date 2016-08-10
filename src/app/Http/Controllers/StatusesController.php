@@ -24,11 +24,15 @@ class StatusesController extends Controller {
      *
      */
     public function getList(Request $request) {
-        $obj_statuses = new Statuses();
+        $obj_statuses = new Statuses;
 
-        $statuses = $obj_statuses->getList();
+        $search = $request->all();
+
+        $statuses = $obj_statuses->getList($search); 
+
+
         $data = array_merge($this->data, array(
-            'statuses' => $statuses,
+            'statuses' => $statuses, 
             'request' => $request,
         ));
 

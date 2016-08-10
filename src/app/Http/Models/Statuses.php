@@ -30,12 +30,20 @@ class Statuses extends Model {
 
     public function getList($params = array()) {
         $this->config_reader = App::make('config');
-        $results_per_page = $this->config_reader->get('dragonknight.tasks_admin_per_page');
+        $results_per_page = $this->config_reader->get('dragonknight.status_admin_per_page');
 
-        $statuses = self::orderBy('status_id', 'DESC')
-                ->paginate($results_per_page);
+        $eloquent = self::orderBy('statuses.status_id', 'DESC');
 
-        return $statuses;
+        //Search by status title
+        if (!empty($params['status_title'])) {
+            $eloquent->where('statuses.status_title', 'LIKE', '%'.$params['status_title'].'%');
+        }
+        
+
+         
+        $status = $eloquent->paginate($results_per_page);
+
+        return $status;
     }
 
     public function pushSelectBox() {
