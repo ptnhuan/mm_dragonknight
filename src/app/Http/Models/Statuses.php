@@ -38,6 +38,12 @@ class Statuses extends Model {
         return $statuses;
     }
 
+    public function pushSelectBox(){
+        $statuses = self::orderBy('status_title', 'ASC')
+                    ->pluck('status_title', 'status_id');
+        return $statuses;
+    }
+
     /*     * ********************************************
      * findRealEstateId
      *

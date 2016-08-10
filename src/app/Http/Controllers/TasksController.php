@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
  * Models
  */
 use App\Http\Models\Tasks;
+use App\Http\Models\Statuses;
 
 class TasksController extends Controller
 {
@@ -39,12 +40,14 @@ class TasksController extends Controller
      */
     public function editTask(Request $request) {
         $obj_tasks = new Tasks();
+        $obj_statuses = new Statuses;
 
         $task_id = $request->get('id');
         $task = $obj_tasks->findTaskId($task_id);
         if ($task) {
             $data = array_merge($this->data, array(
                 'task' => $task,
+                'statuses' => $obj_statuses->pushSelectBox(),
                 'request' => $request,
             ));
             return View::make('laravel-authentication-acl::admin.tasks.form-task')->with(['data' => $data]);
