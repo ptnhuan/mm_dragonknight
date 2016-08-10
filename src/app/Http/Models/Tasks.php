@@ -46,9 +46,18 @@ class Tasks extends Model {
 
         $eloquent = self::orderBy('tasks.task_id', 'DESC');
 
+        //Search by task title
         if (!empty($params['task_title'])) {
             $eloquent->where('tasks.task_title', 'LIKE', '%'.$params['task_title'].'%');
         }
+
+        //Search by task status
+        if (!empty($params['status_id'])) {
+            $eloquent->where('tasks.status_id', 'LIKE', '%'.$params['status_id'].'%');
+        }
+
+
+
 
         $tasks = $eloquent->paginate($results_per_page);
 

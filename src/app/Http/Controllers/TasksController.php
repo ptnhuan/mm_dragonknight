@@ -36,7 +36,7 @@ class TasksController extends Controller {
 
         $data = array_merge($this->data, array(
             'tasks' => $tasks,
-            'statuses' => $statuses->toArray(),
+            'statuses' => array_merge(array(0=> 'None'), $statuses->toArray()),
             'request' => $request,
         ));
 
