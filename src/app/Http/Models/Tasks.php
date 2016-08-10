@@ -14,6 +14,7 @@ class Tasks extends Model {
     protected $fillable = [
         "created_by_user_id",
         "level_id",
+        "status_id",
         "category_id",
         "task_points",
         "task_title",
@@ -43,7 +44,7 @@ class Tasks extends Model {
         $this->config_reader = App::make('config');
         $results_per_page = $this->config_reader->get('dragonknight.tasks_admin_per_page');
 
-        $tasks = self::orderBy('task_id', 'DESC')
+        $tasks = self::orderBy('task_id', 'ASC')
                 ->paginate($results_per_page);
 
         return $tasks;
@@ -84,7 +85,7 @@ class Tasks extends Model {
 
             $task->save();
         } else {
-            
+
         }
     }
 
@@ -165,7 +166,7 @@ class Tasks extends Model {
     }
 
     public function decodeImages($json_images) {
-        
+
     }
 
     /*     * *************************************************************************

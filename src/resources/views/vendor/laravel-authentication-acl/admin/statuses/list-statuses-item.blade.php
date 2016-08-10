@@ -11,9 +11,25 @@
 <table class="table table-hover">
     <thead>
         <tr>
-            <th style="width: 5%"><?php echo trans('statuses.status_order') ?></th>
-            <th style="width:70%"><?php echo trans('statuses.status_title') ?></th>
-            <th><?php echo trans('statuses.status_action') ?></th>
+            <!--ORDER-->
+            <th style="width: 5%">
+                <?php echo trans('statuses.status_order') ?>
+            </th>
+
+            <!--TITLE-->
+            <th style="width: 35%">
+                <?php echo trans('statuses.status_title') ?>
+            </th>
+
+            <!--ID-->
+            <th style="width: 5%">
+                <?php echo trans('statuses.status_id') ?>
+            </th>
+
+            <!--ACTION-->
+            <th>
+                <?php echo trans('statuses.status_action') ?>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -23,21 +39,39 @@
         ?>
         @foreach($statuses as $status)
         <tr>
+
+            <!--ORDER-->
             <td>
-                <?php echo $counter;
+                <?php
+                echo $counter;
                 $counter++;
                 ?>
             </td>
-            <td>{!! $status->status_title !!}</td>
+
+            <!--TITLE-->
+            <td>
+                {!! $status->status_title !!}
+            </td>
+
+            <!--ID-->
+            <td>
+                {!! $status->status_id !!}
+            </td>
+
+            <!--ACTION-->
             <td>
                 <a href="{!! URL::route('statuses.edit', ['id' => $status->status_id]) !!}"><i class="fa fa-edit fa-2x"></i></a>
-                <a href="{!! URL::route('statuses.delete',['id' => $status->status_id, '_token' => csrf_token()]) !!}" class="margin-left-5 delete"><i class="fa fa-trash-o fa-2x"></i></a>
+                <a href="{!! URL::route('statuses.delete',['id' => $status->status_id, '_token' => csrf_token()]) !!}" class="margin-left-5 delete">
+                    <i class="fa fa-trash-o fa-2x"></i>
+                </a>
                 <span class="clearfix"></span>
             </td>
+
         </tr>
         @endforeach
     </tbody>
 </table>
+
 @else
-<span class="text-warning"><h5>No results found.</h5></span>
+<span class="text-warning"><h5>{!! trans('statuses.status_not_found') !!}</h5></span>
 @endif

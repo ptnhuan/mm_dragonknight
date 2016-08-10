@@ -30,4 +30,7 @@ return [
     'status_status' => 'Trạng thái',
     'status_list' => 'Danh sách',
 
+    'status_id' => 'Mã',
+    'status_not_found' => 'Không tìm thấy',
+
 ];

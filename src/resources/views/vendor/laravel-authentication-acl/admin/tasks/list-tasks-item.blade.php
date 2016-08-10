@@ -15,7 +15,7 @@
             <th><?php echo trans('tasks.task_action') ?></th>
         </tr>
     </thead>
-    <tbody>  
+    <tbody>
         <?php
         $nav = $tasks->toArray();
         $counter = ($nav['current_page'] - 1) * $nav['per_page'] + 1;
@@ -43,6 +43,9 @@
 
     </tbody>
 </table>
+<div class="paginator">
+    {!! $tasks->appends($data['request']->except(['page']) )->render() !!}
+</div>
 @else
 <span class="text-warning"><h5>No results found.</h5></span>
 @endif

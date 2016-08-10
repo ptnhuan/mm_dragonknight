@@ -11,7 +11,7 @@ return [
   |
   */
 
-  "tasks_admin_per_page" => 15,
+  "tasks_admin_per_page" => 5,
 
 
 ];
