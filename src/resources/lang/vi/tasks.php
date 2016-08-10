@@ -27,5 +27,6 @@ return [
     'task_create' => 'Tạo mới',
 
     'task_order' => 'STT',
+    'task_status' => 'Trạng thái',
 
 ];

@@ -1,12 +1,14 @@
-<?php namespace App\Http\Controllers;
+<?php
+
+namespace App\Http\Controllers;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesResources;
-
-use View,Redirect;
+use View,
+    Redirect;
 use Illuminate\Http\Request;
 /**
  * Models
@@ -14,28 +16,33 @@ use Illuminate\Http\Request;
 use App\Http\Models\Tasks;
 use App\Http\Models\Statuses;
 
-class TasksController extends Controller
-{
+class TasksController extends Controller {
 
     public $data = array();
+
     /**
      *
      */
-    public function getList(Request $request){
-
+    public function getList(Request $request) {
 
         $obj_tasks = new Tasks();
+        $obj_statuses = new Statuses;
+
+
         $tasks = $obj_tasks->getList();
+        $statuses = $obj_statuses->pushSelectBox();
+
 
         $data = array_merge($this->data, array(
             'tasks' => $tasks,
+            'statuses' => $statuses->toArray(),
             'request' => $request,
         ));
 
         return View::make('laravel-authentication-acl::admin.tasks.list-tasks')->with(['data' => $data]);
     }
 
-     /**
+    /**
      *
      */
     public function editTask(Request $request) {
@@ -51,7 +58,6 @@ class TasksController extends Controller
                 'request' => $request,
             ));
             return View::make('laravel-authentication-acl::admin.tasks.form-task')->with(['data' => $data]);
-
         } else if (is_null($task_id)) {
 
             $data = array_merge($this->data, array(
@@ -59,7 +65,6 @@ class TasksController extends Controller
                 'request' => $request,
             ));
             return View::make('laravel-authentication-acl::admin.tasks.form-task')->with(['data' => $data]);
-
         } else {
 
             return Redirect::route("tasks.list")->withMessage(trans('re.not_found'));
@@ -69,19 +74,15 @@ class TasksController extends Controller
     /**
      *
      */
-    public function postEditTask(){
-                echo 'postEditTask';
-
-
+    public function postEditTask() {
+        echo 'postEditTask';
     }
 
-     /**
+    /**
      *
      */
-    public function deleteTask(){
-                echo 'deleteTask';
-
-
+    public function deleteTask() {
+        echo 'deleteTask';
     }
 
 }
