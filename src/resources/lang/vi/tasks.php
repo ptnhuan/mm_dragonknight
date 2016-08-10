@@ -28,5 +28,6 @@ return [
 
     'task_order' => 'STT',
     'task_status' => 'Trạng thái',
+    'task_list' => 'Danh sách',
 
 ];
