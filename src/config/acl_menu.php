@@ -104,5 +104,11 @@ return [
             "permissions" => ["_superadmin", "_faqs-admin"]
         ],
         
+        [
+            "name" => "Posts",
+            "route" => "posts",
+            "link" => '/admin/posts/list',
+            "permissions" => ["_superadmin", "_posts-admin"]
+        ],
     ]
 ];
