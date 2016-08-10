@@ -35,7 +35,7 @@ class PostsController extends Controller
             'request' => $request,
         ));
 
-        return View::make('laravel-authentication-acl::admin.posts.list-faqs')->with(['data' => $data]);
+        return View::make('laravel-authentication-acl::admin.posts.list-posts')->with(['data' => $data]);
     }
 
      /**
@@ -46,13 +46,13 @@ class PostsController extends Controller
 
         $post_id = $request->get('id');
 
-        $post = $obj_faqs->findFaqId($post_id);
+        $post = $obj_posts->findPostId($post_id);
         if ($post) {
             $data = array_merge($this->data, array(
                 'post' => $post,
                 'request' => $request,
             ));
-            return View::make('laravel-authentication-acl::admin.posts.form-faq')->with(['data' => $data]);
+            return View::make('laravel-authentication-acl::admin.posts.form-post')->with(['data' => $data]);
         } else {
             return Redirect::route("posts.list")->withMessage(trans('re.not_found'));
         }

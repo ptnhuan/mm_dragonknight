@@ -133,7 +133,7 @@ Route::group(['middleware' => ['web']], function () {
         ]);
         Route::get('/admin/posts/edit', [
             'as' => 'posts.edit',
-            'uses' => 'PostsController@editpost'
+            'uses' => 'PostsController@editPost'
         ]);
         Route::post('/admin/posts/edit', [
             'as' => 'posts.edit',

@@ -9,7 +9,7 @@ use DB;
 class Posts extends Model {
 
     protected $table = 'posts';
-    protected $primaryKey = 'posts_id';
+    protected $primaryKey = 'post_id';
     public $timestamps = false;
     protected $fillable = [
       "post_id",
