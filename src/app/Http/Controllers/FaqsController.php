@@ -42,17 +42,32 @@ class FaqsController extends Controller
      */
     public function editFaq(Request $request) {
         $obj_faqs = new Faqs();
+        $obj_statuses = new Statuses;
 
         $faq_id = $request->get('id');
-
         $faq = $obj_faqs->findFaqId($faq_id);
+        
         if ($faq) {
+            
+            //Update for existing faq
             $data = array_merge($this->data, array(
                 'faq' => $faq,
+                'statuses' => $obj_statuses->pushSelectBox(),
+                'request' => $request,
+            ));
+            return View::make('laravel-authentication-acl::admin.faqs.form-faq')->with(['data' => $data]);
+        
+            
+        } else if (is_null($faq_id)) {
+            //Add new faq
+            $data = array_merge($this->data, array(
+                'faq' => null,
+                'statuses' => $obj_statuses->pushSelectBox(),
                 'request' => $request,
             ));
             return View::make('laravel-authentication-acl::admin.faqs.form-faq')->with(['data' => $data]);
         } else {
+
             return Redirect::route("faqs.list")->withMessage(trans('re.not_found'));
         }
     }
@@ -61,7 +76,9 @@ class FaqsController extends Controller
      /**
      *
      */
-    public function postEditTask(){
+    public function postEditFaq(Request $request){
+        var_dump($request->all());
+        die();
                 echo 'postEditTask';
 
 

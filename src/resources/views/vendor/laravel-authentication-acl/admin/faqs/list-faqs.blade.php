@@ -22,7 +22,9 @@
             @endif
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h3 class="panel-title bariol-thin"><i class="fa fa-group"></i> {!! 1 ? 'Search results:' : 'Groups' !!}</h3>
+                    <h3 class="panel-title bariol-thin"><i class="fa fa-group">
+                        </i> {!! 1 ? trans('faqs.faq_page') : 'Groups' !!}
+                    </h3>
                 </div>
                 <div class="panel-body">
                     @include('laravel-authentication-acl::admin.faqs.list-faqs-item')

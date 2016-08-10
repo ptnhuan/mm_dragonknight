@@ -58,10 +58,10 @@ class Faqs extends Model {
      * @status: REVIEWED
      */
 
-    public function findFaqId($id) {
-        $real_estate = self::where('faq_id', $id)
+    public function findFaqId($faq_id) {
+        $faq = self::where('faq_id', $faq_id)
                 ->first();
-        return $real_estate;
+        return $faq;
     }
 
     /*     * ********************************************
