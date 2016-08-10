@@ -1,12 +1,12 @@
 @extends('laravel-authentication-acl::admin.layouts.base-2cols')
 
 @section('title')
-Admin area: edit group
+<?php echo trans('statuses.status_edit_page_title') ?>
 @stop
 
 @section('content')
 
-<?php 
+<?php
 $status = @$data['status'];
 ?>
 
@@ -22,30 +22,41 @@ $status = @$data['status'];
         @if( isset($message) )
         <div class="alert alert-success">{{$message}}</div>
         @endif
+
         <div class="panel panel-info">
             <div class="panel-heading">
-                    <h3 class="panel-title bariol-thin">{!! isset($status->id) ? '<i class="fa fa-pencil"></i> Edit' : '<i class="fa fa-users"></i> Create' !!} group</h3>
+                <h3 class="panel-title bariol-thin">{!! !empty(@$status->status_id) ? '<i class="fa fa-pencil"></i> '.trans('statuses.status_edit') : '<i class="fa fa-users"></i> '.trans('statuses.status_create') !!} <?php echo trans('statuses.status_name') ?></h3>
             </div>
+
             <div class="panel-body">
                 <div class="row">
+
+                    <!--FORM STATUS-->
                     <div class="col-md-12 col-xs-12">
+
                         {{-- group base form --}}
-                        <h4>General data</h4>
-                        {!! Form::model($status, [ 'url' => [URL::route('statuses.edit'), $status->status_id], 'method' => 'post'] ) !!}
-                        <!-- name text field -->
+
+                        {!! Form::model($status, [ 'url' => [URL::route('statuses.edit'), @$status->status_id], 'method' => 'post'] ) !!}
+
+
+                        <!-- STATUSES TITLE -->
                         <div class="form-group">
-                            {!! Form::label('name','Name: *') !!}
-                            {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'group name']) !!}
+                            {!! Form::label('status_title', trans('statuses.status_title').':') !!}
+                            {!! Form::text('status_title', @$status->status_title, ['class' => 'form-control', 'placeholder' => trans('statuses.status_title').'']) !!}
+                            <span class="text-danger">{!! $errors->first('status_title') !!}</span>
                         </div>
-                        <span class="text-danger">{!! $errors->first('name') !!}</span>
-                        {!! Form::hidden('id') !!}
-                        <a href="{!! URL::route('statuses.delete',['id' => $status->status_id, '_token' => csrf_token()]) !!}" class="btn btn-danger pull-right margin-left-5 delete">Delete</a>
-                        {!! Form::submit('Save', array("class"=>"btn btn-info pull-right ")) !!}
+                         
+
+                        <!-- STATUSES ID HIDDEN -->
+                        {!! Form::hidden('id',@$status->status_id) !!}
+                        <a href="{!! URL::route('statuses.delete',['id' => @$status->status_id, '_token' => csrf_token()]) !!}" class="btn btn-danger pull-right margin-left-5 delete"><?php echo trans('statuses.status_delete') ?></a>
+                        {!! Form::submit(trans('statuses.status_save').'', array("class"=>"btn btn-info pull-right ")) !!}
                         {!! Form::close() !!}
-                    </div> 
-                    
+                    </div>
+
                 </div>
-           </div>
+            </div>
+
         </div>
     </div>
 </div>
@@ -53,8 +64,8 @@ $status = @$data['status'];
 
 @section('footer_scripts')
 <script>
-    $(".delete").click(function(){
-        return confirm("Are you sure to delete this item?");
+    $(".delete").click(function () {
+        return confirm("<?php  echo trans('statuses.status_delete_confirm')?>");
     });
 </script>
 @stop

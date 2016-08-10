@@ -17,8 +17,8 @@ class Statuses extends Model {
         "status_description",
         "status_image"
     ];
-
     protected $guarded = ["status_id"];
+
     /*     * ********************************************
      * listRealEstate
      *
@@ -38,9 +38,9 @@ class Statuses extends Model {
         return $statuses;
     }
 
-    public function pushSelectBox(){
+    public function pushSelectBox() {
         $statuses = self::orderBy('status_title', 'ASC')
-                    ->pluck('status_title', 'status_id');
+                ->pluck('status_title', 'status_id');
         return $statuses;
     }
 
@@ -70,35 +70,16 @@ class Statuses extends Model {
      * @status: REVIEWED
      */
 
-    public function updateRealEstate($input) {
-        $real_estate = self::find($input['id']);
-        if (!empty($real_estate)) {
+    public function updateStatus($input) {
+        $status = self::find($input['id']);
+        if (!empty($status)) {
 
-            $real_estate_images = $this->encodeImages($input);
+            $status->status_title = $input['status_title'];
+            $status->status_id = $input['status_id'];
 
-            $real_estate->real_estate_title = $input['title'];
-            $real_estate->real_estate_category_id = $input['datacat'];
-            $real_estate->real_estate_description = $input['description'];
-            $real_estate->real_estate_bedroom = $input['bedroom'];
-            $real_estate->real_estate_bathroom = $input['bathroom'];
-            $real_estate->real_estate_sq = $input['sq'];
-            $real_estate->real_estate_year_build = $input['build_year'];
-
-            $real_estate->real_estate_cost = (double)$input['cost'];
-
-            $real_estate->real_estate_image = $input['filename'];
-            $real_estate->real_estate_images = $real_estate_images;
-
-            $real_estate->real_estate_map_address = $input['map-address'];
-            $real_estate->real_estate_map_marker_lat = $input['map-marker-lat'];
-            $real_estate->real_estate_map_marker_lng = $input['map-marker-lng'];
-            $real_estate->real_estate_map_center_lat = $input['map-center-lat'];
-            $real_estate->real_estate_map_center_lng = $input['map-center-lng'];
-            $real_estate->real_estate_map_zoom = $input['map-zoom'];
-
-            $real_estate->save();
+            $status->save();
         } else {
-
+            
         }
     }
 
@@ -112,30 +93,12 @@ class Statuses extends Model {
      * @status: REVIEWED
      */
 
-    public function addRealEstate($input) {
+    public function addStatus($input) {
 
-        $real_estate_images = $this->encodeImages($input);
-
-        $real_estate = self::create([
-
-                    'real_estate_title' => $input['title'],
-                    'real_estate_category_id' => $input['datacat'],
-                    'real_estate_description' => $input['description'],
-                    'real_estate_bedroom' => $input['bedroom'],
-                    'real_estate_bathroom' => $input['bathroom'],
-                    'real_estate_sq' => $input['sq'],
-                    'real_estate_year_build' => $input['build_year'],
-                    'real_estate_image' => $input['filename'],
-                    'real_estate_images' => $real_estate_images,
-                    'real_estate_cost' => @$input['cost'],
-                    'real_estate_map_address' => $input['map-address'],
-                    'real_estate_map_marker_lat' => $input['map-marker-lat'],
-                    'real_estate_map_marker_lng' => $input['map-marker-lng'],
-                    'real_estate_map_center_lat' => $input['map-center-lat'],
-                    'real_estate_map_center_lng' => $input['map-center-lng'],
-                    'real_estate_map_zoom' => $input['map-zoom'],
+        $status = self::create([
+                    'status_title' => $input['status_title'],
         ]);
-        return $real_estate;
+        return $status;
     }
 
     /*     * ********************************************
@@ -148,11 +111,10 @@ class Statuses extends Model {
      * @status: REVIEWED
      */
 
-    public function deleteRealEstate($input) {
+    public function deleteStatusById($status_id) {
+        $status = self::find($status_id);
 
-        $real_estate = self::find($input['id']);
-
-        return $real_estate->delete();
+        return $status->delete();
     }
 
     /*     * ********************************************
@@ -173,7 +135,7 @@ class Statuses extends Model {
         return $real_estate;
     }
 
-    public function encodeImages($input){
+    public function encodeImages($input) {
         $json_images = array();
 
         if (!empty($input['images_name'])) {
@@ -193,16 +155,16 @@ class Statuses extends Model {
         }
         return json_encode($json_images);
     }
-    public function decodeImages($json_images){
 
+    public function decodeImages($json_images) {
+        
     }
 
-
-    /***************************************************************************
-    /***************************************************************************
-    /*****************************USER FRONT PAGE*******************************
-    /***************************************************************************
-    /***************************************************************************
+    /*     * *************************************************************************
+      /***************************************************************************
+      /*****************************USER FRONT PAGE*******************************
+      /***************************************************************************
+      /***************************************************************************
      * getHighlightRe
      *
      * @author: Kang
@@ -213,7 +175,8 @@ class Statuses extends Model {
      */
 
     public function getHighlightRe() {
-         $real_estate = self::first();
-         return $real_estate;
+        $real_estate = self::first();
+        return $real_estate;
     }
+
 }

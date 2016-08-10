@@ -7,7 +7,8 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesResources;
-use View, Redirect;
+use View,
+    Redirect;
 use Illuminate\Http\Request;
 /**
  * Models
@@ -40,7 +41,7 @@ class StatusesController extends Controller {
     public function editStatus(Request $request) {
         $obj_statuses = new Statuses();
 
-        $status_id = $request->get('id'); 
+        $status_id = $request->get('id');
         $status = $obj_statuses->findStatusId($status_id);
         if ($status) {
             $data = array_merge($this->data, array(
@@ -48,7 +49,16 @@ class StatusesController extends Controller {
                 'request' => $request,
             ));
             return View::make('laravel-authentication-acl::admin.statuses.form-status')->with(['data' => $data]);
+        } else if (is_null($status_id)) {
+
+            $data = array_merge($this->data, array(
+                'status' => null,
+                'statuses' => $obj_statuses->pushSelectBox(),
+                'request' => $request,
+            ));
+            return View::make('laravel-authentication-acl::admin.statuses.form-status')->with(['data' => $data]);
         } else {
+
             return Redirect::route("statuses.list")->withMessage(trans('re.not_found'));
         }
     }
@@ -56,15 +66,44 @@ class StatusesController extends Controller {
     /**
      *
      */
-    public function postEditStatus() {
-        echo 'postEditTask';
+    public function postEditStatus(Request $request) {
+        $obj_statuses = new Statuses();
+
+        $input = $request->all();
+
+        $status_id = $request->get('id');
+
+        $status = $obj_statuses->findStatusId($status_id);
+
+        if ($status) {
+            //edit
+            $obj_statuses->updateStatus($input);
+            return Redirect::route("statuses.list")->withMessage(trans('statuses.status_edit_successful'));
+        } elseif (empty($status_id)) {
+            //add
+            $obj_statuses->addStatus($input);
+            return Redirect::route("statuses.list")->withMessage(trans('statuses.status_edit_successful'));
+        } else {
+            //error
+        }
     }
 
     /**
      *
      */
-    public function deleteTask() {
-        echo 'deleteTask';
+    public function deleteStatus(Request $request) {
+        $obj_statuses = new Statuses();
+
+        $status_id = $request->get('id');
+        $status = $obj_statuses->findStatusId($status_id);
+
+        if ($status) {
+
+            $obj_statuses->deleteStatusById($status_id);
+            return Redirect::route("statuses.list")->withMessage(trans('statuses.status_delete_successful'));
+        } else {
+            return Redirect::route("statuses.list")->withMessage(trans('statuses.status_delete_unsuccessful'));
+        }
     }
 
 }

@@ -27,11 +27,11 @@ class StatusesServiceProvider extends ServiceProvider {
         //Testimonials
         View::composer(['laravel-authentication-acl::admin.statuses.*'], function ($view) {
             $view->with('sidebar_items', [
-                "List" => [
+                trans('statuses.status_list') => [
                     "url" => URL::route('statuses.list'),
                     "icon" => '<i class="fa fa-list"></i>'
                 ],
-                "Add testimonial" => [
+                trans('statuses.status_add') => [
                     "url" => URL::route('statuses.edit'),
                     "icon" => '<i class="fa fa-plus"></i>'
                 ]

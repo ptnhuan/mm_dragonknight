@@ -17,9 +17,17 @@
         </tr>
     </thead>
     <tbody>
+        <?php
+        $nav = $statuses->toArray();
+        $counter = ($nav['current_page'] - 1) * $nav['per_page'] + 1;
+        ?>
         @foreach($statuses as $status)
         <tr>
-            <td></td>
+            <td>
+                <?php echo $counter;
+                $counter++;
+                ?>
+            </td>
             <td>{!! $status->status_title !!}</td>
             <td>
                 <a href="{!! URL::route('statuses.edit', ['id' => $status->status_id]) !!}"><i class="fa fa-edit fa-2x"></i></a>

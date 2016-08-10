@@ -1,16 +1,16 @@
 <div class="panel panel-info">
     <div class="panel-heading">
-        <h3 class="panel-title bariol-thin"><i class="fa fa-search"></i> Group search</h3>
+        <h3 class="panel-title bariol-thin"><i class="fa fa-search"></i><?php echo trans('statuses.status_page_search') ?></h3>
     </div>
     <div class="panel-body">
-        {!! Form::open(['route' => 'groups.list','method' => 'get']) !!}
+        {!! Form::open(['route' => 'statuses.list','method' => 'get']) !!}
         <!-- name text field -->
         <div class="form-group">
-            {!! Form::label('name','Name:') !!}
-            {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'group name']) !!}
+            {!! Form::label('name',trans('statuses.status_title').':') !!}
+            {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => trans('statuses.status_search_title').'']) !!}
         </div>
         <span class="text-danger">{!! $errors->first('name') !!}</span>
-        {!! Form::submit('Search', ["class" => "btn btn-info pull-right"]) !!}
+        {!! Form::submit(trans('statuses.status_search').'', ["class" => "btn btn-info pull-right"]) !!}
         {!! Form::close() !!}
     </div>
 </div>
