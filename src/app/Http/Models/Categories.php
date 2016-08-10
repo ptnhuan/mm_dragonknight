@@ -30,10 +30,16 @@ class Categories extends Model {
 
     public function getList($params = array()) {
         $this->config_reader = App::make('config');
-        $results_per_page = $this->config_reader->get('dragonknight.categorys_admin_per_page');
+        $results_per_page = $this->config_reader->get('dragonknight.category_admin_per_page');
 
-        $categories = self::orderBy('category_id', 'DESC')
-                ->paginate($results_per_page);
+          $eloquent = self::orderBy('categories.category_id', 'DESC');
+         
+        //Search by category title
+        if (!empty($params['category_title'])) {
+            $eloquent->where('categories.category_title', 'LIKE', '%'.$params['category_title'].'%');
+        }
+        
+        $categories = $eloquent->paginate($results_per_page);
 
         return $categories;
     }
@@ -106,11 +112,11 @@ class Categories extends Model {
      * @status: REVIEWED
      */
 
-    public function deleteRealEstate($input) {
+    public function deleteCategoryById($task_id) {
 
-        $real_estate = self::find($input['id']);
+        $category = self::find($task_id);
 
-        return $real_estate->delete();
+        return $category->delete();
     }
 
     /*     * ********************************************

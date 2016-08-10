@@ -25,14 +25,13 @@ class CategoriesController extends Controller {
      *
      */
     public function getList(Request $request) {
-        $obj_categories = new Categories();
-        $obj_statuses = new Statuses;
-        $categories = $obj_categories->getList();
+        $obj_categories = new Categories(); 
+        $search = $request->all();
+        $categories = $obj_categories->getList($search);
         $data = array_merge($this->data, array(
-            'categories' => $categories,
-            'statuses' => $obj_statuses->pushSelectBox(),
+            'categories' => $categories, 
             'request' => $request,
-        )); 
+        ));  
         return View::make('laravel-authentication-acl::admin.categories.list-categories')->with(['data' => $data]);
     }
 
@@ -40,24 +39,21 @@ class CategoriesController extends Controller {
      *
      */
     public function editCategory(Request $request) {
-        $obj_categories = new Categories();
-        $obj_statuses = new Statuses;
+        $obj_categories = new Categories(); 
         $category_id = $request->get('id');
 
         $category = $obj_categories->findCategoryId($category_id);
 
         if ($category) {
             $data = array_merge($this->data, array(
-                'category' => $category,
-                'statuses' => $obj_statuses->pushSelectBox(),
+                'category' => $category, 
                 'request' => $request,
             ));
             return View::make('laravel-authentication-acl::admin.categories.form-category')->with(['data' => $data]);
         } else if (is_null($category_id)) {
 
             $data = array_merge($this->data, array(
-                'category' => null,
-                'statuses' => $obj_statuses->pushSelectBox(),
+                'category' => null, 
                 'request' => $request,
             ));
             return View::make('laravel-authentication-acl::admin.categories.form-category')->with(['data' => $data]);
@@ -96,8 +92,19 @@ class CategoriesController extends Controller {
     /**
      *
      */
-    public function deleteCategory() {
-        echo 'deleteTask';
+    public function deleteCategory(Request $request) {
+          $obj_categories = new Categories();
+
+        $category_id = $request->get('id');
+        $category = $obj_categories->findCategoryId($category_id);
+
+        if ($category) {
+
+            $obj_categories->deleteCategoryById($category_id);
+            return Redirect::route("categories.list")->withMessage(trans('categories.category_delete_successful'));
+        } else {
+            return Redirect::route("categories.list")->withMessage(trans('categories.category_delete_unsuccessful'));
+        }
     }
 
 }
