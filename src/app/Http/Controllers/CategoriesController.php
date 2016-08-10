@@ -40,18 +40,27 @@ class CategoriesController extends Controller {
      *
      */
     public function editCategory(Request $request) {
-        $obj_categories = new Statuses();
+        $obj_categories = new Categories();
 
-        $category_id = $request->get('id');
-
-        $category = $obj_categories->findStatusId($category_id);
+        $category_id = $request->get('id');  
+        
+        $category = $obj_categories->findCategoryId($category_id);
+         
         if ($category) {
             $data = array_merge($this->data, array(
                 'category' => $category,
                 'request' => $request,
             ));
             return View::make('laravel-authentication-acl::admin.categories.form-category')->with(['data' => $data]);
+       } else if (is_null($category_id)) {
+
+            $data = array_merge($this->data, array(
+                'category' => null, 
+                'request' => $request,
+            ));
+            return View::make('laravel-authentication-acl::admin.categories.form-category')->with(['data' => $data]);
         } else {
+
             return Redirect::route("categories.list")->withMessage(trans('re.not_found'));
         }
     }
@@ -59,8 +68,29 @@ class CategoriesController extends Controller {
     /**
      *
      */
-    public function postEditCategory() {
-        echo 'postEditTask';
+    public function postEditCategory(Request $request) {
+        $obj_category = new Categories();
+      
+        $input = $request->all();
+        
+        $category_id = $request->get('id');
+        
+ 
+        $category = $obj_category->findCategoryId($category_id);
+
+        if ($category) {
+            //edit
+            $obj_category->updateCategory($input);
+            return Redirect::route("categories.list")->withMessage(trans('categories.categories_edit_successful'));
+
+        } elseif (empty($category_id)) {
+            //add
+            $obj_category->addCategory($input);
+            return Redirect::route("categories.list")->withMessage(trans('categories.categories_edit_successful'));
+            
+        } else {
+            //error
+        }
     }
 
     /**

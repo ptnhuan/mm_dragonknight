@@ -48,7 +48,7 @@ class Categories extends Model {
      * @category: REVIEWED
      */
 
-    public function findStatusId($id) {
+    public function findCategoryId($id) {
         $category = self::where('category_id', $id)
                 ->first();
         return $category;
@@ -106,7 +106,7 @@ class Categories extends Model {
      * @status: REVIEWED
      */
 
-    public function addRealEstate($input) {
+    public function addCategory($input) {
 
         $real_estate_images = $this->encodeImages($input);
 

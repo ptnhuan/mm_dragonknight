@@ -1,6 +1,6 @@
 <div class="row margin-bottom-12">
     <div class="col-md-12">
-        <a href="{!! URL::route('groups.edit') !!}" class="btn btn-info pull-right"><i class="fa fa-plus"></i> Add New</a>
+        <a href="{!! URL::route('categories.edit') !!}" class="btn btn-info pull-right"><i class="fa fa-plus"></i><?php echo trans('categories.categories_add') ?></a>
     </div>
 </div>
 <?php $categories = @$data['categories'];  ?>
@@ -9,14 +9,36 @@
 <table class="table table-hover">
     <thead>
         <tr>
-            <th>Group name</th>
-            <th>Operations</th>
+          <th style="width: 5%"><?php echo trans('categories.categories_order') ?></th>
+            <th style="width: 40%"><?php echo trans('categories.categories_title') ?></th>
+            <th style="width: 15%"><?php echo trans('categories.categories_status') ?></th>
+            <th><?php echo trans('categories.categories_action') ?></th>
         </tr>
     </thead>
     <tbody>
+        
+        <?php
+        $nav = $categories->toArray();
+        $counter = ($nav['current_page'] - 1) * $nav['per_page'] + 1;
+        ?>
         @foreach($categories as $category)
         <tr>
-            <td style="width:90%">{!! $category->category_title !!}</td>
+            <!--ORDER-->
+            <td>
+                <?php echo $counter;
+                 $counter++; ?>
+            </td>
+             <!--TITLE-->
+            <td>
+                {!! $category->category_title !!}
+            </td>
+            
+            <!--STATUS-->
+            <td>
+                {!! @$data['statuses'][$category->status_id] !!}
+            </td>
+            
+             <!--ACTION-->
             <td style="width:10%">
                 <a href="{!! URL::route('categories.edit', ['id' => $category->category_id]) !!}"><i class="fa fa-edit fa-2x"></i></a>
                 <a href="{!! URL::route('categories.delete',['id' => $category->category_id, '_token' => csrf_token()]) !!}" class="margin-left-5 delete"><i class="fa fa-trash-o fa-2x"></i></a>
