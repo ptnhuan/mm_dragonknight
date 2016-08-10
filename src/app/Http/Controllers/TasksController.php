@@ -82,10 +82,7 @@ class TasksController extends Controller {
         $input = $request->all();
 
         $task_id = $request->get('id');
-
-        var_dump($task_id);
-        die();
-
+ 
         $task = $obj_tasks->findTaskId($task_id);
 
         if ($task) {
@@ -95,6 +92,9 @@ class TasksController extends Controller {
 
         } elseif (empty($task_id)) {
             //add
+            $obj_tasks->addTask($input);
+            return Redirect::route("tasks.list")->withMessage(trans('tasks.task_edit_successful'));
+            
         } else {
             //error
         }

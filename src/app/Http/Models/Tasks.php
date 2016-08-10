@@ -28,8 +28,8 @@ class Tasks extends Model {
         "created_at",
         "updated_at",
     ];
-
     protected $guarded = ["task_id"];
+
     /*     * ********************************************
      * listRealEstate
      *
@@ -80,10 +80,11 @@ class Tasks extends Model {
         if (!empty($task)) {
 
             $task->task_title = $input['task_title'];
+            $task->status_id = $input['status_id'];
 
             $task->save();
         } else {
-
+            
         }
     }
 
@@ -97,30 +98,14 @@ class Tasks extends Model {
      * @status: REVIEWED
      */
 
-    public function addRealEstate($input) {
+    public function addTask($input) {
 
-        $real_estate_images = $this->encodeImages($input);
+        $task = self::create([
 
-        $real_estate = self::create([
-
-                    'real_estate_title' => $input['title'],
-                    'real_estate_category_id' => $input['datacat'],
-                    'real_estate_description' => $input['description'],
-                    'real_estate_bedroom' => $input['bedroom'],
-                    'real_estate_bathroom' => $input['bathroom'],
-                    'real_estate_sq' => $input['sq'],
-                    'real_estate_year_build' => $input['build_year'],
-                    'real_estate_image' => $input['filename'],
-                    'real_estate_images' => $real_estate_images,
-                    'real_estate_cost' => @$input['cost'],
-                    'real_estate_map_address' => $input['map-address'],
-                    'real_estate_map_marker_lat' => $input['map-marker-lat'],
-                    'real_estate_map_marker_lng' => $input['map-marker-lng'],
-                    'real_estate_map_center_lat' => $input['map-center-lat'],
-                    'real_estate_map_center_lng' => $input['map-center-lng'],
-                    'real_estate_map_zoom' => $input['map-zoom'],
+                    'task_title' => $input['task_title'],
+                    'status_id' => $input['status_id'],
         ]);
-        return $real_estate;
+        return $task;
     }
 
     /*     * ********************************************
@@ -158,7 +143,7 @@ class Tasks extends Model {
         return $real_estate;
     }
 
-    public function encodeImages($input){
+    public function encodeImages($input) {
         $json_images = array();
 
         if (!empty($input['images_name'])) {
@@ -178,16 +163,16 @@ class Tasks extends Model {
         }
         return json_encode($json_images);
     }
-    public function decodeImages($json_images){
 
+    public function decodeImages($json_images) {
+        
     }
 
-
-    /***************************************************************************
-    /***************************************************************************
-    /*****************************USER FRONT PAGE*******************************
-    /***************************************************************************
-    /***************************************************************************
+    /*     * *************************************************************************
+      /***************************************************************************
+      /*****************************USER FRONT PAGE*******************************
+      /***************************************************************************
+      /***************************************************************************
      * getHighlightRe
      *
      * @author: Kang
@@ -198,7 +183,8 @@ class Tasks extends Model {
      */
 
     public function getHighlightRe() {
-         $real_estate = self::first();
-         return $real_estate;
+        $real_estate = self::first();
+        return $real_estate;
     }
+
 }
