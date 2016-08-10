@@ -23,7 +23,7 @@ class Posts extends Model {
       "post_images",
       "post_views",
       "post_like",
-      "post_status",
+      "status_id",
       "post_created_at",
       "post_updated_at",
       "updated_at",
@@ -32,8 +32,9 @@ class Posts extends Model {
     ];
 
     protected $guarded = ["post_id"];
-    /*     * ********************************************
-     * listRealEstate
+
+    /*********************************************
+     * getList
      *
      * @author: Kang
      * @date: 26/6/2016
@@ -45,8 +46,22 @@ class Posts extends Model {
         $this->config_reader = App::make('config');
         $results_per_page = $this->config_reader->get('dragonknight.posts_admin_per_page');
 
-        $posts = self::orderBy('post_id', 'DESC')
-                ->paginate($results_per_page);
+        $eloquent = self::orderBy('posts.post_id', 'DESC');
+
+        //Search by post title
+        if (!empty($params['post_title'])) {
+            $eloquent->where('posts.post_title', 'LIKE', '%'.$params['post_title'].'%');
+        }
+
+        //Search by post status
+        if (!empty($params['status_id'])) {
+            $eloquent->where('posts.status_id', 'LIKE', '%'.$params['status_id'].'%');
+        }
+
+
+
+
+        $posts = $eloquent->paginate($results_per_page);
 
         return $posts;
     }
@@ -62,9 +77,9 @@ class Posts extends Model {
      */
 
     public function findPostId($id) {
-        $real_estate = self::where('post_id', $id)
+        $post = self::where('post_id', $id)
                 ->first();
-        return $real_estate;
+        return $post;
     }
 
     /*     * ********************************************
@@ -77,33 +92,14 @@ class Posts extends Model {
      * @status: REVIEWED
      */
 
-    public function updateRealEstate($input) {
-        $real_estate = self::find($input['id']);
-        if (!empty($real_estate)) {
+    public function updatePost($input) {
+        $post = self::find($input['id']);
+        if (!empty($post)) {
 
-            $real_estate_images = $this->encodeImages($input);
+            $post->post_title = $input['post_title'];
+            $post->status_id = $input['status_id'];
 
-            $real_estate->real_estate_title = $input['title'];
-            $real_estate->real_estate_category_id = $input['datacat'];
-            $real_estate->real_estate_description = $input['description'];
-            $real_estate->real_estate_bedroom = $input['bedroom'];
-            $real_estate->real_estate_bathroom = $input['bathroom'];
-            $real_estate->real_estate_sq = $input['sq'];
-            $real_estate->real_estate_year_build = $input['build_year'];
-
-            $real_estate->real_estate_cost = (double)$input['cost'];
-
-            $real_estate->real_estate_image = $input['filename'];
-            $real_estate->real_estate_images = $real_estate_images;
-
-            $real_estate->real_estate_map_address = $input['map-address'];
-            $real_estate->real_estate_map_marker_lat = $input['map-marker-lat'];
-            $real_estate->real_estate_map_marker_lng = $input['map-marker-lng'];
-            $real_estate->real_estate_map_center_lat = $input['map-center-lat'];
-            $real_estate->real_estate_map_center_lng = $input['map-center-lng'];
-            $real_estate->real_estate_map_zoom = $input['map-zoom'];
-
-            $real_estate->save();
+            $post->save();
         } else {
 
         }
@@ -119,30 +115,14 @@ class Posts extends Model {
      * @status: REVIEWED
      */
 
-    public function addRealEstate($input) {
+    public function addPost($input) {
 
-        $real_estate_images = $this->encodeImages($input);
+        $post = self::create([
 
-        $real_estate = self::create([
-
-                    'real_estate_title' => $input['title'],
-                    'real_estate_category_id' => $input['datacat'],
-                    'real_estate_description' => $input['description'],
-                    'real_estate_bedroom' => $input['bedroom'],
-                    'real_estate_bathroom' => $input['bathroom'],
-                    'real_estate_sq' => $input['sq'],
-                    'real_estate_year_build' => $input['build_year'],
-                    'real_estate_image' => $input['filename'],
-                    'real_estate_images' => $real_estate_images,
-                    'real_estate_cost' => @$input['cost'],
-                    'real_estate_map_address' => $input['map-address'],
-                    'real_estate_map_marker_lat' => $input['map-marker-lat'],
-                    'real_estate_map_marker_lng' => $input['map-marker-lng'],
-                    'real_estate_map_center_lat' => $input['map-center-lat'],
-                    'real_estate_map_center_lng' => $input['map-center-lng'],
-                    'real_estate_map_zoom' => $input['map-zoom'],
+                    'post_title' => $input['post_title'],
+                    'status_id' => $input['status_id'],
         ]);
-        return $real_estate;
+        return $post;
     }
 
     /*     * ********************************************
@@ -155,11 +135,11 @@ class Posts extends Model {
      * @status: REVIEWED
      */
 
-    public function deleteRealEstate($input) {
+    public function deletePostById($post_id) {
 
-        $real_estate = self::find($input['id']);
+        $post = self::find($post_id);
 
-        return $real_estate->delete();
+        return $post->delete();
     }
 
     /*     * ********************************************
@@ -180,7 +160,7 @@ class Posts extends Model {
         return $real_estate;
     }
 
-    public function encodeImages($input){
+    public function encodeImages($input) {
         $json_images = array();
 
         if (!empty($input['images_name'])) {
@@ -200,16 +180,16 @@ class Posts extends Model {
         }
         return json_encode($json_images);
     }
-    public function decodeImages($json_images){
+
+    public function decodeImages($json_images) {
 
     }
 
-
-    /***************************************************************************
-    /***************************************************************************
-    /*****************************USER FRONT PAGE*******************************
-    /***************************************************************************
-    /***************************************************************************
+    /*     * *************************************************************************
+      /***************************************************************************
+      /*****************************USER FRONT PAGE*******************************
+      /***************************************************************************
+      /***************************************************************************
      * getHighlightRe
      *
      * @author: Kang
@@ -220,7 +200,8 @@ class Posts extends Model {
      */
 
     public function getHighlightRe() {
-         $real_estate = self::first();
-         return $real_estate;
+        $real_estate = self::first();
+        return $real_estate;
     }
+
 }
