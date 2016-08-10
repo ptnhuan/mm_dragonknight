@@ -75,33 +75,13 @@ class Tasks extends Model {
      * @status: REVIEWED
      */
 
-    public function updateRealEstate($input) {
-        $real_estate = self::find($input['id']);
-        if (!empty($real_estate)) {
+    public function updateTask($input) {
+        $task = self::find($input['id']);
+        if (!empty($task)) {
 
-            $real_estate_images = $this->encodeImages($input);
+            $task->task_title = $input['task_title'];
 
-            $real_estate->real_estate_title = $input['title'];
-            $real_estate->real_estate_category_id = $input['datacat'];
-            $real_estate->real_estate_description = $input['description'];
-            $real_estate->real_estate_bedroom = $input['bedroom'];
-            $real_estate->real_estate_bathroom = $input['bathroom'];
-            $real_estate->real_estate_sq = $input['sq'];
-            $real_estate->real_estate_year_build = $input['build_year'];
-
-            $real_estate->real_estate_cost = (double)$input['cost'];
-
-            $real_estate->real_estate_image = $input['filename'];
-            $real_estate->real_estate_images = $real_estate_images;
-
-            $real_estate->real_estate_map_address = $input['map-address'];
-            $real_estate->real_estate_map_marker_lat = $input['map-marker-lat'];
-            $real_estate->real_estate_map_marker_lng = $input['map-marker-lng'];
-            $real_estate->real_estate_map_center_lat = $input['map-center-lat'];
-            $real_estate->real_estate_map_center_lng = $input['map-center-lng'];
-            $real_estate->real_estate_map_zoom = $input['map-zoom'];
-
-            $real_estate->save();
+            $task->save();
         } else {
 
         }
@@ -153,11 +133,11 @@ class Tasks extends Model {
      * @status: REVIEWED
      */
 
-    public function deleteRealEstate($input) {
+    public function deleteTaskById($task_id) {
 
-        $real_estate = self::find($input['id']);
+        $task = self::find($task_id);
 
-        return $real_estate->delete();
+        return $task->delete();
     }
 
     /*     * ********************************************
