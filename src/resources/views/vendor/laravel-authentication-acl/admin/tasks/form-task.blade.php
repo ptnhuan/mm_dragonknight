@@ -25,7 +25,7 @@ $task = @$data['task'];
 
         <div class="panel panel-info">
             <div class="panel-heading">
-                <h3 class="panel-title bariol-thin">{!! !empty(@$task->task_id) ? '<i class="fa fa-pencil"></i> ' : '<i class="fa fa-users"></i> Create' !!} <?php echo trans('tasks.task_name') ?></h3>
+                <h3 class="panel-title bariol-thin">{!! !empty(@$task->task_id) ? '<i class="fa fa-pencil"></i> '.trans('tasks.task_edit') : '<i class="fa fa-users"></i> '.trans('tasks.task_create') !!} <?php echo trans('tasks.task_name') ?></h3>
             </div>
 
             <div class="panel-body">
