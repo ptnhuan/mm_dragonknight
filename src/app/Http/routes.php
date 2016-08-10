@@ -123,5 +123,25 @@ Route::group(['middleware' => ['web']], function () {
             'as' => 'faqs.delete',
             'uses' => 'FaqsController@deleteFaq'
         ]);
+        
+        /**
+         * Posts
+         */
+        Route::get('/admin/posts/list', [
+            'as' => 'posts.list',
+            'uses' => 'PostsController@getList'
+        ]);
+        Route::get('/admin/posts/edit', [
+            'as' => 'posts.edit',
+            'uses' => 'PostsController@editpost'
+        ]);
+        Route::post('/admin/posts/edit', [
+            'as' => 'posts.edit',
+            'uses' => 'PostsController@postEditPost'
+        ]);
+        Route::get('/admin/posts/delete', [
+            'as' => 'posts.delete',
+            'uses' => 'PostsController@deletePost'
+        ]);
     });
 });
