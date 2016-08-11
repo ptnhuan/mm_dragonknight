@@ -25,13 +25,14 @@ class FaqsServiceProvider extends ServiceProvider {
     public function boot() {
 
         //Testimonials
+        //Testimonials
         View::composer(['laravel-authentication-acl::admin.faqs.*'], function ($view) {
             $view->with('sidebar_items', [
-                "List" => [
+                trans('faqs.faq_list') => [
                     "url" => URL::route('faqs.list'),
                     "icon" => '<i class="fa fa-list"></i>'
                 ],
-                "Add testimonial" => [
+                trans('faqs.faq_add') => [
                     "url" => URL::route('faqs.edit'),
                     "icon" => '<i class="fa fa-plus"></i>'
                 ]

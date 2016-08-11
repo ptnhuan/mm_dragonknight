@@ -1,7 +1,7 @@
 @extends('laravel-authentication-acl::admin.layouts.base-2cols')
 
 @section('title')
-    Admin area: Groups list
+Admin area: Groups list
 @stop
 
 @section('content')
@@ -12,13 +12,13 @@
             {{-- print messages --}}
             <?php $message = Session::get('message'); ?>
             @if( isset($message) )
-                <div class="alert alert-success">{!! $message !!}</div>
+            <div class="alert alert-success">{!! $message !!}</div>
             @endif
             {{-- print errors --}}
             @if($errors && ! $errors->isEmpty() )
-                @foreach($errors->all() as $error)
-                    <div class="alert alert-danger">{!! $error !!}</div>
-                @endforeach
+            @foreach($errors->all() as $error)
+            <div class="alert alert-danger">{!! $error !!}</div>
+            @endforeach
             @endif
             <div class="panel panel-info">
                 <div class="panel-heading">
@@ -28,8 +28,8 @@
                 </div>
                 <div class="panel-body">
                     @include('laravel-authentication-acl::admin.faqs.list-faqs-item')
-               </div>
-           </div>
+                </div>
+            </div>
         </div>
         <div class="col-md-4">
             @include('laravel-authentication-acl::admin.faqs.search-faqs')
@@ -39,9 +39,9 @@
 @stop
 
 @section('footer_scripts')
-    <script>
-        $(".delete").click(function(){
-            return confirm("Are you sure to delete this item?");
-        });
-    </script>
+<script>
+    $(".delete").click(function () {
+        return confirm("Are you sure to delete this item?");
+    });
+</script>
 @stop
