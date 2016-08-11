@@ -27,11 +27,11 @@ class CategoriesServiceProvider extends ServiceProvider {
         //Testimonials
         View::composer(['laravel-authentication-acl::admin.categories.*'], function ($view) {
             $view->with('sidebar_items', [
-                "List" => [
+                trans('Categories.category_list') => [
                     "url" => URL::route('categories.list'),
                     "icon" => '<i class="fa fa-list"></i>'
                 ],
-                "Add testimonial" => [
+                trans('Categories.category_add') => [
                     "url" => URL::route('categories.edit'),
                     "icon" => '<i class="fa fa-plus"></i>'
                 ]

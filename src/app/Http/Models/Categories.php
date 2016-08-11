@@ -17,8 +17,8 @@ class Categories extends Model {
         "category_description",
         "category_image"
     ];
-
     protected $guarded = ["category_id"];
+
     /*     * ********************************************
      * listRealEstate
      *
@@ -32,13 +32,13 @@ class Categories extends Model {
         $this->config_reader = App::make('config');
         $results_per_page = $this->config_reader->get('dragonknight.category_admin_per_page');
 
-          $eloquent = self::orderBy('categories.category_id', 'DESC');
-         
+        $eloquent = self::orderBy('categories.category_id', 'DESC');
+
         //Search by category title
         if (!empty($params['category_title'])) {
-            $eloquent->where('categories.category_title', 'LIKE', '%'.$params['category_title'].'%');
+            $eloquent->where('categories.category_title', 'LIKE', '%' . $params['category_title'] . '%');
         }
-        
+
         $categories = $eloquent->paginate($results_per_page);
 
         return $categories;
@@ -71,14 +71,14 @@ class Categories extends Model {
      */
 
     public function updateCategory($input) {
-         $category = self::find($input['id']);
+        $category = self::find($input['id']);
         if (!empty($category)) {
 
             $category->category_title = $input['category_title'];
 
             $category->save();
         } else {
-
+            
         }
     }
 
@@ -94,7 +94,7 @@ class Categories extends Model {
 
     public function addCategory($input) {
 
-         $category = self::create([
+        $category = self::create([
 
                     'category_title' => $input['category_title'],
 //                    'status_id' => $input['status_id'],
@@ -137,7 +137,7 @@ class Categories extends Model {
         return $real_estate;
     }
 
-    public function encodeImages($input){
+    public function encodeImages($input) {
         $json_images = array();
 
         if (!empty($input['images_name'])) {
@@ -157,16 +157,16 @@ class Categories extends Model {
         }
         return json_encode($json_images);
     }
-    public function decodeImages($json_images){
 
+    public function decodeImages($json_images) {
+        
     }
 
-
-    /***************************************************************************
-    /***************************************************************************
-    /*****************************USER FRONT PAGE*******************************
-    /***************************************************************************
-    /***************************************************************************
+    /*     * *************************************************************************
+      /***************************************************************************
+      /*****************************USER FRONT PAGE*******************************
+      /***************************************************************************
+      /***************************************************************************
      * getHighlightRe
      *
      * @author: Kang
@@ -177,7 +177,8 @@ class Categories extends Model {
      */
 
     public function getHighlightRe() {
-         $real_estate = self::first();
-         return $real_estate;
+        $real_estate = self::first();
+        return $real_estate;
     }
+
 }

@@ -25,7 +25,8 @@
         <tr>
             <!--ORDER-->
             <td>
-                <?php echo $counter;
+                <?php
+                echo $counter;
                 $counter++;
                 ?>
             </td>
@@ -45,6 +46,7 @@
         @endforeach
     </tbody>
 </table>
+ <!--PAGINATION-->
 <div class="paginator">
     {!! $categories->appends($data['request']->except(['page']) )->render() !!}
 </div>
