@@ -34,7 +34,7 @@
 
                         {{-- group base form --}}
 
-                        {!! Form::model($task, [ 'url' => [URL::route('tasks.edit'), @$task->task_id], 'method' => 'post'] ) !!}
+                           {!! Form::open(['route'=>['tasks.edit'],  'files'=>true, 'method' => 'post'])  !!}
 
                         <!-- TASK POINT -->
                         <div class="form-group">
@@ -77,6 +77,12 @@
                             {!! Form::select('status_id', @$data['statuses'], @$task->status_id, ['class' => 'form-control']) !!}
 
                             <span class="text-danger">{!! $errors->first('status_id') !!}</span>
+                        </div>
+
+                        <!-- TASK IMAGE -->
+                        <div class="form-group config-images">
+                            {!! Form::label('image',trans('re.images'),': *') !!}
+                            {!! Form::file('image') !!}
                         </div>
 
                         <!-- TASK ID HIDDEN -->
