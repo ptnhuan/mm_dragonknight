@@ -54,27 +54,24 @@ class TasksController extends Controller {
 
         $task_id = $request->get('id');
 
-        $tasks = $obj_tasks->findTaskId($task_id);
-
-        $statuses = $obj_statuses->pushSelectBox();
-
-        if ($tasks) {
+        $task = $obj_tasks->findTaskId($task_id); 
+         
+        if ($task) { 
             $data = array_merge($this->data, array(
-                'tasks' => $tasks,
-                'statuses' => array_merge(array(0 => trans('tasks.task_select_all')), $statuses->toArray()),
+                'task' => $task,
+                'statuses' => $obj_statuses->pushSelectBox(),
                 'request' => $request,
             ));
             return View::make('laravel-authentication-acl::admin.tasks.form-task')->with(['data' => $data]);
-        } else if (is_null($task_id)) {
-
+            
+        } else if (is_null($task_id)) { 
             $data = array_merge($this->data, array(
-                'tasks' => $tasks,
-                'statuses' => array_merge(array(0 => trans('tasks.task_select_all')), $statuses->toArray()),
+                'task' => $task,
+                'statuses' => $obj_statuses->pushSelectBox(),
                 'request' => $request,
             ));
             return View::make('laravel-authentication-acl::admin.tasks.form-task')->with(['data' => $data]);
-        } else {
-
+        } else { 
             return Redirect::route("tasks.list")->withMessage(trans('re.not_found'));
         }
     }
@@ -91,9 +88,9 @@ class TasksController extends Controller {
         $task_id = $request->get('id');
 
         $task = $obj_tasks->findTaskId($task_id);
-
+        
         if ($task) {
-            //edit
+            //edit 
             $obj_tasks->updateTask($input);
             return Redirect::route("tasks.list")->withMessage(trans('tasks.task_edit_successful'));
         } elseif (empty($task_id)) {
