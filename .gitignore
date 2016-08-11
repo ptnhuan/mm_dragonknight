@@ -48,3 +48,10 @@ Temporary Items
 /nbproject/private/
 nbproject/project.properties
 nbproject/project.xml
+src/nbproject/project.xml
+src/nbproject/project.properties
+src/nbproject/private/private.properties
+src/nbproject/private/config.properties
+src/db/mm_dragonknight.sql
+logs/dragonknight-access.log
+logs/dragonknight-error.log
