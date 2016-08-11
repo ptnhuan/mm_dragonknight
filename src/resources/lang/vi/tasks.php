@@ -15,6 +15,7 @@ return [
     'task_title' => 'Tiêu đề',
     'task_overview' => 'Tổng quan',
     'task_description' => 'Mô tả',
+    'task_notes' => 'Ghi chú',
     'task_action' => 'Thao tác',
     'task_page' => 'Quản lý task',
     'task_page_search' => 'Tìm kiếm task',
