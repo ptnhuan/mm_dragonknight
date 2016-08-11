@@ -15,7 +15,6 @@ use Illuminate\Http\Request;
  */
 use App\Http\Models\Tasks;
 use App\Http\Models\Statuses;
-
 /**
  * Libraries
  */
@@ -68,7 +67,6 @@ class TasksController extends Controller {
                 'request' => $request,
             ));
             return View::make('laravel-authentication-acl::admin.tasks.form-task')->with(['data' => $data]);
-
         } else if (is_null($task_id)) {
             $data = array_merge($this->data, array(
                 'task' => $task,
@@ -85,6 +83,7 @@ class TasksController extends Controller {
      *
      */
     public function postEditTask(Request $request) {
+        $libFiles = new LibFiles();
 
         $obj_tasks = new Tasks();
 
@@ -93,6 +92,10 @@ class TasksController extends Controller {
         $task_id = $request->get('id');
 
         $task = $obj_tasks->findTaskId($task_id);
+
+        $configs = config('dragonknight.libfiles');
+        $file = $request->file('image');
+        $fileinfo = $libFiles->upload($configs['task'], $file);
 
         if ($task) {
             //edit
