@@ -12,6 +12,7 @@ return [
     'task_name' => 'Task',
     'task_list_page_title' => 'Danh sách Tasks',
     'task_edit_page_title' => 'Chỉnh sửa Task',
+    'task_point' => 'Điểm',
     'task_title' => 'Tiêu đề',
     'task_overview' => 'Tổng quan',
     'task_description' => 'Mô tả',

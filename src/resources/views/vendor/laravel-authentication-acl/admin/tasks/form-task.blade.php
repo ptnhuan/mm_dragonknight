@@ -36,6 +36,12 @@
 
                         {!! Form::model($task, [ 'url' => [URL::route('tasks.edit'), @$task->task_id], 'method' => 'post'] ) !!}
 
+                        <!-- TASK POINT -->
+                        <div class="form-group">
+                            {!! Form::label('task_point', trans('tasks.task_point').':') !!}
+                            {!! Form::text('task_point', @$task->task_point, ['class' => 'form-control', 'placeholder' => trans('tasks.task_point').'']) !!}
+                            <span class="text-danger">{!! $errors->first('task_point') !!}</span>
+                        </div>
 
                         <!-- TASK TITLE -->
                         <div class="form-group">
@@ -43,28 +49,28 @@
                             {!! Form::text('task_title', @$task->task_title, ['class' => 'form-control', 'placeholder' => trans('tasks.task_title').'']) !!}
                             <span class="text-danger">{!! $errors->first('task_title') !!}</span>
                         </div>
-                         
+
                         <!-- TASK OVERVIEW -->
                         <div class="form-group">
                             {!! Form::label('task_overview', trans('tasks.task_overview').':') !!}
                             {!! Form::text('task_overview', @$task->task_overview, ['class' => 'form-control', 'placeholder' => trans('tasks.task_overview').'']) !!}
                             <span class="text-danger">{!! $errors->first('task_overview') !!}</span>
                         </div>
-                        
+
                         <!-- TASK DESCRIPTION   -->
                         <div class="form-group">
                             {!! Form::label('task_description', trans('tasks.task_description').':') !!}
                             {!! Form::text('task_description', @$task->task_description, ['class' => 'form-control', 'placeholder' => trans('tasks.task_description').'']) !!}
                             <span class="text-danger">{!! $errors->first('task_description') !!}</span>
                         </div>
-                        
-                         <!-- TASK NOTES   -->
+
+                        <!-- TASK NOTES   -->
                         <div class="form-group">
                             {!! Form::label('task_notes', trans('tasks.task_notes').':') !!}
                             {!! Form::text('task_notes', @$task->task_notes, ['class' => 'form-control', 'placeholder' => trans('tasks.task_notes').'']) !!}
                             <span class="text-danger">{!! $errors->first('task_notes') !!}</span>
                         </div>
-                        
+
                         <!-- TASK STATUS -->
                         <div class="form-group">
                             {!! Form::label('status_id', trans('tasks.task_status').':') !!}
@@ -91,7 +97,7 @@
 @section('footer_scripts')
 <script>
     $(".delete").click(function () {
-        return confirm("<?php  echo trans('tasks.task_delete_confirm')?>");
+        return confirm("<?php echo trans('tasks.task_delete_confirm') ?>");
     });
 </script>
 @stop
