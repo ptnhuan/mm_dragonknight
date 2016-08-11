@@ -71,7 +71,9 @@
         @endforeach
     </tbody>
 </table>
-
+<div class="paginator">
+    {!! $statuses->appends($data['request']->except(['page']) )->render() !!}
+</div>
 @else
 <span class="text-warning"><h5>{!! trans('statuses.status_not_found') !!}</h5></span>
 @endif

@@ -30,7 +30,7 @@ class Statuses extends Model {
 
     public function getList($params = array()) {
         $this->config_reader = App::make('config');
-        $results_per_page = $this->config_reader->get('dragonknight.status_admin_per_page');
+        $results_per_page = $this->config_reader->get('dragonknight.statuses_admin_per_page');
 
         $eloquent = self::orderBy('statuses.status_id', 'DESC');
 
