@@ -96,6 +96,7 @@ class Tasks extends Model {
 
             $task->task_title = $input['task_title'];
             $task->status_id = $input['status_id'];
+            $task->task_image = $input['filename'];
 
             $task->save();
         } else {

@@ -37,12 +37,13 @@ class TasksController extends Controller {
         $tasks = $obj_tasks->getList($search);
 
         $statuses = $obj_statuses->pushSelectBox();
-
+        $configs = config('dragonknight.libfiles');
 
         $data = array_merge($this->data, array(
             'tasks' => $tasks,
             'statuses' => array_merge(array(0 => trans('tasks.task_select_all')), $statuses->toArray()),
             'request' => $request,
+            'configs' => $configs
         ));
 
         return View::make('laravel-authentication-acl::admin.tasks.list-tasks')->with(['data' => $data]);
@@ -99,11 +100,14 @@ class TasksController extends Controller {
 
         if ($task) {
             //edit
-            $obj_tasks->updateTask($input);
+            $params = array_merge($input, $fileinfo);
+
+            $obj_tasks->updateTask($params);
             return Redirect::route("tasks.list")->withMessage(trans('tasks.task_edit_successful'));
         } elseif (empty($task_id)) {
             //add
-            $obj_tasks->addTask($input);
+            $params = array_merge($input, $fileinfo);
+            $obj_tasks->addTask($params);
             return Redirect::route("tasks.list")->withMessage(trans('tasks.task_edit_successful'));
         } else {
             //error

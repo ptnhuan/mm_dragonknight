@@ -12,6 +12,7 @@
             <th style="width: 5%"><?php echo trans('tasks.task_order') ?></th>
             <th style="width: 40%"><?php echo trans('tasks.task_title') ?></th>
             <th style="width: 15%"><?php echo trans('tasks.task_status') ?></th>
+            <th style="width: 15%"><?php echo trans('tasks.task_image') ?></th>
             <th><?php echo trans('tasks.task_action') ?></th>
         </tr>
     </thead>
@@ -30,6 +31,9 @@
 
             <!--STATUS-->
             <td>{!! @$data['statuses'][$task->status_id] !!}</td>
+
+            <!--IMAGE-->
+            <td><img src="{!! url(@$data['configs']['task']['urlpath'].'/'.$task->task_image) !!}"></td>
 
             <!--ACTION-->
             <td>
