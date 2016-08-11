@@ -31,12 +31,13 @@ class TasksController extends Controller {
         $search = $request->all();
 
         $tasks = $obj_tasks->getList($search);
+
         $statuses = $obj_statuses->pushSelectBox();
 
 
         $data = array_merge($this->data, array(
             'tasks' => $tasks,
-            'statuses' => array_merge(array(0=> 'None'), $statuses->toArray()),
+            'statuses' => array_merge(array(0 => 'None'), $statuses->toArray()),
             'request' => $request,
         ));
 
@@ -48,22 +49,27 @@ class TasksController extends Controller {
      */
     public function editTask(Request $request) {
         $obj_tasks = new Tasks();
+
         $obj_statuses = new Statuses;
 
         $task_id = $request->get('id');
-        $task = $obj_tasks->findTaskId($task_id);
-        if ($task) {
+
+        $tasks = $obj_tasks->findTaskId($task_id);
+
+        $statuses = $obj_statuses->pushSelectBox();
+
+        if ($tasks) {
             $data = array_merge($this->data, array(
-                'task' => $task,
-                'statuses' => $obj_statuses->pushSelectBox(),
+                'tasks' => $tasks,
+                'statuses' => array_merge(array(0 => 'None'), $statuses->toArray()),
                 'request' => $request,
             ));
             return View::make('laravel-authentication-acl::admin.tasks.form-task')->with(['data' => $data]);
         } else if (is_null($task_id)) {
 
             $data = array_merge($this->data, array(
-                'task' => null,
-                'statuses' => $obj_statuses->pushSelectBox(),
+                'tasks' => $tasks,
+                'statuses' => array_merge(array(0 => 'None'), $statuses->toArray()),
                 'request' => $request,
             ));
             return View::make('laravel-authentication-acl::admin.tasks.form-task')->with(['data' => $data]);
@@ -90,12 +96,10 @@ class TasksController extends Controller {
             //edit
             $obj_tasks->updateTask($input);
             return Redirect::route("tasks.list")->withMessage(trans('tasks.task_edit_successful'));
-
         } elseif (empty($task_id)) {
             //add
             $obj_tasks->addTask($input);
             return Redirect::route("tasks.list")->withMessage(trans('tasks.task_edit_successful'));
-
         } else {
             //error
         }

@@ -6,9 +6,7 @@
 
 @section('content')
 
-<?php
-$task = @$data['task'];
-?>
+<?php $task = @$data['task']; ?>
 
 <div class="row">
     <div class="col-md-12">
@@ -45,6 +43,21 @@ $task = @$data['task'];
                             {!! Form::text('task_title', @$task->task_title, ['class' => 'form-control', 'placeholder' => trans('tasks.task_title').'']) !!}
                             <span class="text-danger">{!! $errors->first('task_title') !!}</span>
                         </div>
+                         
+                        <!-- TASK OVERVIEW -->
+                        <div class="form-group">
+                            {!! Form::label('task_overview', trans('tasks.task_overview').':') !!}
+                            {!! Form::text('task_overview', @$task->task_overview, ['class' => 'form-control', 'placeholder' => trans('tasks.task_overview').'']) !!}
+                            <span class="text-danger">{!! $errors->first('task_overview') !!}</span>
+                        </div>
+                        
+                        <!-- TASK DESCRIPTION   -->
+                        <div class="form-group">
+                            {!! Form::label('task_description', trans('tasks.task_description').':') !!}
+                            {!! Form::text('task_description', @$task->task_description, ['class' => 'form-control', 'placeholder' => trans('tasks.task_description').'']) !!}
+                            <span class="text-danger">{!! $errors->first('task_description') !!}</span>
+                        </div>
+                        
                         <!-- TASK STATUS -->
                         <div class="form-group">
                             {!! Form::label('status_id', trans('tasks.task_status').':') !!}
