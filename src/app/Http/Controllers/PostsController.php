@@ -1,12 +1,14 @@
-<?php namespace App\Http\Controllers;
+<?php
+
+namespace App\Http\Controllers;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesResources;
-
-use View,Redirect;
+use View,
+    Redirect;
 use Illuminate\Http\Request;
 /**
  * Models
@@ -14,7 +16,6 @@ use Illuminate\Http\Request;
 use App\Http\Models\Tasks;
 use App\Http\Models\Statuses;
 use App\Http\Models\Categories;
-use App\Http\Models\Faqs;
 use App\Http\Models\Posts;
 
 class PostsController extends Controller {
@@ -32,12 +33,13 @@ class PostsController extends Controller {
         $search = $request->all();
 
         $posts = $obj_posts->getList($search);
+
         $statuses = $obj_statuses->pushSelectBox();
 
 
         $data = array_merge($this->data, array(
             'posts' => $posts,
-            'statuses' => array_merge(array(0=> 'None'), $statuses->toArray()),
+            'statuses' => array_merge(array(0 => 'None'), $statuses->toArray()),
             'request' => $request,
         ));
 
@@ -49,22 +51,23 @@ class PostsController extends Controller {
      */
     public function editPost(Request $request) {
         $obj_posts = new Posts();
+
         $obj_statuses = new Statuses;
 
         $post_id = $request->get('id');
         $post = $obj_posts->findPostId($post_id);
+        $statuses = $obj_statuses->pushSelectBox();
         if ($post) {
             $data = array_merge($this->data, array(
                 'post' => $post,
-                'statuses' => $obj_statuses->pushSelectBox(),
+                'statuses' => array_merge(array(0 => 'None'), $statuses->toArray()),
                 'request' => $request,
             ));
             return View::make('laravel-authentication-acl::admin.posts.form-post')->with(['data' => $data]);
         } else if (is_null($post_id)) {
 
             $data = array_merge($this->data, array(
-                'post' => null,
-                'statuses' => $obj_statuses->pushSelectBox(),
+                'statuses' => array_merge(array(0 => 'None'), $statuses->toArray()),
                 'request' => $request,
             ));
             return View::make('laravel-authentication-acl::admin.posts.form-post')->with(['data' => $data]);
@@ -91,12 +94,10 @@ class PostsController extends Controller {
             //edit
             $obj_posts->updatePost($input);
             return Redirect::route("posts.list")->withMessage(trans('posts.post_edit_successful'));
-
         } elseif (empty($post_id)) {
             //add
             $obj_posts->addPost($input);
             return Redirect::route("posts.list")->withMessage(trans('posts.post_edit_successful'));
-
         } else {
             //error
         }

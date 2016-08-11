@@ -50,12 +50,12 @@ class Posts extends Model {
 
         //Search by post title
         if (!empty($params['post_title'])) {
-            $eloquent->where('posts.post_title', 'LIKE', '%'.$params['post_title'].'%');
+            $eloquent->where('posts.post_title', 'LIKE', '%' . $params['post_title'] . '%');
         }
 
         //Search by post status
         if (!empty($params['status_id'])) {
-            $eloquent->where('posts.status_id', 'LIKE', '%'.$params['status_id'].'%');
+            $eloquent->where('posts.status_id', 'LIKE', '%' . $params['status_id'] . '%');
         }
 
 
@@ -82,8 +82,8 @@ class Posts extends Model {
         return $post;
     }
 
-    /*     * ********************************************
-     * updateRealEstate
+    /*********************************************
+     * updatePost
      *
      * @author: Kang
      * @web: http://tailieuweb.com
@@ -98,7 +98,7 @@ class Posts extends Model {
 
             $post->post_title = $input['post_title'];
             $post->status_id = $input['status_id'];
-
+            
             $post->save();
         } else {
 
@@ -106,7 +106,7 @@ class Posts extends Model {
     }
 
     /*     * ********************************************
-     * addRealEstate
+     * addPost
      *
      * @author: Kang
      * @web: http://tailieuweb.com
@@ -126,7 +126,7 @@ class Posts extends Model {
     }
 
     /*     * ********************************************
-     * deleteRealEstate
+     * deletePostById
      *
      * @author: Kang
      * @web: http://tailieuweb.com
@@ -140,68 +140,6 @@ class Posts extends Model {
         $post = self::find($post_id);
 
         return $post->delete();
-    }
-
-    /*     * ********************************************
-     * viewRe
-     *
-     * @author: Kang
-     * @web: http://tailieuweb.com
-     * @date: 26/6/2016
-     *
-     * @status: REVIEWED
-     */
-
-    public function viewRe($params = array()) {
-
-        $real_estate = self::where('real_estate_id', $params['real_estate_id'])
-                ->first();
-
-        return $real_estate;
-    }
-
-    public function encodeImages($input) {
-        $json_images = array();
-
-        if (!empty($input['images_name'])) {
-            foreach ($input['images_name'] as $index => $image_name) {
-                $json_images[] = array(
-                    'name' => $image_name,
-                    'info' => @$input['images_info'][$index]
-                );
-            }
-        }
-
-        if ($input['filename'] && !$input['set_to']) {
-            $json_images[] = array_merge($json_images, array(
-                'name' => $input['filename'],
-                'info' => ''
-            ));
-        }
-        return json_encode($json_images);
-    }
-
-    public function decodeImages($json_images) {
-
-    }
-
-    /*     * *************************************************************************
-      /***************************************************************************
-      /*****************************USER FRONT PAGE*******************************
-      /***************************************************************************
-      /***************************************************************************
-     * getHighlightRe
-     *
-     * @author: Kang
-     * @web: http://tailieuweb.com
-     * @date: 04/08/2016
-     *
-     * @status: TODO: RE-CODE
-     */
-
-    public function getHighlightRe() {
-        $real_estate = self::first();
-        return $real_estate;
     }
 
 }
