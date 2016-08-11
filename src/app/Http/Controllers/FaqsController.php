@@ -29,18 +29,18 @@ class FaqsController extends Controller {
         $obj_statuses = new Statuses;
 
         $search = $request->all();
-        
+
         $faqs = $obj_faqs->getList($search);
         $statuses = $obj_statuses->pushSelectBox();
-         
+
         $data = array_merge($this->data, array(
             'faqs' => $faqs,
             'statuses' => $statuses->toArray(),
             'request' => $request,
-        )); 
+        ));
 
         return View::make('laravel-authentication-acl::admin.faqs.list-faqs')->with(['data' => $data]);
-    }   
+    }
 
     /**
      *

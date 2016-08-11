@@ -45,7 +45,40 @@ $faq = @$data['faq'];
                             {!! Form::text('faq_title', @$faq->faq_title, ['class' => 'form-control', 'placeholder' => trans('faqs.faq_title').'']) !!}
                             <span class="text-danger">{!! $errors->first('faq_title') !!}</span>
                         </div>
-                       
+                        
+                         <!-- OVERVIEW -->
+                        <div class="form-group">
+                            {!! Form::label('faq_overview', trans('faqs.faq_overview').':') !!}
+                            {!! Form::text('faq_overview', @$faq->faq_overview, ['class' => 'form-control', 'placeholder' => trans('faqs.faq_overview').'']) !!}
+                            <span class="text-danger">{!! $errors->first('faq_overview') !!}</span>
+                        </div>
+                         
+                          <!-- DESCRIPTION -->
+                        <div class="form-group">
+                            {!! Form::label('faq_description', trans('faqs.faq_description').':') !!}
+                            {!! Form::text('faq_description', @$faq->faq_description, ['class' => 'form-control', 'placeholder' => trans('faqs.faq_description').'']) !!}
+                            <span class="text-danger">{!! $errors->first('faq_description') !!}</span>
+                        </div>
+                             <!--VIEWS -->
+                        <div class="form-group">
+                            {!! Form::label('faq_views', trans('faqs.faq_views').':') !!}
+                            {!! Form::text('faq_description', @$faq->faq_views, ['class' => 'form-control', 'placeholder' => trans('faqs.faq_views').'']) !!}
+                            <span class="text-danger">{!! $errors->first('faq_views') !!}</span>
+                        </div>
+                                <!--LIKE -->
+                        <div class="form-group">
+                            {!! Form::label('faq_likes', trans('faqs.faq_likes').':') !!}
+                            {!! Form::text('faq_likes', @$faq->faq_likes, ['class' => 'form-control', 'placeholder' => trans('faqs.faq_likes').'']) !!}
+                            <span class="text-danger">{!! $errors->first('faq_likes') !!}</span>
+                        </div>
+
+                                  <!--CACHE PAGE -->
+                        <div class="form-group">
+                            {!! Form::label('faq_cache_page', trans('faqs.faq_cache_page').'') !!}
+                            {!! Form::text('faq_cache_page', @$faq->faq_cache_page, ['class' => 'form-control', 'placeholder' => trans('faqs.faq_cache_page').'']) !!}
+                            <span class="text-danger">{!! $errors->first('faq_cache_page') !!}</span>
+                        </div>
+
                         <!--STATUS -->
                         <div class="form-group">
                             {!! Form::label('status_id', trans('faqs.faq_status').':') !!}
@@ -54,6 +87,7 @@ $faq = @$data['faq'];
                             <span class="text-danger">{!! $errors->first('status_id') !!}</span>
                         </div>
                         
+
                         <!-- TASK ID HIDDEN -->
                         {!! Form::hidden('id',@$faq->faq_id) !!}
                         <a href="{!! URL::route('faqs.delete',['id' => @$faq->faq_id, '_token' => csrf_token()]) !!}" class="btn btn-danger pull-right margin-left-5 delete"><?php echo trans('faqs.faq_delete') ?></a>
@@ -72,7 +106,7 @@ $faq = @$data['faq'];
 @section('footer_scripts')
 <script>
     $(".delete").click(function () {
-        return confirm("<?php  echo trans('faqs.faq_delete_confirm')?>");
+        return confirm("<?php echo trans('faqs.faq_delete_confirm') ?>");
     });
 </script>
 @stop

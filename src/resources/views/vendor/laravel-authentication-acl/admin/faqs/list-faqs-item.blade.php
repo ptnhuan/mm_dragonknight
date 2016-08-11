@@ -23,7 +23,8 @@
         @foreach($faqs as $faq)
         <tr>
             <!--ORDER-->
-            <td><?php echo $counter; $counter++; ?></td>
+            <td><?php echo $counter;
+        $counter++; ?></td>
 
             <!--TITLE-->
             <td>{!! $faq->faq_title !!}</td>
