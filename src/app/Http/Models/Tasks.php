@@ -31,7 +31,7 @@ class Tasks extends Model {
     ];
     protected $guarded = ["task_id"];
 
-    /*********************************************
+    /*     * *******************************************
      * getList
      *
      * @author: Kang
@@ -48,12 +48,12 @@ class Tasks extends Model {
 
         //Search by task title
         if (!empty($params['task_title'])) {
-            $eloquent->where('tasks.task_title', 'LIKE', '%'.$params['task_title'].'%');
+            $eloquent->where('tasks.task_title', 'LIKE', '%' . $params['task_title'] . '%');
         }
 
         //Search by task status
         if (!empty($params['status_id'])) {
-            $eloquent->where('tasks.status_id', 'LIKE', '%'.$params['status_id'].'%');
+            $eloquent->where('tasks.status_id', 'LIKE', '%' . $params['status_id'] . '%');
         }
 
 
@@ -80,8 +80,8 @@ class Tasks extends Model {
         return $task;
     }
 
-    /*     * ********************************************
-     * updateRealEstate
+    /*********************************************
+     * updateTask
      *
      * @author: Kang
      * @web: http://tailieuweb.com
@@ -104,7 +104,7 @@ class Tasks extends Model {
     }
 
     /*     * ********************************************
-     * addRealEstate
+     * addTask
      *
      * @author: Kang
      * @web: http://tailieuweb.com
@@ -124,7 +124,7 @@ class Tasks extends Model {
     }
 
     /*     * ********************************************
-     * deleteRealEstate
+     * deleteTaskById
      *
      * @author: Kang
      * @web: http://tailieuweb.com
@@ -138,68 +138,6 @@ class Tasks extends Model {
         $task = self::find($task_id);
 
         return $task->delete();
-    }
-
-    /*     * ********************************************
-     * viewRe
-     *
-     * @author: Kang
-     * @web: http://tailieuweb.com
-     * @date: 26/6/2016
-     *
-     * @status: REVIEWED
-     */
-
-    public function viewRe($params = array()) {
-
-        $real_estate = self::where('real_estate_id', $params['real_estate_id'])
-                ->first();
-
-        return $real_estate;
-    }
-
-    public function encodeImages($input) {
-        $json_images = array();
-
-        if (!empty($input['images_name'])) {
-            foreach ($input['images_name'] as $index => $image_name) {
-                $json_images[] = array(
-                    'name' => $image_name,
-                    'info' => @$input['images_info'][$index]
-                );
-            }
-        }
-
-        if ($input['filename'] && !$input['set_to']) {
-            $json_images[] = array_merge($json_images, array(
-                'name' => $input['filename'],
-                'info' => ''
-            ));
-        }
-        return json_encode($json_images);
-    }
-
-    public function decodeImages($json_images) {
-
-    }
-
-    /*     * *************************************************************************
-      /***************************************************************************
-      /*****************************USER FRONT PAGE*******************************
-      /***************************************************************************
-      /***************************************************************************
-     * getHighlightRe
-     *
-     * @author: Kang
-     * @web: http://tailieuweb.com
-     * @date: 04/08/2016
-     *
-     * @status: TODO: RE-CODE
-     */
-
-    public function getHighlightRe() {
-        $real_estate = self::first();
-        return $real_estate;
     }
 
 }

@@ -22,7 +22,10 @@
             @endif
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h3 class="panel-title bariol-thin"><i class="fa fa-group"></i> {!! $data['request']->all() ? trans('tasks.task_page_search') : trans('tasks.task_page') !!}:</h3>
+                    <h3 class="panel-title bariol-thin">
+                        <i class="fa fa-group"></i>
+                        {!! $data['request']->all() ? trans('tasks.task_page_search') : trans('tasks.task_page') !!}:
+                    </h3>
                 </div>
                 <div class="panel-body">
                     @include('laravel-authentication-acl::admin.tasks.list-tasks-item')

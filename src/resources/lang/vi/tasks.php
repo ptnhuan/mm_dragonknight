@@ -30,4 +30,14 @@ return [
     'task_status' => 'Trạng thái',
     'task_list' => 'Danh sách',
 
+    'task_select_all' => 'Tất cả',
+
+    /*
+    |--------------------------------------------------------------------------
+    | TasksContrller
+    |--------------------------------------------------------------------------
+    | error message
+    */
+    'task_required_ttile' => 'Yêu cầu nhập tiêu đề',
+
 ];
