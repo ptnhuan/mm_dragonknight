@@ -33,5 +33,7 @@ return [
 
     'status_id' => 'Mã',
     'status_not_found' => 'Không tìm thấy',
+    
+    'status_select_all' => 'Tất cả',
 
 ];

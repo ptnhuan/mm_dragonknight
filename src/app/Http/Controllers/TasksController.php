@@ -37,7 +37,7 @@ class TasksController extends Controller {
 
         $data = array_merge($this->data, array(
             'tasks' => $tasks,
-            'statuses' => array_merge(array(0 => 'None'), $statuses->toArray()),
+            'statuses' => array_merge(array(0 => trans('tasks.task_select_all')), $statuses->toArray()),
             'request' => $request,
         ));
 
@@ -61,7 +61,7 @@ class TasksController extends Controller {
         if ($tasks) {
             $data = array_merge($this->data, array(
                 'tasks' => $tasks,
-                'statuses' => array_merge(array(0 => 'None'), $statuses->toArray()),
+                'statuses' => array_merge(array(0 => trans('tasks.task_select_all')), $statuses->toArray()),
                 'request' => $request,
             ));
             return View::make('laravel-authentication-acl::admin.tasks.form-task')->with(['data' => $data]);
@@ -69,7 +69,7 @@ class TasksController extends Controller {
 
             $data = array_merge($this->data, array(
                 'tasks' => $tasks,
-                'statuses' => array_merge(array(0 => 'None'), $statuses->toArray()),
+                'statuses' => array_merge(array(0 => trans('tasks.task_select_all')), $statuses->toArray()),
                 'request' => $request,
             ));
             return View::make('laravel-authentication-acl::admin.tasks.form-task')->with(['data' => $data]);
