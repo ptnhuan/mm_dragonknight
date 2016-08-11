@@ -38,14 +38,19 @@ $status = @$data['status'];
 
                         {!! Form::model($status, [ 'url' => [URL::route('statuses.edit'), @$status->status_id], 'method' => 'post'] ) !!}
 
-
                         <!-- STATUSES TITLE -->
                         <div class="form-group">
                             {!! Form::label('status_title', trans('statuses.status_title').':') !!}
                             {!! Form::text('status_title', @$status->status_title, ['class' => 'form-control', 'placeholder' => trans('statuses.status_title').'']) !!}
                             <span class="text-danger">{!! $errors->first('status_title') !!}</span>
                         </div>
-                         
+
+                        <!-- STATUSES DESCRIPTION -->
+                        <div class="form-group">
+                            {!! Form::label('status_description', trans('statuses.status_description').':') !!}
+                            {!! Form::text('status_description', @$statuxs->status_description, ['class' => 'form-control', 'placeholder' => trans('statuses.status_description').'']) !!}
+                            <span class="text-danger">{!! $errors->first('status_description') !!}</span>
+                        </div> 
 
                         <!-- STATUSES ID HIDDEN -->
                         {!! Form::hidden('id',@$status->status_id) !!}
