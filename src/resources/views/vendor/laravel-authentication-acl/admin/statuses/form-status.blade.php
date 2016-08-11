@@ -48,7 +48,7 @@ $status = @$data['status'];
                         <!-- STATUSES DESCRIPTION -->
                         <div class="form-group">
                             {!! Form::label('status_description', trans('statuses.status_description').':') !!}
-                            {!! Form::text('status_description', @$statuxs->status_description, ['class' => 'form-control', 'placeholder' => trans('statuses.status_description').'']) !!}
+                            {!! Form::text('status_description', @$status->status_description, ['class' => 'form-control', 'placeholder' => trans('statuses.status_description').'']) !!}
                             <span class="text-danger">{!! $errors->first('status_description') !!}</span>
                         </div> 
 
