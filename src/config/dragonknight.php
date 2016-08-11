@@ -14,4 +14,6 @@ return [
     "tasks_admin_per_page" => 5,
     "statuses_admin_per_page" => 5,
     "faqs_admin_per_page" => 5,
+    "category_admin_per_page" => 5,
+   
 ];
