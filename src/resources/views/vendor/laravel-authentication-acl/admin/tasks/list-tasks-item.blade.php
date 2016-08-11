@@ -23,8 +23,7 @@
         @foreach($tasks as $task)
         <tr>
             <!--ORDER-->
-            <td><?php echo $counter;
-        $counter++; ?></td>
+            <td><?php echo $counter; $counter++; ?></td>
 
             <!--TITLE-->
             <td>{!! $task->task_title !!}</td>

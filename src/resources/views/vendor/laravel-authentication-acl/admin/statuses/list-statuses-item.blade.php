@@ -42,10 +42,7 @@
 
             <!--ORDER-->
             <td>
-                <?php
-                echo $counter;
-                $counter++;
-                ?>
+                <?php  echo $counter; $counter++; ?>
             </td>
 
             <!--TITLE-->

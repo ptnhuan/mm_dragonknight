@@ -40,7 +40,6 @@ class Statuses extends Model {
         }
         
 
-         
         $status = $eloquent->paginate($results_per_page);
 
         return $status;
