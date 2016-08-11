@@ -9,13 +9,13 @@
 <table class="table table-hover">
     <thead>
         <tr>
-            <th style="width: 10%"><?php echo trans('faqs.faq_order') ?></th>
+            <th style="width: 5%"><?php echo trans('faqs.faq_order') ?></th>
             <th style="width: 40%"><?php echo trans('faqs.faq_title') ?></th>
-             <th style="width: 15%"><?php echo trans('tasks.task_status') ?></th>
-            <th ><?php echo trans('faqs.faq_action') ?></th>
+            <th style="width: 15%"><?php echo trans('faqs.faq_status') ?></th>
+            <th><?php echo trans('faqs.faq_action') ?></th>
         </tr>
     </thead>
-    <tbody>  
+    <tbody>
         <?php
         $nav = $faqs->toArray();
         $counter = ($nav['current_page'] - 1) * $nav['per_page'] + 1;
@@ -23,9 +23,7 @@
         @foreach($faqs as $faq)
         <tr>
             <!--ORDER-->
-            <td>
-                <?php echo $counter; $counter++; ?>
-            </td>
+            <td><?php echo $counter; $counter++; ?></td>
 
             <!--TITLE-->
             <td>{!! $faq->faq_title !!}</td>
@@ -44,6 +42,9 @@
 
     </tbody>
 </table>
+<div class="paginator">
+    {!! $faqs->appends($data['request']->except(['page']) )->render() !!}
+</div>
 @else
 <span class="text-warning"><h5>No results found.</h5></span>
 @endif

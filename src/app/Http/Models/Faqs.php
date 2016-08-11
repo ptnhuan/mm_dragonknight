@@ -9,28 +9,28 @@ use DB;
 class Faqs extends Model {
 
     protected $table = 'faqs';
-    protected $primaryKey = 'faqs_id';
+    protected $primaryKey = 'faq_id';
     public $timestamps = false;
     protected $fillable = [
-      "create_by_user_id",
-      "level_id",
-      "category_id",
-      "faqs_title",
-      "faqs_overview",
-      "faqs_description",
-      "faqs_views",
-      "faqs_like",
-      "faqs_cache_page",
-      "faqs_status",
-      "faqs_created_at",
-      "faqs_updated_at",
-      "updated_at",
-      "created_at",
+        "create_by_user_id",
+        "level_id",
+        "status_id",
+        "category_id",
+        "faq_title",
+        "faq_overview",
+        "faq_description",
+        "faq_views",
+        "faq_like",
+        "faq_cache_page",
+        "faq_created_at",
+        "faq_updated_at",
+        "updated_at",
+        "created_at",
     ];
-
     protected $guarded = ["faq_id"];
+
     /*     * ********************************************
-     * listRealEstate
+     * getList
      *
      * @author: Kang
      * @date: 26/6/2016
@@ -42,14 +42,26 @@ class Faqs extends Model {
         $this->config_reader = App::make('config');
         $results_per_page = $this->config_reader->get('dragonknight.faqs_admin_per_page');
 
-        $faqs = self::orderBy('faq_id', 'DESC')
-                ->paginate($results_per_page);
+        $eloquent = self::orderBy('faqs.faq_id', 'DESC');
+
+        //Search by faq title
+        if (!empty($params['faq_title'])) {
+            $eloquent->where('faqs.faq_title', 'LIKE', '%' . $params['faq_title'] . '%');
+        }
+
+        //Search by faq status
+        if (!empty($params['status_id'])) {
+            $eloquent->where('faqs.status_id', 'LIKE', '%' . $params['status_id'] . '%');
+        }
+
+
+        $faqs = $eloquent->paginate($results_per_page);
 
         return $faqs;
     }
 
     /*     * ********************************************
-     * findRealEstateId
+     * findFaqId
      *
      * @author: Kang
      * @web: http://tailieuweb.com
@@ -65,7 +77,7 @@ class Faqs extends Model {
     }
 
     /*     * ********************************************
-     * updateRealEstate
+     * updateFaq
      *
      * @author: Kang
      * @web: http://tailieuweb.com
@@ -74,40 +86,21 @@ class Faqs extends Model {
      * @status: REVIEWED
      */
 
-    public function updateRealEstate($input) {
-        $real_estate = self::find($input['id']);
-        if (!empty($real_estate)) {
+    public function updateFaq($input) {
+        $faq = self::find($input['id']);
+        if (!empty($faq)) {
 
-            $real_estate_images = $this->encodeImages($input);
+            $faq->faq_title = $input['faq_title'];
+            $faq->status_id = $input['status_id'];
 
-            $real_estate->real_estate_title = $input['title'];
-            $real_estate->real_estate_category_id = $input['datacat'];
-            $real_estate->real_estate_description = $input['description'];
-            $real_estate->real_estate_bedroom = $input['bedroom'];
-            $real_estate->real_estate_bathroom = $input['bathroom'];
-            $real_estate->real_estate_sq = $input['sq'];
-            $real_estate->real_estate_year_build = $input['build_year'];
-
-            $real_estate->real_estate_cost = (double)$input['cost'];
-
-            $real_estate->real_estate_image = $input['filename'];
-            $real_estate->real_estate_images = $real_estate_images;
-
-            $real_estate->real_estate_map_address = $input['map-address'];
-            $real_estate->real_estate_map_marker_lat = $input['map-marker-lat'];
-            $real_estate->real_estate_map_marker_lng = $input['map-marker-lng'];
-            $real_estate->real_estate_map_center_lat = $input['map-center-lat'];
-            $real_estate->real_estate_map_center_lng = $input['map-center-lng'];
-            $real_estate->real_estate_map_zoom = $input['map-zoom'];
-
-            $real_estate->save();
+            $faq->save();
         } else {
-
+            
         }
     }
 
     /*     * ********************************************
-     * addRealEstate
+     * addFaq
      *
      * @author: Kang
      * @web: http://tailieuweb.com
@@ -116,34 +109,17 @@ class Faqs extends Model {
      * @status: REVIEWED
      */
 
-    public function addRealEstate($input) {
+    public function addFaq($input) {
 
-        $real_estate_images = $this->encodeImages($input);
-
-        $real_estate = self::create([
-
-                    'real_estate_title' => $input['title'],
-                    'real_estate_category_id' => $input['datacat'],
-                    'real_estate_description' => $input['description'],
-                    'real_estate_bedroom' => $input['bedroom'],
-                    'real_estate_bathroom' => $input['bathroom'],
-                    'real_estate_sq' => $input['sq'],
-                    'real_estate_year_build' => $input['build_year'],
-                    'real_estate_image' => $input['filename'],
-                    'real_estate_images' => $real_estate_images,
-                    'real_estate_cost' => @$input['cost'],
-                    'real_estate_map_address' => $input['map-address'],
-                    'real_estate_map_marker_lat' => $input['map-marker-lat'],
-                    'real_estate_map_marker_lng' => $input['map-marker-lng'],
-                    'real_estate_map_center_lat' => $input['map-center-lat'],
-                    'real_estate_map_center_lng' => $input['map-center-lng'],
-                    'real_estate_map_zoom' => $input['map-zoom'],
+        $faq = self::create([
+                    'faq_title' => $input['faq_title'],
+                    'status_id' => $input['status_id']
         ]);
-        return $real_estate;
+        return $faq;
     }
 
     /*     * ********************************************
-     * deleteRealEstate
+     * deleteFaqById
      *
      * @author: Kang
      * @web: http://tailieuweb.com
@@ -152,11 +128,11 @@ class Faqs extends Model {
      * @status: REVIEWED
      */
 
-    public function deleteRealEstate($input) {
+    public function deleteFaqById($faq_id) {
 
-        $real_estate = self::find($input['id']);
+        $faq = self::find($faq_id);
 
-        return $real_estate->delete();
+        return $faq->delete();
     }
 
     /*     * ********************************************
@@ -177,36 +153,11 @@ class Faqs extends Model {
         return $real_estate;
     }
 
-    public function encodeImages($input){
-        $json_images = array();
-
-        if (!empty($input['images_name'])) {
-            foreach ($input['images_name'] as $index => $image_name) {
-                $json_images[] = array(
-                    'name' => $image_name,
-                    'info' => @$input['images_info'][$index]
-                );
-            }
-        }
-
-        if ($input['filename'] && !$input['set_to']) {
-            $json_images[] = array_merge($json_images, array(
-                'name' => $input['filename'],
-                'info' => ''
-            ));
-        }
-        return json_encode($json_images);
-    }
-    public function decodeImages($json_images){
-
-    }
-
-
-    /***************************************************************************
-    /***************************************************************************
-    /*****************************USER FRONT PAGE*******************************
-    /***************************************************************************
-    /***************************************************************************
+    /*     * *************************************************************************
+      /***************************************************************************
+      /*****************************USER FRONT PAGE*******************************
+      /***************************************************************************
+      /***************************************************************************
      * getHighlightRe
      *
      * @author: Kang
@@ -217,7 +168,8 @@ class Faqs extends Model {
      */
 
     public function getHighlightRe() {
-         $real_estate = self::first();
-         return $real_estate;
+        $real_estate = self::first();
+        return $real_estate;
     }
+
 }

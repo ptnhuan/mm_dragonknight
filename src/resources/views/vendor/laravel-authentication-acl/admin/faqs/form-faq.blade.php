@@ -39,20 +39,21 @@ $faq = @$data['faq'];
                         {!! Form::model($faq, [ 'url' => [URL::route('faqs.edit'), @$faq->faq_id], 'method' => 'post'] ) !!}
 
 
-                        <!-- TASK TITLE -->
+                        <!-- TITLE -->
                         <div class="form-group">
                             {!! Form::label('faq_title', trans('faqs.faq_title').':') !!}
                             {!! Form::text('faq_title', @$faq->faq_title, ['class' => 'form-control', 'placeholder' => trans('faqs.faq_title').'']) !!}
                             <span class="text-danger">{!! $errors->first('faq_title') !!}</span>
                         </div>
-                        <!-- TASK STATUS -->
+                       
+                        <!--STATUS -->
                         <div class="form-group">
                             {!! Form::label('status_id', trans('faqs.faq_status').':') !!}
                             {!! Form::select('status_id', @$data['statuses'], @$faq->status_id, ['class' => 'form-control']) !!}
 
                             <span class="text-danger">{!! $errors->first('status_id') !!}</span>
                         </div>
-
+                        
                         <!-- TASK ID HIDDEN -->
                         {!! Form::hidden('id',@$faq->faq_id) !!}
                         <a href="{!! URL::route('faqs.delete',['id' => @$faq->faq_id, '_token' => csrf_token()]) !!}" class="btn btn-danger pull-right margin-left-5 delete"><?php echo trans('faqs.faq_delete') ?></a>
