@@ -36,7 +36,7 @@ $level = @$data['level'];
             <div class="panel-body">
                 <div class="row">
 
-                    <!--FORM TASK-->
+                    <!--FORM LEVEL-->
                     <div class="col-md-12 col-xs-12">
 
                         {{-- group base form --}}
@@ -44,7 +44,7 @@ $level = @$data['level'];
                         {!! Form::model($level, [ 'url' => [URL::route('levels.edit'), @$level->level_id], 'method' => 'post'] ) !!}
 
 
-                        <!-- TASK TITLE -->
+                        <!-- LEVEL TITLE -->
                         <div class="form-group">
                             {!! Form::label('level_title', trans('levels.level_title').':') !!}
                             {!! Form::text('level_title', @$level->level_title, ['class' => 'form-control', 
@@ -52,8 +52,47 @@ $level = @$data['level'];
                             <span class="text-danger">{!! $errors->first('level_title') !!}</span>
                         </div>
                         
-
-                        <!-- TASK ID HIDDEN -->
+                         <!-- LEVEL POINT -->
+                        <div class="form-group">
+                            {!! Form::label('level_point', trans('levels.level_point').':') !!}
+                            {!! Form::text('level_point', @$level->level_point, ['class' => 'form-control', 
+                            'placeholder' => trans('levels.level_point').'']) !!}
+                            <span class="text-danger">{!! $errors->first('level_point') !!}</span>
+                        </div>
+                         
+                           <!-- LEVEL OVERVIEW -->
+                        <div class="form-group">
+                            {!! Form::label('level_overview', trans('levels.level_overview').':') !!}
+                            {!! Form::text('level_overview', @$level->level_overview, ['class' => 'form-control', 
+                            'placeholder' => trans('levels.level_overview').'']) !!}
+                            <span class="text-danger">{!! $errors->first('level_overview') !!}</span>
+                        </div>
+                           
+                             <!-- LEVEL DESCRIPTION -->
+                        <div class="form-group">
+                            {!! Form::label('level_description', trans('levels.level_description').':') !!}
+                            {!! Form::text('level_description', @$level->level_description, ['class' => 'form-control', 
+                            'placeholder' => trans('levels.level_description').'']) !!}
+                            <span class="text-danger">{!! $errors->first('level_description') !!}</span>
+                        </div>
+                             
+                             <!-- LEVEL IMAGE -->
+                        <div class="form-group">
+                            {!! Form::label('level_image', trans('levels.level_image').':') !!}
+                            {!! Form::text('level_image', @$level->level_image, ['class' => 'form-control', 
+                            'placeholder' => trans('levels.level_image').'']) !!}
+                            <span class="text-danger">{!! $errors->first('level_image') !!}</span>
+                        </div>
+                                  
+                             <!-- LEVEL IMAGES -->
+                        <div class="form-group">
+                            {!! Form::label('level_images', trans('levels.level_images').':') !!}
+                            {!! Form::text('level_images', @$level->level_images, ['class' => 'form-control', 
+                            'placeholder' => trans('levels.level_images').'']) !!}
+                            <span class="text-danger">{!! $errors->first('level_images') !!}</span>
+                        </div>
+                                       
+                        <!-- LEVEL ID HIDDEN -->
                         {!! Form::hidden('id',@$level->level_id) !!}
                         <a href="{!! URL::route('levels.delete',['id' => @$level->level_id, '_token' => csrf_token()]) !!}" class="btn btn-danger pull-right margin-left-5 delete">
                             <?php echo trans('levels.level_delete') ?>

@@ -19,14 +19,18 @@ return [
     'level_search' => 'Tìm kiếm',
     'level_search_title' => 'Tên tiêu đề:',
 
-    'level_delete_confirm' => 'Bạn có muốn xóa level này không?',
+    'level_delete_confirm' => 'Bahn có muốn xóa level này không?',
     'level_add' => 'Thêm mới',
-    'level_save' => 'Lưu',
+    'level_save' => 'Luu',
     'level_delete' => 'Xóa',
     'level_edit' => 'Chỉnh sửa',
     'level_create' => 'Tạo mới',
 
     'level_order' => 'STT',
     'level_list' => 'Danh sách',
-
+    'level_point' => 'Ðiểm',
+    'level_overview' => 'Tổng quan',
+    'level_description' => 'Nội dung',
+    'level_image' => 'Hình mô tả',
+    'level_images' => 'Hình ảnh',
 ];
