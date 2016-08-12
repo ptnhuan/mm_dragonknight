@@ -44,6 +44,12 @@ class Categories extends Model {
         return $categories;
     }
 
+    public function pushSelectBox() {
+        $categories = self::orderBy('category_title', 'ASC')
+                ->pluck('category_title', 'category_id');
+        return $categories;
+    }
+
     /*     * ********************************************
      * findRealEstateId
      *
@@ -112,9 +118,9 @@ class Categories extends Model {
      * @status: REVIEWED
      */
 
-    public function deleteCategoryById($task_id) {
+    public function deleteCategoryById($category_id) {
 
-        $category = self::find($task_id);
+        $category = self::find($category_id);
 
         return $category->delete();
     }

@@ -46,5 +46,20 @@ return [
             'urlpath' => 'packages/media/faqs',
             'prename' => 't_'
         ],
+        
+        /**
+         * Categories
+         */
+        'category' => [
+            'filetype' => [
+                'jpg', 'png', 'gif'
+            ],
+            'filesize' => [
+                'max' => 3
+            ],
+            'filepath' => 'public/packages/media/categories',
+            'urlpath' => 'packages/media/categories',
+            'prename' => 'c_'
+        ],
     ]
 ];

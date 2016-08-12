@@ -28,6 +28,10 @@ return [
     'category_order' => 'STT',
     'category_status' => 'Trạng thái',
     'category_list' => 'Danh sách',
+    'category_overview' =>'Mô tả ngắn',
+    'category_description' =>'Mô tả',
+    'category_parent' =>'Thuộc',
+    'category_select_none' => 'Không'
 
 ];
 

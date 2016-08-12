@@ -38,8 +38,11 @@
 
             <!--ACTION-->
             <td style="width:10%">
-                <a href="{!! URL::route('categories.edit', ['id' => $category->category_id]) !!}"><i class="fa fa-edit fa-2x"></i></a>
-                <a href="{!! URL::route('categories.delete',['id' => $category->category_id, '_token' => csrf_token()]) !!}" class="margin-left-5 delete"><i class="fa fa-trash-o fa-2x"></i></a>
+                <a href="{!! URL::route('categories.edit', ['id' => $category->category_id]) !!}">
+                    <i class="fa fa-edit fa-2x"></i></a>
+                <a href="{!! URL::route('categories.delete',['id' => $category->category_id, '_token' => csrf_token()]) !!}" 
+                   class="margin-left-5 delete"><i class="fa fa-trash-o fa-2x"></i>
+                </a>
                 <span class="clearfix"></span>
             </td>
         </tr>

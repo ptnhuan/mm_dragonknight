@@ -6,9 +6,7 @@
 
 @section('content')
 
-<?php
-$category = @$data['category'];
-?>
+<?php $category = @$data['category']; ?>
 
 <div class="row">
     <div class="col-md-12">
@@ -36,18 +34,47 @@ $category = @$data['category'];
 
                         {{-- group base form --}}
 
-                        {!! Form::model($category, [ 'url' => [URL::route('categories.edit'), @$category->category_id], 'method' => 'post'] ) !!}
+                        {!! Form::open(['route'=>['categories.edit'],  'files'=>true, 'method' => 'post'])  !!}
 
 
-                        <!-- TASK TITLE -->
+                        <!--  TITLE -->
                         <div class="form-group">
                             {!! Form::label('category_title', trans('categories.category_title').':') !!}
                             {!! Form::text('category_title', @$category->category_title, ['class' => 'form-control', 'placeholder' => trans('categories.category_title').'']) !!}
                             <span class="text-danger">{!! $errors->first('category_title') !!}</span>
                         </div>
-                      
 
-                        <!-- TASK ID HIDDEN -->
+                        <!--  TITLE -->
+                        <div class="form-group">
+                            {!! Form::label('category_id_parent', trans('categories.category_parent').':') !!}
+                            {!! Form::select('category_id_parent', @$data['categories'], @$category->category_id_parent, ['class' => 'form-control']) !!}
+
+                            <span class="text-danger">{!! $errors->first('category_title') !!}</span>
+                        </div>
+
+
+                        <!--  OVERVIEW -->
+                        <div class="form-group">
+                            {!! Form::label('category_overview', trans('categories.category_overview').':') !!}
+                            {!! Form::text('category_overview', @$category->category_overview, ['class' => 'form-control', 'placeholder' => trans('categories.category_overview').'']) !!}
+                            <span class="text-danger">{!! $errors->first('category_overview') !!}</span>
+                        </div>
+
+                        <!--  DESCRIPTION   -->
+                        <div class="form-group">
+                            {!! Form::label('category_description', trans('categories.category_description').':') !!}
+                            {!! Form::text('category_description', @$category->category_description, ['class' => 'form-control', 'placeholder' => trans('categories.category_description').'']) !!}
+                            <span class="text-danger">{!! $errors->first('category_description') !!}</span>
+                        </div>
+
+
+                        <!--  IMAGE -->
+                        <div class="form-group config-images">
+                            {!! Form::label('image',trans('re.images'),': *') !!}
+                            {!! Form::file('image') !!}
+                        </div>
+
+                        <!--  ID HIDDEN -->
                         {!! Form::hidden('id',@$category->category_id) !!}
                         <a href="{!! URL::route('categories.delete',['id' => @$category->category_id, '_token' => csrf_token()]) !!}" class="btn btn-danger pull-right margin-left-5 delete"><?php echo trans('categories.category_delete') ?></a>
                         {!! Form::submit(trans('categories.category_save').'', array("class"=>"btn btn-info pull-right ")) !!}
@@ -65,7 +92,7 @@ $category = @$data['category'];
 @section('footer_scripts')
 <script>
     $(".delete").click(function () {
-        return confirm("<?php  echo trans('categories.category_delete_confirm')?>");
+        return confirm("<?php echo trans('categories.category_delete_confirm') ?>");
     });
 </script>
 @stop
