@@ -15,9 +15,9 @@
 
 <!-- TASK POINT -->
 <div class="form-group">
-    {!! Form::label('task_point', trans('tasks.task_point').':') !!}
-    {!! Form::text('task_point', @$task->task_point, ['class' => 'form-control', 'placeholder' => trans('tasks.task_point').'']) !!}
-    <span class="text-danger">{!! $errors->first('task_point') !!}</span>
+    {!! Form::label('task_points', trans('tasks.task_points').':') !!}
+    {!! Form::text('task_points', @$task->task_points, ['class' => 'form-control', 'placeholder' => trans('tasks.task_points').'']) !!}
+    <span class="text-danger">{!! $errors->first('task_points') !!}</span>
 </div>
 
 

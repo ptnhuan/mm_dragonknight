@@ -22,8 +22,8 @@ if (@$data['input']) {
     <div class="col-md-12">
         {{-- model general errors from the form --}}
 
-        @if(@$data['errors'] && @$data['errors']->has('title') )
-        <div class="alert alert-danger">{!! @$data['errors']->first('title') !!}</div>
+        @if(@$data['errors'] )
+            <div class="alert alert-danger">{!! trans('tasks.task_unsuccessful') !!}</div>
         @elseif (@$data['message'])
             <div class="alert alert-success">{!! trans('tasks.task_successful') !!}</div>
         @endif

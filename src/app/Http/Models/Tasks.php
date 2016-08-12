@@ -91,6 +91,7 @@ class Tasks extends Model {
      */
 
     public function updateTask($input) {
+        $task_images = $this->encodeImages($input);
         $task = self::find($input['id']);
         if (!empty($task)) {
 
@@ -99,7 +100,9 @@ class Tasks extends Model {
             $task->task_overview = $input['task_overview'];
             $task->task_description = $input['task_description'];
             $task->task_notes = $input['task_notes'];
-            $task->task_point = $input['task_point']; 
+            $task->task_points = $input['task_points'];
+            $task->task_image = $input['filename'];
+            $task->task_images = $task_images;
             $task->save();
         } else {
 
@@ -118,6 +121,7 @@ class Tasks extends Model {
 
     public function addTask($input) {
 
+        $task_images = $this->encodeImages($input);
         $task = self::create([
 
                     'task_title' => $input['task_title'],
@@ -125,7 +129,9 @@ class Tasks extends Model {
                     'task_overview' => $input['task_overview'],
                     'task_description' => $input['task_description'],
                     'task_notes' => $input['task_notes'],
-                    'task_point' => $input['task_point'],
+                    'task_points' => $input['task_points'],
+                    'task_image' => $input['filename'],
+                    'task_images' => $task_images,
         ]);
         return $task;
     }
@@ -145,6 +151,30 @@ class Tasks extends Model {
         $task = self::find($task_id);
 
         return $task->delete();
+    }
+
+     public function encodeImages($input){
+        $json_images = array();
+
+        if (!empty($input['images_name'])) {
+            foreach ($input['images_name'] as $index => $image_name) {
+                $json_images[] = array(
+                    'name' => $image_name,
+                    'info' => @$input['images_info'][$index]
+                );
+            }
+        }
+
+        if ($input['filename'] && !$input['set_to']) {
+            $json_images[] = array_merge($json_images, array(
+                'name' => $input['filename'],
+                'info' => ''
+            ));
+        }
+        return json_encode($json_images);
+    }
+    public function decodeImages($json_images){
+
     }
 
 }

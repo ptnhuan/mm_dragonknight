@@ -74,7 +74,7 @@ class TasksController extends Controller {
         $request->session()->forget('errors');
         $request->session()->forget('message');
         $request->session()->forget('input');
-
+        $configs = config('dragonknight.libfiles');
         if ($task) {
             $data = array_merge($this->data, array(
                 'task' => $task,
@@ -83,6 +83,7 @@ class TasksController extends Controller {
                 'errors' => $errors,
                 'input' => $input,
                 'message' => $message,
+                'configs' => $configs,
             ));
             return View::make('laravel-authentication-acl::admin.tasks.form-task')->with(['data' => $data]);
         } else if (is_null($task_id)) {
@@ -93,6 +94,7 @@ class TasksController extends Controller {
                 'errors' => $errors,
                 'input' => $input,
                 'message' => $message,
+                'configs' => $configs,
             ));
 
             return View::make('laravel-authentication-acl::admin.tasks.form-task')->with(['data' => $data]);
@@ -117,14 +119,50 @@ class TasksController extends Controller {
 
         $task_id = $request->get('id');
 
-
+        $task = $obj_tasks->findTaskId($task_id);
 
         /**
          * Validator value
          */
         if (!empty($validator->validate($input))) {
+            /**
+             * Upload file image
+             * @Check: extension, size
+             */
+            $fileinfo = array();
+            if (!empty($input['image'])) {
+                $configs = config('dragonknight.libfiles');
+                $file = $request->file('image');
+                $fileinfo = $libFiles->upload($configs['task'], $file);
+            } else {
+                $fileinfo['filename'] = '';
+            }
+            //TODO: check
+            $input = array_merge($input, $fileinfo);
+            /**
+             * VALID
+             */
+            if ($task) {
+                 if (empty($fileinfo['filename']) && $input['is_file']) {
+                    $input['filename'] = $task->task_image;
+                }
+                //edit
+                $params = array_merge($fileinfo, $input);
 
+                $obj_tasks->updateTask($params);
+                return Redirect::route("tasks.list")->withMessage(trans('tasks.task_edit_successful'));
+            } elseif (empty($task_id)) {
+                //add
+                $params = array_merge($input, $fileinfo);
+                $obj_tasks->addTask($params);
+                return Redirect::route("tasks.list")->withMessage(trans('tasks.task_edit_successful'));
+            } else {
+                //error
+            }
         } else {
+            /**
+             * UNVALID
+             */
             $errors = $validator->getErrors();
 
             if (!empty($task_id)) {
@@ -138,26 +176,6 @@ class TasksController extends Controller {
                 $request->session()->put('input', $request->all());
                 return Redirect::route("tasks.edit");
             }
-        }
-
-
-
-
-
-
-        if ($task) {
-            //edit
-            $params = array_merge($input, $fileinfo);
-
-            $obj_tasks->updateTask($params);
-            return Redirect::route("tasks.list")->withMessage(trans('tasks.task_edit_successful'));
-        } elseif (empty($task_id)) {
-            //add
-            $params = array_merge($input, $fileinfo);
-            $obj_tasks->addTask($params);
-            return Redirect::route("tasks.list")->withMessage(trans('tasks.task_edit_successful'));
-        } else {
-            //error
         }
     }
 

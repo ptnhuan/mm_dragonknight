@@ -42,6 +42,7 @@
         {!! HTML::script('packages/jacopo/laravel-authentication-acl/js/vendor/bootstrap.min.js') !!}
 
         @yield('footer_scripts')
+        @yield('footer_more_scripts')
         {{-- End footer scripts --}}
     </body>
 </html>
