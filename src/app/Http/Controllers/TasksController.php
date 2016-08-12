@@ -19,6 +19,13 @@ use App\Http\Models\Statuses;
  * Libraries
  */
 use App\Http\Libraries\LibFiles as LibFiles;
+/**
+ * Validator
+ */
+use Validator;
+use Response;
+use Illuminate\Support\MessageBag as MessageBag;
+use App\Http\Requests\TaskValidator;
 
 class TasksController extends Controller {
 
@@ -60,12 +67,22 @@ class TasksController extends Controller {
         $task_id = $request->get('id');
 
         $task = $obj_tasks->findTaskId($task_id);
+        $errors = $request->session()->get('errors', null);
+        $message = $request->session()->get('message', FALSE);
+        $input = $request->session()->get('input', null);
+
+        $request->session()->forget('errors');
+        $request->session()->forget('message');
+        $request->session()->forget('input');
 
         if ($task) {
             $data = array_merge($this->data, array(
                 'task' => $task,
                 'statuses' => $obj_statuses->pushSelectBox(),
                 'request' => $request,
+                'errors' => $errors,
+                'input' => $input,
+                'message' => $message,
             ));
             return View::make('laravel-authentication-acl::admin.tasks.form-task')->with(['data' => $data]);
         } else if (is_null($task_id)) {
@@ -73,7 +90,11 @@ class TasksController extends Controller {
                 'task' => $task,
                 'statuses' => $obj_statuses->pushSelectBox(),
                 'request' => $request,
+                'errors' => $errors,
+                'input' => $input,
+                'message' => $message,
             ));
+
             return View::make('laravel-authentication-acl::admin.tasks.form-task')->with(['data' => $data]);
         } else {
             return Redirect::route("tasks.list")->withMessage(trans('re.not_found'));
@@ -81,10 +102,14 @@ class TasksController extends Controller {
     }
 
     /**
-     *
+     * - Update existing task
+     * - Add new task
+     * @Check validator
+     * @Upload multiple image
      */
     public function postEditTask(Request $request) {
         $libFiles = new LibFiles();
+        $validator = new TaskValidator();
 
         $obj_tasks = new Tasks();
 
@@ -92,11 +117,33 @@ class TasksController extends Controller {
 
         $task_id = $request->get('id');
 
-        $task = $obj_tasks->findTaskId($task_id);
 
-        $configs = config('dragonknight.libfiles');
-        $file = $request->file('image');
-        $fileinfo = $libFiles->upload($configs['task'], $file);
+
+        /**
+         * Validator value
+         */
+        if (!empty($validator->validate($input))) {
+
+        } else {
+            $errors = $validator->getErrors();
+
+            if (!empty($task_id)) {
+                $request->session()->put('errors', $errors);
+                $request->session()->put('message', true);
+                $request->session()->put('input', $request->all());
+                return Redirect::route("tasks.edit", ["id" => $task_id]);
+            } else {
+                $request->session()->put('errors', $errors);
+                $request->session()->put('message', true);
+                $request->session()->put('input', $request->all());
+                return Redirect::route("tasks.edit");
+            }
+        }
+
+
+
+
+
 
         if ($task) {
             //edit

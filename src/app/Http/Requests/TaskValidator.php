@@ -6,7 +6,9 @@ use \LaravelAcl\Library\Validators\AbstractValidator;
 class TaskValidator extends AbstractValidator
 {
     protected static $rules = array(
-        'title' => 'required',
+        'task_title' => 'required',
+        'task_overview' => 'required',
+        'task_description' => 'required',
     );
 
     protected static $messages = [
@@ -31,7 +33,9 @@ class TaskValidator extends AbstractValidator
 
     public function messages() {
         self::$messages = [
-            'title.required' => trans('tasks.task_required_ttile'),
+            'task_title.required' => trans('tasks.task_required_title'),
+            'task_overview.required' => trans('tasks.task_required_overview'),
+            'task_description.required' => trans('tasks.task_required_description'),
         ];
     }
 

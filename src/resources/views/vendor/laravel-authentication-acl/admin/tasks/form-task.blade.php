@@ -6,20 +6,29 @@
 
 @section('content')
 
-<?php $task = @$data['task']; ?>
+
+
+<?php
+$task = @$data['task'];
+if (@$data['input']) {
+    $task = new stdClass();
+    $task->task_title = @$task->task_title?$task->task_title:$data['input']['task_title'];
+    $task->task_overview = @$task->task_overview?$task->task_overview:$data['input']['task_overview'];
+    $task->task_description = @$task->task_description?$task->task_description:$data['input']['task_description'];
+}
+?>
 
 <div class="row">
     <div class="col-md-12">
         {{-- model general errors from the form --}}
-        @if($errors->has('model') )
-        <div class="alert alert-danger">{!! $errors->first('model') !!}</div>
+
+        @if(@$data['errors'] && @$data['errors']->has('title') )
+        <div class="alert alert-danger">{!! @$data['errors']->first('title') !!}</div>
+        @elseif (@$data['message'])
+            <div class="alert alert-success">{!! trans('tasks.task_successful') !!}</div>
         @endif
 
-        {{-- successful message --}}
-        <?php $message = Session::get('message'); ?>
-        @if( isset($message) )
-        <div class="alert alert-success">{{$message}}</div>
-        @endif
+
 
         <div class="panel panel-info">
             <div class="panel-heading">
