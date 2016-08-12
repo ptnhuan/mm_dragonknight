@@ -96,8 +96,10 @@ class Tasks extends Model {
 
             $task->task_title = $input['task_title'];
             $task->status_id = $input['status_id'];
-            $task->task_image = $input['filename'];
-
+            $task->task_overview = $input['task_overview'];
+            $task->task_description = $input['task_description'];
+            $task->task_notes = $input['task_notes'];
+            $task->task_point = $input['task_point']; 
             $task->save();
         } else {
 
@@ -120,6 +122,10 @@ class Tasks extends Model {
 
                     'task_title' => $input['task_title'],
                     'status_id' => $input['status_id'],
+                    'task_overview' => $input['task_overview'],
+                    'task_description' => $input['task_description'],
+                    'task_notes' => $input['task_notes'],
+                    'task_point' => $input['task_point'],
         ]);
         return $task;
     }
