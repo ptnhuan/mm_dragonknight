@@ -34,55 +34,31 @@
 
                         {{-- group base form --}}
 
-                           {!! Form::open(['route'=>['tasks.edit'],  'files'=>true, 'method' => 'post'])  !!}
+                        {!! Form::open(['route'=>['tasks.edit'],  'files'=>true, 'method' => 'post'])  !!}
 
-                        <!-- TASK POINT -->
-                        <div class="form-group">
-                            {!! Form::label('task_point', trans('tasks.task_point').':') !!}
-                            {!! Form::text('task_point', @$task->task_point, ['class' => 'form-control', 'placeholder' => trans('tasks.task_point').'']) !!}
-                            <span class="text-danger">{!! $errors->first('task_point') !!}</span>
-                        </div>
 
-                        <!-- TASK TITLE -->
-                        <div class="form-group">
-                            {!! Form::label('task_title', trans('tasks.task_title').':') !!}
-                            {!! Form::text('task_title', @$task->task_title, ['class' => 'form-control', 'placeholder' => trans('tasks.task_title').'']) !!}
-                            <span class="text-danger">{!! $errors->first('task_title') !!}</span>
-                        </div>
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#home">{!! trans('re.overview') !!}</a></li>
+                            <li><a data-toggle="tab" href="#menu1">{!! trans('re.attributes') !!}</a></li>
+                            <li><a data-toggle="tab" href="#menu2">{!! trans('re.images') !!}</a></li>
+                        </ul>
 
-                        <!-- TASK OVERVIEW -->
-                        <div class="form-group">
-                            {!! Form::label('task_overview', trans('tasks.task_overview').':') !!}
-                            {!! Form::text('task_overview', @$task->task_overview, ['class' => 'form-control', 'placeholder' => trans('tasks.task_overview').'']) !!}
-                            <span class="text-danger">{!! $errors->first('task_overview') !!}</span>
-                        </div>
+                        <div class="tab-content">
 
-                        <!-- TASK DESCRIPTION   -->
-                        <div class="form-group">
-                            {!! Form::label('task_description', trans('tasks.task_description').':') !!}
-                            {!! Form::text('task_description', @$task->task_description, ['class' => 'form-control', 'placeholder' => trans('tasks.task_description').'']) !!}
-                            <span class="text-danger">{!! $errors->first('task_description') !!}</span>
-                        </div>
+                            <!--TASK OVERVIEW-->
+                            <div id="home" class="tab-pane fade in active">
+                                @include('laravel-authentication-acl::admin.tasks.form-task-overview')
+                            </div>
 
-                        <!-- TASK NOTES   -->
-                        <div class="form-group">
-                            {!! Form::label('task_notes', trans('tasks.task_notes').':') !!}
-                            {!! Form::text('task_notes', @$task->task_notes, ['class' => 'form-control', 'placeholder' => trans('tasks.task_notes').'']) !!}
-                            <span class="text-danger">{!! $errors->first('task_notes') !!}</span>
-                        </div>
+                            <!--TASK ATTRIBUTES-->
+                            <div id="menu1" class="tab-pane fade">
+                                @include('laravel-authentication-acl::admin.tasks.form-task-attributes')
+                            </div>
 
-                        <!-- TASK STATUS -->
-                        <div class="form-group">
-                            {!! Form::label('status_id', trans('tasks.task_status').':') !!}
-                            {!! Form::select('status_id', @$data['statuses'], @$task->status_id, ['class' => 'form-control']) !!}
-
-                            <span class="text-danger">{!! $errors->first('status_id') !!}</span>
-                        </div>
-
-                        <!-- TASK IMAGE -->
-                        <div class="form-group config-images">
-                            {!! Form::label('image',trans('re.images'),': *') !!}
-                            {!! Form::file('image') !!}
+                            <!--TASK IMAGES--->
+                            <div id="menu2" class="tab-pane fade">
+                                @include('laravel-authentication-acl::admin.tasks.form-task-images')
+                            </div>
                         </div>
 
                         <!-- TASK ID HIDDEN -->
