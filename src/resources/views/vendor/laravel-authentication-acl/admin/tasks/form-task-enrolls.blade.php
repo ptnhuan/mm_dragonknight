@@ -10,7 +10,7 @@
     <div class="row">
 
         <!--USER SEARCH-->
-        <div class="col-md-8 user-search" style="display: none">
+        <div class="col-md-7 user-search" style="display: none">
             <h4>Thêm users</h4>
             <table class="table table-hover">
                 <thead>
@@ -27,7 +27,7 @@
         </div>
 
         <!--USER ENROLLED -->
-        <div class="col-md-4 user-enrolled">
+        <div class="col-md-5 user-enrolled">
             <h4>Đã giao task</h4>
             <table class="table table-hover">
                 <thead>
@@ -39,7 +39,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>
+                        <td>AA
                              {!! Form::hidden('user_ids[]', 0) !!}
                         </td>
                         <td>AA</td>
@@ -56,7 +56,7 @@
 
 @section('footer_ajax_scripts')
 <script>
-    $("#task_enrolls").keypress(function () {
+    $("#user_enrolls").keypress(function () {
         $('.user-search tbody').empty();
         $('.user-search').show();
         $.ajax({
@@ -64,12 +64,11 @@
             url: "{!!  URL::route('ajax_user.search') !!}",
             data: {
                 '_token': "{!! csrf_token() !!}",
-                keyword: $("#task_enrolls").val()
+                keyword: $("#user_enrolls").val()
             },
             success: function (data) {
                 $('.user-search tbody').empty();
-                $('.user-search').show();
-
+                $('.user-search').show(); 
                 if (data) {
                     var html_user_item = '';
                     var user_list = jQuery.parseJSON(data);
@@ -80,9 +79,8 @@
                                             <td>' + user_list[i].email + '</td>  \n\
                                             <td>  <a href="#" class="assign-task" ><i class="fa fa-arrow-right" aria-hidden="true"></i></a>   </td>                           \n\
                                         </tr>';
-                        $('.user-search-list tbody').append(html_user_item);
-                    }
-
+                        $('.user-search tbody').append(html_user_item);
+                    } 
                 }
             },
             error: function (data) {
