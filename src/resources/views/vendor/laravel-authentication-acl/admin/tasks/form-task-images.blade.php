@@ -8,7 +8,7 @@ if (!empty($task)) {
 ?>
 <!-- TASK IMAGE -->
 <div class="form-group config-images">
-    {!! Form::label('image',trans('tasks.task_images'),': *') !!}
+    {!! Form::label('image',trans('re.images'),': *') !!}
     {!! Form::file('image') !!}
     {!! Form::hidden('is_file', !empty(@$task->task_image)?1:0, ['class' => 'is_file']) !!}
 
