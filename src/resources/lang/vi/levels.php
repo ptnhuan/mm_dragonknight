@@ -11,7 +11,7 @@ return [
 
     'level_name' => 'Levels',
     'level_list_page_title' => 'Danh sách Levels',
-    'level_edit_page_title' => 'Chỉnh sửa Levels',
+    'level_edit_page_title' => 'Ch?nh s?a Levels',
     'level_title' => 'Tiêu đề',
     'level_action' => 'Thao tác',
     'level_page' => 'Quản lý Level',
@@ -28,5 +28,9 @@ return [
 
     'level_order' => 'STT',
     'level_list' => 'Danh sách',
-
+    'level_point' => 'Ðiểm',
+    'level_overview' => 'Tổng quan',
+    'level_description' => 'Nội dung',
+    'level_image' => 'Hình mô tả',
+    'level_images' => 'Hình ảnh',
 ];
