@@ -1,15 +1,17 @@
 <!-- TASK USER ID   -->
 <div class="form-group">
-    {!! Form::label('task_enrolls', trans('tasks.task_enrolls').':') !!}
-    {!! Form::text('task_enrolls', null, ['class' => 'form-control', 'placeholder' => trans('tasks.task_enrolls').'']) !!}
-    <span class="text-danger">{!! $errors->first('task_enrolls') !!}</span>
+    {!! Form::label('user_enrolls', trans('tasks.task_enrolls').':') !!}
+    {!! Form::text('user_enrolls', null, ['class' => 'form-control', 'placeholder' => trans('tasks.task_enrolls').'']) !!}
+    <span class="text-danger">{!! $errors->first('user_enrolls') !!}</span>
 </div>
 
 
-<div class="user-enrolled">
+<div class="user-list">
     <div class="row">
+
         <!--USER SEARCH-->
-        <div class="col-md-8 user-search-list" style="display: none">
+        <div class="col-md-8 user-search" style="display: none">
+            <h4>Thêm users</h4>
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -19,13 +21,14 @@
                     </tr>
                 </thead>
                 <tbody>
-
+                    <!--AJAX CONTENT-->
                 </tbody>
             </table>
         </div>
 
         <!--USER ENROLLED -->
-        <div class="col-md-4">
+        <div class="col-md-4 user-enrolled">
+            <h4>Đã giao task</h4>
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -36,7 +39,9 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>A</td>
+                        <td>
+                             {!! Form::hidden('user_ids[]', 0) !!}
+                        </td>
                         <td>AA</td>
                         <td><i class="fa fa-times" aria-hidden="true"></i></td>
                     </tr>
@@ -52,8 +57,8 @@
 @section('footer_ajax_scripts')
 <script>
     $("#task_enrolls").keypress(function () {
-        $('.user-search-list tbody').empty();
-        $('.user-search-list').show();
+        $('.user-search tbody').empty();
+        $('.user-search').show();
         $.ajax({
             type: "POST",
             url: "{!!  URL::route('ajax_user.search') !!}",
@@ -62,9 +67,8 @@
                 keyword: $("#task_enrolls").val()
             },
             success: function (data) {
-                $('.user-list-search').show();
-                $('.user-search-list tbody').empty();
-                $('.user-search-list').show();
+                $('.user-search tbody').empty();
+                $('.user-search').show();
 
                 if (data) {
                     var html_user_item = '';
@@ -82,13 +86,14 @@
                 }
             },
             error: function (data) {
-                console.log('error');
+                $('.user-search').empty();
+                $('.user-search').append('<h4>Không tìm thấy</h4>');
             }
         });
     });
 
     $('.assign-task').click(function(){
-        
+
     });
 
 </script>
