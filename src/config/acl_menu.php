@@ -103,12 +103,19 @@ return [
             "link" => '/admin/faqs/list',
             "permissions" => ["_superadmin", "_faqs-admin"]
         ],
-        
+
         [
             "name" => "Posts",
             "route" => "posts",
             "link" => '/admin/posts/list',
             "permissions" => ["_superadmin", "_posts-admin"]
+        ],
+
+        [
+            "name" => "",
+            "route" => "ajax_user.search",
+            "link" => '/ajax/user_search',
+            "permissions" => [""]
         ],
     ]
 ];

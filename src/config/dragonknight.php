@@ -15,8 +15,9 @@ return [
     "statuses_admin_per_page" => 5,
     "faqs_admin_per_page" => 5,
     "category_admin_per_page" => 5,
+    "ajax_user_search_per_page" => 10,
 
-    
+
     'libfiles' => [
         /**
          * Tasks
@@ -46,7 +47,7 @@ return [
             'urlpath' => 'packages/media/faqs',
             'prename' => 't_'
         ],
-        
+
         /**
          * Categories
          */

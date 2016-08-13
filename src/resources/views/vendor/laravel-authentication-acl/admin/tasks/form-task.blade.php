@@ -47,9 +47,10 @@ if (@$data['input']) {
 
 
                         <ul class="nav nav-tabs">
-                            <li class="active"><a data-toggle="tab" href="#home">{!! trans('re.overview') !!}</a></li>
-                            <li><a data-toggle="tab" href="#menu1">{!! trans('re.attributes') !!}</a></li>
-                            <li><a data-toggle="tab" href="#menu2">{!! trans('re.images') !!}</a></li>
+                            <li class="active"><a data-toggle="tab" href="#home">{!! trans('task_tab_overview') !!}</a></li>
+                            <li><a data-toggle="tab" href="#menu1">{!! trans('task_tab_attributes') !!}</a></li>
+                            <li><a data-toggle="tab" href="#menu2">{!! trans('task_tab_images') !!}</a></li>
+                            <li><a data-toggle="tab" href="#menu3">{!! trans('task_tab_enrolls') !!}</a></li>
                         </ul>
 
                         <div class="tab-content">
@@ -67,6 +68,11 @@ if (@$data['input']) {
                             <!--TASK IMAGES--->
                             <div id="menu2" class="tab-pane fade">
                                 @include('laravel-authentication-acl::admin.tasks.form-task-images')
+                            </div>
+
+                            <!--TASK ENROLLS--->
+                            <div id="menu3" class="tab-pane fade">
+                                @include('laravel-authentication-acl::admin.tasks.form-task-enrolls')
                             </div>
                         </div>
 

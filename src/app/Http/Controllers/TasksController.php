@@ -154,8 +154,8 @@ class TasksController extends Controller {
             } elseif (empty($task_id)) {
                 //add
                 $params = array_merge($input, $fileinfo);
-                $obj_tasks->addTask($params);
-                return Redirect::route("tasks.list")->withMessage(trans('tasks.task_edit_successful'));
+                $task = $obj_tasks->addTask($params);
+                return Redirect::route("tasks.edit", ["id" => $task->task_id])->withMessage(trans('tasks.task_add_successful'));
             } else {
                 //error
             }
@@ -166,10 +166,14 @@ class TasksController extends Controller {
             $errors = $validator->getErrors();
 
             if (!empty($task_id)) {
-                $request->session()->put('errors', $errors);
-                $request->session()->put('message', true);
-                $request->session()->put('input', $request->all());
+                
+                $request->session()->put('flash_message', array(
+                    'errors' => $errors,
+                    'message' => trans('tasks.task_error_action'),
+                    'input' => $request->all(),
+                ));
                 return Redirect::route("tasks.edit", ["id" => $task_id]);
+
             } else {
                 $request->session()->put('errors', $errors);
                 $request->session()->put('message', true);

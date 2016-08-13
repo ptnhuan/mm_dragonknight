@@ -15,12 +15,23 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
 /**
  * User login and logout
  */
 Route::group(['middleware' => ['web']], function () {
     Route::group(['middleware' => ['admin_logged', 'can_see']], function () {
+
+        /**
+         * User search by ajax
+         */
+        Route::post('/ajax/user_search', [
+            'as' => 'ajax_user.search',
+            'uses' => 'UsersController@ajax_search_user'
+        ]);
+         Route::get('/ajax/user_search', [
+            'as' => 'ajax_user.search',
+            'uses' => 'UsersController@ajax_search_user'
+        ]);
 
         /**
          * tasks
@@ -123,7 +134,7 @@ Route::group(['middleware' => ['web']], function () {
             'as' => 'faqs.delete',
             'uses' => 'FaqsController@deleteFaq'
         ]);
-        
+
         /**
          * Posts
          */
