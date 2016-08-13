@@ -62,5 +62,19 @@ return [
             'urlpath' => 'packages/media/categories',
             'prename' => 'c_'
         ],
+        /**
+         * Posts
+         */
+        'post' => [
+            'filetype' => [
+                'jpg', 'png', 'gif'
+            ],
+            'filesize' => [
+                'max' => 3
+            ],
+            'filepath' => 'public/packages/media/posts',
+            'urlpath' => 'packages/media/posts',
+            'prename' => 'p_'
+        ],
     ]
 ];

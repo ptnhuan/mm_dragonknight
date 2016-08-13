@@ -13,10 +13,20 @@ use Illuminate\Http\Request;
 /**
  * Models
  */
-use App\Http\Models\Tasks;
 use App\Http\Models\Statuses;
 use App\Http\Models\Categories;
 use App\Http\Models\Posts;
+/**
+ * Libraries
+ */
+use App\Http\Libraries\LibFiles;
+/**
+ * Validator
+ */
+use Validator;
+use App\Http\Requests\PostValidator;
+use Response;
+use Illuminate\Support\MessageBag as MessageBag;
 
 class PostsController extends Controller {
 
@@ -55,24 +65,40 @@ class PostsController extends Controller {
         $obj_statuses = new Statuses;
 
         $post_id = $request->get('id');
+
         $post = $obj_posts->findPostId($post_id);
-        $statuses = $obj_statuses->pushSelectBox();
+
+        $errors = $request->session()->get('errors', null);
+        $message = $request->session()->get('message', FALSE);
+        $input = $request->session()->get('input', null);
+
+        $request->session()->forget('errors');
+        $request->session()->forget('message');
+        $request->session()->forget('input');
+        $configs = config('dragonknight.libfiles');
         if ($post) {
             $data = array_merge($this->data, array(
                 'post' => $post,
-                'statuses' => array_merge(array(0 => 'None'), $statuses->toArray()),
+                'statuses' => $obj_statuses->pushSelectBox(),
                 'request' => $request,
+                'errors' => $errors,
+                'input' => $input,
+                'message' => $message,
+                'configs' => $configs,
             ));
             return View::make('laravel-authentication-acl::admin.posts.form-post')->with(['data' => $data]);
         } else if (is_null($post_id)) {
-
             $data = array_merge($this->data, array(
-                'statuses' => array_merge(array(0 => 'None'), $statuses->toArray()),
+                'post' => $post,
+                'statuses' => $obj_statuses->pushSelectBox(),
                 'request' => $request,
+                'errors' => $errors,
+                'input' => $input,
+                'message' => $message,
+                'configs' => $configs,
             ));
             return View::make('laravel-authentication-acl::admin.posts.form-post')->with(['data' => $data]);
         } else {
-
             return Redirect::route("posts.list")->withMessage(trans('re.not_found'));
         }
     }
@@ -81,6 +107,9 @@ class PostsController extends Controller {
      *
      */
     public function postEditPost(Request $request) {
+        $libFiles = new LibFiles();
+
+        $validator = new PostValidator;
 
         $obj_posts = new Posts();
 
@@ -90,16 +119,62 @@ class PostsController extends Controller {
 
         $post = $obj_posts->findPostId($post_id);
 
-        if ($post) {
-            //edit
-            $obj_posts->updatePost($input);
-            return Redirect::route("posts.list")->withMessage(trans('posts.post_edit_successful'));
-        } elseif (empty($post_id)) {
-            //add
-            $obj_posts->addPost($input);
-            return Redirect::route("posts.list")->withMessage(trans('posts.post_edit_successful'));
+        /**
+         * Validator value
+         */
+        if (!empty($validator->validate($input))) {
+            /**
+             * Upload file images
+             * check: extension, size
+             */
+            $fileinfo = array();
+            if (!empty($input['image'])) {
+                $configs = config('dragonknight.libfiles');
+                $file = $request->file('image');
+                $fileinfo = $libFiles->upload($configs['post'], $file);
+            } else {
+                $fileinfo['filename'] = '';
+            }
+            //TODO: Check
+            $input = array_merge($input, $fileinfo);
+            /**
+             * VALID
+             */
+            if ($post) {
+                if (empty($fileinfo['filename']) && $input['is_file']) {
+                    $input['filename'] = $post->post_image;
+                }
+                //edit
+                $params = array_merge($fileinfo, $input);
+
+                $obj_posts->updatePost($params);
+                return Redirect::route("posts.list")->withMessage(trans('posts.post_edit_successful'));
+            } elseif (empty($post_id)) {
+                //add
+                $params = array_merge($input, $fileinfo);
+                $post = $obj_posts->addPost($params);
+                return Redirect::route("posts.edit", ["id" => $post->post_id])->withMessage(trans('posts.post_add_successful'));
+            } else {
+                //error
+            }
         } else {
-            //error
+            /**
+             * UNVALID
+             */
+            $errors = $validator->getErrors();
+            if (!empty($post_id)) {
+                $request->session()->put('errors', $errors);
+                $request->session()->put('message', true);
+                $request->session()->put('input', $request->all());
+
+                return Redirect::route("posts.edit", ["id" => $post_id]);
+            } else {
+                $request->session()->put('errors', $errors);
+                $request->session()->put('message', true);
+                $request->session()->put('input', $request->all());
+
+                return Redirect::route("posts.edit");
+            }
         }
     }
 
