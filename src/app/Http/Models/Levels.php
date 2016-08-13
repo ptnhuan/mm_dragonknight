@@ -50,9 +50,9 @@ class Levels extends Model {
      * findLevelById
      */
 
-    public function findLevelById($id) {
+    public function findLevelById($level_id) {
         
-        $level = self::where('level_id', $id)
+        $level = self::where('level_id', $level_id)
                 ->first();
         return $level;
     }
@@ -62,7 +62,7 @@ class Levels extends Model {
      */
 
     public function updateLevel($input) {
-        $level = self::find($input['id']);
+        $level = self::find($input['level_id']);
         if (!empty($level)) {
 
             $level->level_title = $input['level_title'];

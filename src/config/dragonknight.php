@@ -62,5 +62,19 @@ return [
             'urlpath' => 'packages/media/categories',
             'prename' => 'c_'
         ],
+        /**
+         * Levels
+         */
+        'level' => [
+            'filetype' => [
+                'jpg', 'png', 'gif'
+            ],
+            'filesize' => [
+                'max' => 3
+            ],
+            'filepath' => 'public/packages/media/levels',
+            'urlpath' => 'packages/media/levels',
+            'prename' => 'l_'
+        ],
     ]
 ];
