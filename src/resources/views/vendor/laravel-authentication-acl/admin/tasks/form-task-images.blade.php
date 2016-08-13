@@ -1,14 +1,14 @@
 <?php
 $arr_images = array();
 
-if (!empty($task)) {
-    $arr = $task->task_images;
-    $arr_images = json_decode($task->task_images);
+if (!empty($task_images)) {
+    $arr = $task_images->task_images;
+    $arr_images = json_decode($task_images->task_images);
 }
 ?>
 <!-- TASK IMAGE -->
 <div class="form-group config-images">
-    {!! Form::label('image',trans('re.images'),': *') !!}
+    {!! Form::label('image',trans('tasks.task_images'),': *') !!}
     {!! Form::file('image') !!}
     {!! Form::hidden('is_file', !empty(@$task->task_image)?1:0, ['class' => 'is_file']) !!}
 

@@ -10,6 +10,8 @@
 
 <?php
 $task = @$data['task'];
+$task_images = @$data['task'];
+ 
 if (@$data['input']) {
     $task = new stdClass();
     $task->task_title = @$task->task_title?$task->task_title:$data['input']['task_title'];
@@ -47,10 +49,10 @@ if (@$data['input']) {
 
 
                         <ul class="nav nav-tabs">
-                            <li class="active"><a data-toggle="tab" href="#home">{!! trans('task_tab_overview') !!}</a></li>
-                            <li><a data-toggle="tab" href="#menu1">{!! trans('task_tab_attributes') !!}</a></li>
-                            <li><a data-toggle="tab" href="#menu2">{!! trans('task_tab_images') !!}</a></li>
-                            <li><a data-toggle="tab" href="#menu3">{!! trans('task_tab_enrolls') !!}</a></li>
+                            <li class="active"><a data-toggle="tab" href="#home">{!! trans('tasks.task_tab_overview') !!}</a></li>
+                            <li><a data-toggle="tab" href="#menu1">{!! trans('tasks.task_tab_attributes') !!}</a></li>
+                            <li><a data-toggle="tab" href="#menu2">{!! trans('tasks.task_tab_images') !!}</a></li>
+                            <li><a data-toggle="tab" href="#menu3">{!! trans('tasks.task_tab_enrolls') !!}</a></li>
                         </ul>
 
                         <div class="tab-content">

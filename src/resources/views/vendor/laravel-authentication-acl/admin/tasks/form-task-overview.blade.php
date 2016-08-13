@@ -5,7 +5,6 @@ $messages = array(
     'task_description' => '',
 );
 $errors = @$data['errors'];
-
 if ($errors && !empty($errors->first('task_title'))) {
     $messages['task_title'] = $errors->first('task_title');
 }

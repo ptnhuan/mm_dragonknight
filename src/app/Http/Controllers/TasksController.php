@@ -120,7 +120,6 @@ class TasksController extends Controller {
         $task_id = $request->get('id');
 
         $task = $obj_tasks->findTaskId($task_id);
-
         /**
          * Validator value
          */
@@ -164,14 +163,12 @@ class TasksController extends Controller {
              * UNVALID
              */
             $errors = $validator->getErrors();
-
             if (!empty($task_id)) {
                 
-                $request->session()->put('flash_message', array(
-                    'errors' => $errors,
-                    'message' => trans('tasks.task_error_action'),
-                    'input' => $request->all(),
-                ));
+                $request->session()->put('errors', $errors);
+                $request->session()->put('message', true);
+                $request->session()->put('input', $request->all());
+               
                 return Redirect::route("tasks.edit", ["id" => $task_id]);
 
             } else {
