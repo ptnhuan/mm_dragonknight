@@ -4,18 +4,18 @@ $messages = array(
     'task_overview' => '',
     'task_description' => '',
 );
-$errors = @$data['errors']; 
-if ($errors) {
-    if (!empty($erros->first('task_title'))) {
-        $messages['task_title'] = $errors->first('task_title');
-    }
-     if (!empty($erros->first('task_overview'))) {
-        $messages['task_overview'] = $errors->first('task_overview');
-    }
-     if (!empty($erros->first('task_description'))) {
-        $messages['task_description'] = $errors->first('task_description');
-    }
+$errors = @$data['errors'];
+
+if ($errors && !empty($errors->first('task_title'))) {
+    $messages['task_title'] = $errors->first('task_title');
 }
+if ($errors && !empty($errors->first('task_overview'))) {
+    $messages['task_overview'] = $errors->first('task_overview');
+}
+if ($errors &&  !empty($errors->first('task_description'))) {
+    $messages['task_description'] = $errors->first('task_description');
+}
+
 ?>
 <!-- TASK TITLE -->
 <div class="form-group">
