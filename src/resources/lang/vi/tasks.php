@@ -35,6 +35,10 @@ return [
     'task_list' => 'Danh sách',
 
     'task_select_all' => 'Tất cả',
+    
+    'task_enrolls' => 'Giao task cho',
+    'task_images' => 'Hình ảnh',
+    'task_points' => 'Điểm',
 
     /*
     |--------------------------------------------------------------------------
@@ -43,5 +47,21 @@ return [
     | error message
     */
     'task_required_ttile' => 'Yêu cầu nhập tiêu đề',
+    
+    /**
+     * Nav tab tasks
+     */
+    'task_tab_overview' => 'Mô tả',
+    'task_tab_attributes' => 'Thuộc tính',
+    'task_tab_images' => 'Hình ảnh',
+    'task_tab_enrolls' => 'Giao task',
+    
+    /**
+     * User task
+     */
+    'user_name' => 'Họ tên',
+    'task_user_name' => 'Họ tên',
+    'user_email' => 'Email',
+    'task_user_status' => 'Trạng thái',
 
 ];
