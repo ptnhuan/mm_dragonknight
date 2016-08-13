@@ -28,5 +28,13 @@ return [
 
     'level_order' => 'STT',
     'level_list' => 'Danh sách',
-
+    'level_point' => 'Ðiểm',
+    'level_overview' => 'Tổng quan',
+    'level_description' => 'Nội dung',
+    'level_image' => 'Hình mô tả',
+    'level_images' => 'Hình ảnh',
+    'level_points' => 'Điểm',
+    're.overview' => 'Tổng quan',
+    're.images' => 'Hình ảnh',
+    're.attributes' => 'Đối tượng',
 ];

@@ -16,6 +16,18 @@ use Illuminate\Http\Request;
 use App\Http\Models\Levels;
 use App\Http\Models\Statuses;
 
+/**
+ * Libraries
+ */
+use App\Http\Libraries\LibFiles as LibFiles;
+
+/**
+ * Validator
+ */
+use Validator;
+use Response;
+use Illuminate\Support\MessageBag as MessageBag;
+use App\Http\Requests\LevelValidator;
 class LevelsController extends Controller {
 
     public $data = array();
@@ -72,28 +84,72 @@ class LevelsController extends Controller {
     /**
      *
      */
-    public function postEditLevel(Request $request) {
+     public function postEditLevel(Request $request) {
+        $libFiles = new LibFiles();
+        $validator = new LevelValidator();
 
         $obj_levels = new Levels();
 
         $input = $request->all();
 
-        $level_id = $request->get('id');
- 
+        $level_id = $request->get('level_id');
+
         $level = $obj_levels->findLevelById($level_id);
+        /**
+         * Validator value
+         */
+        if (!empty($validator->validate($input))) {
+            /**
+             * Upload file image
+             * @Check: extension, size
+             */
+            $fileinfo = array();
+            if (!empty($input['image'])) {
+                $configs = config('dragonknight.libfiles');
+                $file = $request->file('image');
+                $fileinfo = $libFiles->upload($configs['level'], $file);
+            } else {
+                $fileinfo['filename'] = '';
+            }
+            //TODO: check
+            $input = array_merge($input, $fileinfo);
+            /**
+             * VALID
+             */
+            if ($level) {
+                 if (empty($fileinfo['filename']) && $input['is_file']) {
+                    $input['filename'] = $level->level_image;
+                }
+                //edit
+                $params = array_merge($fileinfo, $input);
 
-        if ($level) {
-            //edit
-            $obj_levels->updateLevel($input);
-            return Redirect::route("levels.list")->withMessage(trans('levels.level_edit_successful'));
-
-        } elseif (empty($level_id)) {
-            //add
-            $obj_levels->addLevel($input);
-            return Redirect::route("levels.list")->withMessage(trans('levels.level_edit_successful'));
-            
+                $obj_levels->updateLevel($params);
+                return Redirect::route("levels.list")->withMessage(trans('levels.level_edit_successful'));
+            } elseif (empty($level_id)) {
+                //add
+                $params = array_merge($input, $fileinfo);
+                $obj_levels->addLevel($params);
+                return Redirect::route("levels.list")->withMessage(trans('levels.level_edit_successful'));
+            } else {
+                //error
+            }
         } else {
-            //error
+            /**
+             * UNVALID
+             */
+            $errors = $validator->getErrors();
+
+            if (!empty($level_id)) {
+                $request->session()->put('errors', $errors);
+                $request->session()->put('message', true);
+                $request->session()->put('input', $request->all());
+                return Redirect::route("levels.edit", ["id" => $level_id]);
+            } else {
+                $request->session()->put('errors', $errors);
+                $request->session()->put('message', true);
+                $request->session()->put('input', $request->all());
+                return Redirect::route("levels.edit");
+            }
         }
     }
 

@@ -13,6 +13,7 @@ $level = @$data['level'];
 <div class="row">
     <div class="col-md-12">
         {{-- model general errors from the form --}}
+        
         @if($errors->has('model') )
         <div class="alert alert-danger">{!! $errors->first('model') !!}</div>
         @endif
@@ -36,28 +37,41 @@ $level = @$data['level'];
             <div class="panel-body">
                 <div class="row">
 
-                    <!--FORM TASK-->
+                    <!--FORM LEVEL-->
                     <div class="col-md-12 col-xs-12">
 
                         {{-- group base form --}}
 
-                        {!! Form::model($level, [ 'url' => [URL::route('levels.edit'), @$level->level_id], 'method' => 'post'] ) !!}
+                        {!! Form::open(['route'=>['levels.edit'],  'files'=>true, 'method' => 'post'])  !!}
 
 
-                        <!-- TASK TITLE -->
-                        <div class="form-group">
-                            {!! Form::label('level_title', trans('levels.level_title').':') !!}
-                            {!! Form::text('level_title', @$level->level_title, ['class' => 'form-control', 
-                            'placeholder' => trans('levels.level_title').'']) !!}
-                            <span class="text-danger">{!! $errors->first('level_title') !!}</span>
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#home">{!! trans('levels.re.overview') !!}</a></li>
+                            <li><a data-toggle="tab" href="#menu1">{!! trans('levels.re.attributes') !!}</a></li>
+                            <li><a data-toggle="tab" href="#menu2">{!! trans('levels.re.images') !!}</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+
+                            <!--LEVEL OVERVIEW-->
+                            <div id="home" class="tab-pane fade in active">
+                                @include('laravel-authentication-acl::admin.levels.form-level-overview')
+                            </div>
+
+                            <!--LEVEL ATTRIBUTES-->
+                            <div id="menu1" class="tab-pane fade">
+                                @include('laravel-authentication-acl::admin.levels.form-level-attributes')
+                            </div>
+
+                            <!--LEVEL IMAGES--->
+                            <div id="menu2" class="tab-pane fade">
+                                @include('laravel-authentication-acl::admin.levels.form-level-images')
+                            </div>
                         </div>
-                        
 
-                        <!-- TASK ID HIDDEN -->
+                        <!-- LEVEL ID HIDDEN -->
                         {!! Form::hidden('id',@$level->level_id) !!}
-                        <a href="{!! URL::route('levels.delete',['id' => @$level->level_id, '_token' => csrf_token()]) !!}" class="btn btn-danger pull-right margin-left-5 delete">
-                            <?php echo trans('levels.level_delete') ?>
-                        </a>
+                        <a href="{!! URL::route('levels.delete',['id' => @$level->level_id, '_token' => csrf_token()]) !!}" class="btn btn-danger pull-right margin-left-5 delete"><?php echo trans('levels.level_delete') ?></a>
                         {!! Form::submit(trans('levels.level_save').'', array("class"=>"btn btn-info pull-right ")) !!}
                         {!! Form::close() !!}
                     </div>
