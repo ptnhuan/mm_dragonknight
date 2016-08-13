@@ -13,9 +13,12 @@ class Categories extends Model {
     public $timestamps = false;
     protected $fillable = [
         "category_id",
+        "category_id_parent",
         "category_title",
+        "category_overview",
         "category_description",
-        "category_image"
+        "category_image",
+        "category_images"
     ];
     protected $guarded = ["category_id"];
 
@@ -77,10 +80,16 @@ class Categories extends Model {
      */
 
     public function updateCategory($input) {
+        $category_images = $this->encodeImages($input);
         $category = self::find($input['id']);
         if (!empty($category)) {
 
             $category->category_title = $input['category_title'];
+            $category->category_overview = $input['category_overview'];
+            $category->category_description = $input['category_description'];
+            $category->category_image = $input['filename'];
+            $category->category_images = $category_images;
+
 
             $category->save();
         } else {
@@ -99,11 +108,15 @@ class Categories extends Model {
      */
 
     public function addCategory($input) {
+        $category_images = $this->encodeImages($input);
 
         $category = self::create([
 
                     'category_title' => $input['category_title'],
-//                    'status_id' => $input['status_id'],
+                    'category_overview' => $input['category_overview'],
+                    'category_description' => $input['category_description'],
+                    'category_image' => $input['filename'],
+                    'category_images' => $category_images,
         ]);
         return $category;
     }
@@ -168,23 +181,6 @@ class Categories extends Model {
         
     }
 
-    /*     * *************************************************************************
-      /***************************************************************************
-      /*****************************USER FRONT PAGE*******************************
-      /***************************************************************************
-      /***************************************************************************
-     * getHighlightRe
-     *
-     * @author: Kang
-     * @web: http://tailieuweb.com
-     * @date: 04/08/2016
-     *
-     * @status: TODO: RE-CODE
-     */
-
-    public function getHighlightRe() {
-        $real_estate = self::first();
-        return $real_estate;
-    }
+   
 
 }

@@ -31,7 +31,10 @@ return [
     'category_overview' =>'Mô tả ngắn',
     'category_description' =>'Mô tả',
     'category_parent' =>'Thuộc',
-    'category_select_none' => 'Không'
+    'category_select_none' => 'Không',
+    'category_required_title' => 'Bạn không được bỏ trống tiêu đề',
+    'category_required_overview' => 'Bạn không được bỏ trống Mô tả ngắn',
+    'category_required_description' => 'Bạn không được bỏ trống Mô tả chi tiết',
 
 ];
 
