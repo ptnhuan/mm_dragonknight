@@ -32,11 +32,11 @@ class Users extends User {
         //Search by task title
         if (!empty($params['keyword'])) {
             $eloquent->where('user_profile.first_name', 'LIKE', '%' . $params['keyword'] . '%');
-            $eloquent->orwhere('user_profile.first_name', 'LIKE', '%' . $params['keyword'] . '%');
+            $eloquent->orwhere('user_profile.last_name', 'LIKE', '%' . $params['keyword'] . '%');
             $eloquent->orwhere('users.email', 'LIKE', '%' . $params['keyword'] . '%');
             $eloquent->orwhere('users.id', 'LIKE', '%' . $params['keyword'] . '%');
         }
-        $eloquent->select('users.email, user_profile.first_name, user_profile.last_name');
+//        $eloquent->select('users.email, user_profile.first_name, user_profile.last_name');
 
         $users = $eloquent->paginate($results_per_page);
 
