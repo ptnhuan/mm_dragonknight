@@ -51,7 +51,7 @@ if (@$data['input']) {
                             <li class="active"><a data-toggle="tab" href="#home">{!! trans('posts.post_tab_overview') !!}</a></li>
                             <li><a data-toggle="tab" href="#menu1">{!! trans('posts.post_tab_attributes') !!}</a></li>
                             <li><a data-toggle="tab" href="#menu2">{!! trans('posts.post_tab_images') !!}</a></li>
-                            <li><a data-toggle="tab" href="#menu3">{!! trans('posts.post_tab_enrolls') !!}</a></li>
+                            
                         </ul>
 
                         <div class="tab-content">
@@ -71,10 +71,7 @@ if (@$data['input']) {
                                 @include('laravel-authentication-acl::admin.posts.form-post-images')
                             </div>
 
-                            <!--POST ENROLLS--->
-                            <div id="menu3" class="tab-pane fade">
-                                @include('laravel-authentication-acl::admin.posts.form-post-enrolls')
-                            </div>
+                            
                         </div>
 
                         <!-- POST ID HIDDEN -->
