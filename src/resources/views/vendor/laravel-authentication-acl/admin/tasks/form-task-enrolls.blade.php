@@ -39,11 +39,16 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>AA
-                             {!! Form::hidden('user_ids[]', 0) !!}
+                        <td>
+                            AA
+                            {!! Form::hidden('user_ids[]', 0) !!}
                         </td>
                         <td>AA</td>
-                        <td><i class="fa fa-times" aria-hidden="true"></i></td>
+                        <td>
+                            <a href="#" class="remove-enrolled">
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                            </a>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -68,19 +73,47 @@
             },
             success: function (data) {
                 $('.user-search tbody').empty();
-                $('.user-search').show(); 
+                $('.user-search').show();
                 if (data) {
                     var html_user_item = '';
                     var user_list = jQuery.parseJSON(data);
                     for (i = 0; i < user_list.length; i++) {
                         html_user_item =
                                 '<tr> \n\
-                                            <td>' + user_list[i].first_name + ' ' + user_list[i].first_name + '</td>  \n\
-                                            <td>' + user_list[i].email + '</td>  \n\
-                                            <td>  <a href="#" class="assign-task" ><i class="fa fa-arrow-right" aria-hidden="true"></i></a>   </td>                           \n\
-                                        </tr>';
+                                    <td>\n\
+                                        ' + user_list[i].first_name + ' ' + user_list[i].first_name + '</td>  \n\
+                                    <td>' + user_list[i].email + '</td>  \n\
+                                    <td>  \n\
+                                        <a href="#" class="assign-task" > \n\
+                                            <i class="fa fa-arrow-right" aria-hidden="true"></i>\n\
+                                            <input type="hidden" class="user-id" value="' + user_list[i].id + '">\n\
+                                            <input type="hidden" class="user-name" value="' + user_list[i].first_name + ' ' + user_list[i].first_name + '">\n\
+                                        </a>   \n\
+                                    </td>\n\
+                                </tr>';
                         $('.user-search tbody').append(html_user_item);
-                    } 
+
+                        $('.assign-task').click(function () {
+                            var user_id = $(this).children('.user-id').val();
+                            var user_name = $(this).children('.user-name').val();
+                            var html_enrolled = '<tr>\n\
+                                                    <td>\n\
+                                                        ' + user_name + '\n\
+                                                        <input type="hidden" name="user_ids[]" value="'+user_id+'"\n\
+                                                    </td>\n\
+                                                    <td>\n\
+                                                        Taks mới\n\
+                                                    </td>\n\
+                                                    <td><a href="#" class="remove-enrolled"><i class="fa fa-times" aria-hidden="true"></i></a></td>\n\
+                                                </tr>';
+                            $('.user-enrolled tbody').append(html_enrolled);
+                            $('.remove-enrolled').click(function () {
+                                $(this).parent().parent().remove();
+                            });
+
+                        });
+
+                    }
                 }
             },
             error: function (data) {
@@ -89,9 +122,8 @@
             }
         });
     });
-
-    $('.assign-task').click(function(){
-
+    $('.remove-enrolled').click(function () {
+        $(this).parent().parent().remove();
     });
 
 </script>
