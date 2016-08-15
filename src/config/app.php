@@ -148,6 +148,7 @@ return [
         App\Http\ViewComposers\LevelsServiceProvider::class,
         App\Http\ViewComposers\FaqsServiceProvider::class,
         App\Http\ViewComposers\PostsServiceProvider::class,
+        App\Http\ViewComposers\UsersTasksServiceProvider::class,
     ],
     /*
       |--------------------------------------------------------------------------

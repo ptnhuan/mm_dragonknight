@@ -154,5 +154,25 @@ Route::group(['middleware' => ['web']], function () {
             'as' => 'posts.delete',
             'uses' => 'PostsController@deletePost'
         ]);
+        
+        /**
+         * Users Tasks
+         */
+        Route::get('/admin/users-tasks/list', [
+            'as' => 'users_tasks.list',
+            'uses' => 'UsersTasksController@getList'
+        ]);
+        Route::get('/admin/users-tasks/edit', [
+            'as' => 'users_tasks.edit',
+            'uses' => 'PostsController@editUserTask'
+        ]);
+        Route::post('/admin/users-tasks/edit', [
+            'as' => 'users_tasks.edit',
+            'uses' => 'UsersTasksController@postEditUserTask'
+        ]);
+        Route::get('/admin/users-tasks/delete', [
+            'as' => 'users_tasks.delete',
+            'uses' => 'UsersTasksController@deleteUserTask'
+        ]);
     });
 });

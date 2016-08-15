@@ -117,5 +117,12 @@ return [
             "link" => '/ajax/user_search',
             "permissions" => [""]
         ],
+
+        [
+            "name" => "Users Tasks",
+            "route" => "users_tasks",
+            "link" => '/admin/users-tasks/list',
+            "permissions" => ["_superadmin", "_users-tasks-admin"]
+        ],
     ]
 ];
