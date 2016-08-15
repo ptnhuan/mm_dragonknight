@@ -37,13 +37,9 @@ class CategoriesController extends Controller {
     public function getList(Request $request) {
 
         $obj_categories = new Categories();
-        $obj_statuses = new Statuses;
-
-        $search = $request->all();
-
+        $search = $request->all();  
+   
         $categories = $obj_categories->getList($search);
-
-        $statuses = $obj_statuses->pushSelectBox();
         $configs = config('dragonknight.libfiles');
 
         $data = array_merge($this->data, array(
@@ -134,8 +130,7 @@ class CategoriesController extends Controller {
              */
             if ($category) {
                 //edit
-                if (empty($fileinfo['filename']) && $input['is_file'])
-                {
+                if (empty($fileinfo['filename']) && $input['is_file']) {
                     $input['filename'] = $category->category_image;
                 }
 
@@ -146,9 +141,9 @@ class CategoriesController extends Controller {
             } elseif (empty($category_id)) {
                 //add
 
-                 $params = array_merge($input, $fileinfo);
+                $params = array_merge($input, $fileinfo);
                 $obj_categories->addCategory($params);
-               return Redirect::route("categories.list")->withMessage(trans('categories.category_edit_successful'));
+                return Redirect::route("categories.list")->withMessage(trans('categories.category_edit_successful'));
             } else {
                 //error
             }

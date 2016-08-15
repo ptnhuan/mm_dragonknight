@@ -32,6 +32,7 @@ return [
     'category_description' =>'Mô tả',
     'category_parent' =>'Thuộc',
     'category_select_none' => 'Không',
+    'category_unsuccessful'=>'Bạn phải điền đầy đủ thông tin',
     'category_required_title' => 'Bạn không được bỏ trống tiêu đề',
     'category_required_overview' => 'Bạn không được bỏ trống Mô tả ngắn',
     'category_required_description' => 'Bạn không được bỏ trống Mô tả chi tiết',

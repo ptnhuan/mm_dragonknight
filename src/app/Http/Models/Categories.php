@@ -85,7 +85,9 @@ class Categories extends Model {
         if (!empty($category)) {
 
             $category->category_title = $input['category_title'];
+            $category->category_id_parent = $input['category_id_parent'];
             $category->category_overview = $input['category_overview'];
+
             $category->category_description = $input['category_description'];
             $category->category_image = $input['filename'];
             $category->category_images = $category_images;
@@ -113,6 +115,7 @@ class Categories extends Model {
         $category = self::create([
 
                     'category_title' => $input['category_title'],
+                    'category_id_parent' => $input['category_id_parent'],
                     'category_overview' => $input['category_overview'],
                     'category_description' => $input['category_description'],
                     'category_image' => $input['filename'],
@@ -180,7 +183,5 @@ class Categories extends Model {
     public function decodeImages($json_images) {
         
     }
-
-   
 
 }

@@ -59,7 +59,7 @@ if (!empty($category_images)) {
                             <span class="text-danger">{!! $errors->first('category_title') !!}</span>
                         </div>
 
-                        <!--  TITLE -->
+                        <!--  CATEGORY PARENT-->
                         <div class="form-group">
                             {!! Form::label('category_id_parent', trans('categories.category_parent').':') !!}
                             {!! Form::select('category_id_parent', @$data['categories'], @$category->category_id_parent, ['class' => 'form-control']) !!}
