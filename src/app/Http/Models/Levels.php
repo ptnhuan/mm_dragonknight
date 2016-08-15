@@ -20,7 +20,6 @@ class Levels extends Model {
         "level_notes",
         "level_image",
         "level_images",
-        "level_status",
         "level_created_at",
         "level_updated_at",
         "created_at",
