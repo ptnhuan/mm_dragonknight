@@ -38,18 +38,19 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <!--ASSIGNED USER-->
+                    @if(!empty($data['users_tasks']))
+                    @foreach($data['users_tasks'] as $user_task)
                     <tr>
                         <td>
-                            AA
-                            {!! Form::hidden('user_ids[]', 0) !!}
+                            {!! $user_task->first_name .' '. $user_task->last_name !!}
+                            {!! Form::hidden('user_ids[]',$user_task->user_id) !!}
                         </td>
-                        <td>AA</td>
-                        <td>
-                            <a href="#" class="remove-enrolled">
-                                <i class="fa fa-times" aria-hidden="true"></i>
-                            </a>
-                        </td>
+                        <td>{!! Form::select('status_ids[]', @$data['statuses'], $user_task->status_id, ['class' => 'form-control']) !!}</td>
+                        <td><a href="#" class="remove-enrolled"><i class="fa fa-times" aria-hidden="true"></i></a></td>
                     </tr>
+                    @endforeach
+                    @endif
                 </tbody>
             </table>
         </div>
@@ -61,25 +62,34 @@
 
 @section('footer_ajax_scripts')
 <script>
+    /**
+     * Search user by keyword
+     */
+    var timeout;
     $("#user_enrolls").keypress(function () {
         $('.user-search tbody').empty();
         $('.user-search').show();
-        $.ajax({
-            type: "POST",
-            url: "{!!  URL::route('ajax_user.search') !!}",
-            data: {
-                '_token': "{!! csrf_token() !!}",
-                keyword: $("#user_enrolls").val()
-            },
-            success: function (data) {
-                $('.user-search tbody').empty();
-                $('.user-search').show();
-                if (data) {
-                    var html_user_item = '';
-                    var user_list = jQuery.parseJSON(data);
-                    for (i = 0; i < user_list.length; i++) {
-                        html_user_item =
-                                '<tr> \n\
+        if(timeout) {
+            clearTimeout(timeout);
+            timeout = null;
+        }
+        timeout  = setTimeout(function () {
+            $.ajax({
+                type: "POST",
+                url: "{!!  URL::route('ajax_user.search') !!}",
+                data: {
+                    '_token': "{!! csrf_token() !!}",
+                    keyword: $("#user_enrolls").val()
+                },
+                success: function (data) {
+                    $('.user-search tbody').empty();
+                    $('.user-search').show();
+                    if (data) {
+                        var html_user_item = '';
+                        var user_list = jQuery.parseJSON(data);
+                        for (i = 0; i < user_list.length; i++) {
+                            html_user_item =
+                                    '<tr> \n\
                                     <td>\n\
                                         ' + user_list[i].first_name + ' ' + user_list[i].first_name + '</td>  \n\
                                     <td>' + user_list[i].email + '</td>  \n\
@@ -91,39 +101,40 @@
                                         </a>   \n\
                                     </td>\n\
                                 </tr>';
-                        $('.user-search tbody').append(html_user_item);
+                            $('.user-search tbody').append(html_user_item);
+                        }
+                    }
+                },
+                error: function (data) {
+                    $('.user-search').empty();
+                    $('.user-search').append('<h4>Không tìm thấy</h4>');
+                }
+            });
 
-                        $('.assign-task').click(function () {
-                            var user_id = $(this).children('.user-id').val();
-                            var user_name = $(this).children('.user-name').val();
-                            var html_enrolled = '<tr>\n\
+        }, 1000);
+    });//End search
+
+    $('.remove-enrolled').click(function () {
+        $(this).parent().parent().remove();
+    });
+
+    $(document).on('click', '.assign-task', function () {
+        var user_id = $(this).children('.user-id').val();
+        var user_name = $(this).children('.user-name').val();
+        var html_enrolled = '<tr>\n\
                                                     <td>\n\
                                                         ' + user_name + '\n\
-                                                        <input type="hidden" name="user_ids[]" value="'+user_id+'"\n\
+                                                        <input type="hidden" name="user_ids[]" value="' + user_id + '"\n\
                                                     </td>\n\
                                                     <td>\n\
-                                                        Taks mới\n\
+                                                    ' + $('#status_id').clone().prop({name: "status_ids[]"}).get(0).outerHTML +'\n\
                                                     </td>\n\
                                                     <td><a href="#" class="remove-enrolled"><i class="fa fa-times" aria-hidden="true"></i></a></td>\n\
                                                 </tr>';
-                            $('.user-enrolled tbody').append(html_enrolled);
-                            $('.remove-enrolled').click(function () {
-                                $(this).parent().parent().remove();
-                            });
-
-                        });
-
-                    }
-                }
-            },
-            error: function (data) {
-                $('.user-search').empty();
-                $('.user-search').append('<h4>Không tìm thấy</h4>');
-            }
+        $('.user-enrolled tbody').append(html_enrolled);
+        $('.remove-enrolled').click(function () {
+            $(this).parent().parent().remove();
         });
-    });
-    $('.remove-enrolled').click(function () {
-        $(this).parent().parent().remove();
     });
 
 </script>

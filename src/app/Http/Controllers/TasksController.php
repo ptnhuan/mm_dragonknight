@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
  * Models
  */
 use App\Http\Models\Tasks;
+use App\Http\Models\UsersTasks;
 use App\Http\Models\Statuses;
 /**
  * Libraries
@@ -61,6 +62,7 @@ class TasksController extends Controller {
      */
     public function editTask(Request $request) {
         $obj_tasks = new Tasks();
+        $obj_users_tasks = new UsersTasks();
 
         $obj_statuses = new Statuses;
 
@@ -84,6 +86,7 @@ class TasksController extends Controller {
                 'input' => $input,
                 'message' => $message,
                 'configs' => $configs,
+                'users_tasks' => $obj_users_tasks->getUserByTaskId($task_id)
             ));
             return View::make('laravel-authentication-acl::admin.tasks.form-task')->with(['data' => $data]);
         } else if (is_null($task_id)) {
@@ -114,6 +117,7 @@ class TasksController extends Controller {
         $validator = new TaskValidator();
 
         $obj_tasks = new Tasks();
+        $obj_users_tasks = new UsersTasks();
 
         $input = $request->all();
 
@@ -138,6 +142,7 @@ class TasksController extends Controller {
             }
             //TODO: check
             $input = array_merge($input, $fileinfo);
+
             /**
              * VALID
              */
@@ -149,11 +154,21 @@ class TasksController extends Controller {
                 $params = array_merge($fileinfo, $input);
 
                 $obj_tasks->updateTask($params);
+
+                /**
+                 * Assign task
+                 */
+                $obj_users_tasks->assignTask($input['user_ids'], $input['status_ids'], $task->task_id);
                 return Redirect::route("tasks.list")->withMessage(trans('tasks.task_edit_successful'));
             } elseif (empty($task_id)) {
                 //add
                 $params = array_merge($input, $fileinfo);
                 $task = $obj_tasks->addTask($params);
+
+                /**
+                 * Assign task
+                 */
+                $obj_users_tasks->assignTask($input['user_ids'], $input['status_ids'], $task->task_id);
                 return Redirect::route("tasks.edit", ["id" => $task->task_id])->withMessage(trans('tasks.task_add_successful'));
             } else {
                 //error
@@ -164,11 +179,11 @@ class TasksController extends Controller {
              */
             $errors = $validator->getErrors();
             if (!empty($task_id)) {
-                
+
                 $request->session()->put('errors', $errors);
                 $request->session()->put('message', true);
                 $request->session()->put('input', $request->all());
-               
+
                 return Redirect::route("tasks.edit", ["id" => $task_id]);
 
             } else {
