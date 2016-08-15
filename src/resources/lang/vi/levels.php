@@ -36,5 +36,5 @@ return [
     'level_points' => 'Điểm',
     're.overview' => 'Tổng quan',
     're.images' => 'Hình ảnh',
-    're.attributes' => 'Đối tượng',
+    're.attributes' => 'Thuộc tính',
 ];
