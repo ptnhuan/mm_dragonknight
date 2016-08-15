@@ -158,7 +158,7 @@ class TasksController extends Controller {
                 /**
                  * Assign task
                  */
-                $obj_users_tasks->assignTask($input['user_ids'], $input['status_ids'], $task->task_id);
+                $obj_users_tasks->assignTask(@$input['user_ids'], @$input['status_ids'], $task->task_id);
                 return Redirect::route("tasks.list")->withMessage(trans('tasks.task_edit_successful'));
             } elseif (empty($task_id)) {
                 //add

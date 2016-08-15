@@ -78,11 +78,10 @@ class UsersTasks extends Model {
 
     public function getUserByTaskId($task_id) {
         $users_tasks = self::where('users_tasks.task_id', '=', $task_id)
-                            ->join('user_profile', 'user_profile.user_id', '=', 'users_tasks.user_id')
-                            ->select('user_profile.first_name', 'user_profile.last_name', 'users_tasks.status_id', 'users_tasks.user_id')
-                            ->get();
+                ->join('user_profile', 'user_profile.user_id', '=', 'users_tasks.user_id')
+                ->select('user_profile.first_name', 'user_profile.last_name', 'users_tasks.status_id', 'users_tasks.user_id')
+                ->get();
         return $users_tasks;
-
     }
 
     /*     * ********************************************
@@ -97,14 +96,17 @@ class UsersTasks extends Model {
 
     public function assignTask($user_ids, $status_ids, $task_id) {
         $this->deleteUsreStask($task_id);
-        foreach ($user_ids as $index => $user_id) {
-            $this->addUserTask(array('user_id' => $user_id, 'task_id' => $task_id, 'status_id' => $status_ids[$index]));
+        if (!empty($user_ids)) {
+            foreach ($user_ids as $index => $user_id) {
+                $this->addUserTask(array('user_id' => $user_id, 'task_id' => $task_id, 'status_id' => $status_ids[$index]));
+            }
         }
     }
 
     public function deleteUsreStask($task_id) {
 
-        $users_tasks = self::find($task_id);
+        $users_tasks = self::where('task_id', '=', $task_id);
+
         if (!empty($users_tasks)) {
             return $users_tasks->delete();
         }
@@ -168,6 +170,7 @@ class UsersTasks extends Model {
         $user_task = self::create([
                     'user_id' => $input['user_id'],
                     'task_id' => $input['task_id'],
+                    'status_id' => $input['status_id'],
         ]);
         return $user_task;
     }
