@@ -6,22 +6,30 @@
 
 @section('content')
 
+
+
 <?php
 $faq = @$data['faq'];
+$faq_image = @$data['faq'];
+if (@$data['input']) {
+    $faq = new stdClass();  
+    $faq->faq_title = @$faq->faq_title?$faq->faq_title:$data['input']['faq_title'];
+    $faq->faq_overview = @$faq->faq_overview?$faq->faq_overview:$data['input']['faq_overview'];
+    $faq->faq_description = @$faq->faq_description?$faq->faq_description:$data['input']['faq_description'];
+}
 ?>
 
 <div class="row">
     <div class="col-md-12">
         {{-- model general errors from the form --}}
-        @if($errors->has('model') )
-        <div class="alert alert-danger">{!! $errors->first('model') !!}</div>
+
+        @if(@$data['errors'] )
+            <div class="alert alert-danger">{!! trans('faqs.faq_unsuccessful') !!}</div>
+        @elseif (@$data['message'])
+            <div class="alert alert-success">{!! trans('faqs.faq_successful') !!}</div>
         @endif
 
-        {{-- successful message --}}
-        <?php $message = Session::get('message'); ?>
-        @if( isset($message) )
-        <div class="alert alert-success">{{$message}}</div>
-        @endif
+
 
         <div class="panel panel-info">
             <div class="panel-heading">
@@ -36,57 +44,34 @@ $faq = @$data['faq'];
 
                         {{-- group base form --}}
 
-                        {!! Form::model($faq, [ 'url' => [URL::route('faqs.edit'), @$faq->faq_id], 'method' => 'post'] ) !!}
+                        {!! Form::open(['route'=>['faqs.edit'],  'files'=>true, 'method' => 'faq'])  !!}
 
 
-                        <!-- TITLE -->
-                        <div class="form-group">
-                            {!! Form::label('faq_title', trans('faqs.faq_title').':') !!}
-                            {!! Form::text('faq_title', @$faq->faq_title, ['class' => 'form-control', 'placeholder' => trans('faqs.faq_title').'']) !!}
-                            <span class="text-danger">{!! $errors->first('faq_title') !!}</span>
-                        </div>
-                        
-                         <!-- OVERVIEW -->
-                        <div class="form-group">
-                            {!! Form::label('faq_overview', trans('faqs.faq_overview').':') !!}
-                            {!! Form::text('faq_overview', @$faq->faq_overview, ['class' => 'form-control', 'placeholder' => trans('faqs.faq_overview').'']) !!}
-                            <span class="text-danger">{!! $errors->first('faq_overview') !!}</span>
-                        </div>
-                         
-                          <!-- DESCRIPTION -->
-                        <div class="form-group">
-                            {!! Form::label('faq_description', trans('faqs.faq_description').':') !!}
-                            {!! Form::text('faq_description', @$faq->faq_description, ['class' => 'form-control', 'placeholder' => trans('faqs.faq_description').'']) !!}
-                            <span class="text-danger">{!! $errors->first('faq_description') !!}</span>
-                        </div>
-                             <!--VIEWS -->
-                        <div class="form-group">
-                            {!! Form::label('faq_views', trans('faqs.faq_views').':') !!}
-                            {!! Form::text('faq_description', @$faq->faq_views, ['class' => 'form-control', 'placeholder' => trans('faqs.faq_views').'']) !!}
-                            <span class="text-danger">{!! $errors->first('faq_views') !!}</span>
-                        </div>
-                                <!--LIKE -->
-                        <div class="form-group">
-                            {!! Form::label('faq_likes', trans('faqs.faq_likes').':') !!}
-                            {!! Form::text('faq_likes', @$faq->faq_likes, ['class' => 'form-control', 'placeholder' => trans('faqs.faq_likes').'']) !!}
-                            <span class="text-danger">{!! $errors->first('faq_likes') !!}</span>
-                        </div>
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#home">{!! trans('faqs.faq_tab_overview') !!}</a></li>
+                            <li><a data-toggle="tab" href="#menu1">{!! trans('faqs.faq_tab_attributes') !!}</a></li>
+                            <li><a data-toggle="tab" href="#menu2">{!! trans('faqs.faq_tab_image') !!}</a></li>
+                        </ul>
 
-                                  <!--CACHE PAGE -->
-                        <div class="form-group">
-                            {!! Form::label('faq_cache_page', trans('faqs.faq_cache_page').'') !!}
-                            {!! Form::text('faq_cache_page', @$faq->faq_cache_page, ['class' => 'form-control', 'placeholder' => trans('faqs.faq_cache_page').'']) !!}
-                            <span class="text-danger">{!! $errors->first('faq_cache_page') !!}</span>
-                        </div>
+                        <div class="tab-content">
 
-                        <!--STATUS -->
-                        <div class="form-group">
-                            {!! Form::label('status_id', trans('faqs.faq_status').':') !!}
-                            {!! Form::select('status_id', @$data['statuses'], @$faq->status_id, ['class' => 'form-control']) !!}
+                            <!--TASK OVERVIEW-->
+                            <div id="home" class="tab-pane fade in active">
+                                @include('laravel-authentication-acl::admin.faqs.form-faq-overview')
+                            </div>
 
-                            <span class="text-danger">{!! $errors->first('status_id') !!}</span>
+                            <!--TASK ATTRIBUTES-->
+                            <div id="menu1" class="tab-pane fade">
+                                @include('laravel-authentication-acl::admin.faqs.form-faq-attributes')
+                            </div>
+
+                            <!--TASK IMAGES--->
+                            <div id="menu2" class="tab-pane fade">
+                                @include('laravel-authentication-acl::admin.faqs.form-faq-image')
+                            </div>
+
+                           
                         </div>
-                        
 
                         <!-- TASK ID HIDDEN -->
                         {!! Form::hidden('id',@$faq->faq_id) !!}

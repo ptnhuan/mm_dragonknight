@@ -31,6 +31,27 @@ return [
     'faq_create' => 'Tạo mới',
     'faq_order' => 'STT',
     'faq_status' => 'Trạng thái',
-    'faq_list' => 'Danh sách',
-    ''
+    'faq_list' => 'Danh sách',  
+    
+     /**
+     * Nav tab faqs
+     */
+
+    'faq_tab_overview' => 'Mô tả',
+    'faq_tab_attributes' => 'Thuộc tính',
+    'faq_tab_image' => 'Hình ảnh', 
+    'faqs.faq_required_title' => 'Chưa nhập tiêu đề', 
+    'faqs.faq_required_overview' => 'Chưa nhập mô tả ', 
+    'faqs.faq_required_desciption' => 'Chưa nhập nội dung', 
+    
+    
+    /**
+     * User faqs
+     */
+    'faq_user_name' => 'Họ tên',
+    'faq_user_status' => 'Trạng thái',
+    'user_name' => 'Họ tên',
+    'user_email' => 'Email',
+    'user_action' => 'Thao tác',
+    
 ];

@@ -3,7 +3,7 @@
         <a href="{!! URL::route('faqs.edit') !!}" class="btn btn-info pull-right"><i class="fa fa-plus"></i><?php echo trans('faqs.faq_add') ?></a>
     </div>
 </div>
-<?php $faqs = @$data['faqs']; ?>
+<?php $faqs = @$data['faq']; ?>
 
 @if( !$faqs->isEmpty() )
 <table class="table table-hover">

@@ -19,6 +19,7 @@ class Faqs extends Model {
         "faq_title",
         "faq_overview",
         "faq_description",
+        "faq_image", // làm k lo lam ..cmt :(
         "faq_views",
         "faq_like",
         "faq_cache_page",
@@ -40,7 +41,7 @@ class Faqs extends Model {
 
     public function getList($params = array()) {
         $this->config_reader = App::make('config');
-        $results_per_page = $this->config_reader->get('dragonknight.faqs_admin_per_page');
+        $results_per_page = $this->config_reader->get('dragonknight.faq_admin_per_page');
 
         $eloquent = self::orderBy('faqs.faq_id', 'DESC');
 
@@ -55,13 +56,15 @@ class Faqs extends Model {
         }
 
 
-        $faqs = $eloquent->paginate($results_per_page);
 
-        return $faqs;
+
+        $faq = $eloquent->paginate($results_per_page);
+
+        return $faq;
     }
 
     /*     * ********************************************
-     * findFaqId
+     * findRealEstateId
      *
      * @author: Kang
      * @web: http://tailieuweb.com
@@ -70,13 +73,13 @@ class Faqs extends Model {
      * @status: REVIEWED
      */
 
-    public function findFaqId($faq_id) {
-        $faq = self::where('faq_id', $faq_id)
+    public function findFaqId($id) {
+        $faq = self::where('faq_id', $id)
                 ->first();
         return $faq;
     }
 
-    /*     * ********************************************
+    /*     * *******************************************
      * updateFaq
      *
      * @author: Kang
@@ -92,7 +95,9 @@ class Faqs extends Model {
 
             $faq->faq_title = $input['faq_title'];
             $faq->status_id = $input['status_id'];
-
+            $faq->faq_overview = $input['faq_overview'];
+            $faq->faq_description = $input['faq_description'];
+            $faq->faq_image = $input['filename'];
             $faq->save();
         } else {
             
@@ -112,8 +117,12 @@ class Faqs extends Model {
     public function addFaq($input) {
 
         $faq = self::create([
+
                     'faq_title' => $input['faq_title'],
-                    'status_id' => $input['status_id']
+                    'status_id' => $input['status_id'],
+                    'faq_overview' => $input['faq_overview'],
+                    'faq_description' => $input['faq_description'],
+                    'faq_image' => $input['filename'],
         ]);
         return $faq;
     }
@@ -134,42 +143,5 @@ class Faqs extends Model {
 
         return $faq->delete();
     }
-
-    /*     * ********************************************
-     * viewRe
-     *
-     * @author: Kang
-     * @web: http://tailieuweb.com
-     * @date: 26/6/2016
-     *
-     * @status: REVIEWED
-     */
-
-    public function viewRe($params = array()) {
-
-        $real_estate = self::where('real_estate_id', $params['real_estate_id'])
-                ->first();
-
-        return $real_estate;
-    }
-
-    /*     * *************************************************************************
-      /***************************************************************************
-      /*****************************USER FRONT PAGE*******************************
-      /***************************************************************************
-      /***************************************************************************
-     * getHighlightRe
-     *
-     * @author: Kang
-     * @web: http://tailieuweb.com
-     * @date: 04/08/2016
-     *
-     * @status: TODO: RE-CODE
-     */
-
-    public function getHighlightRe() {
-        $real_estate = self::first();
-        return $real_estate;
-    }
-
+ 
 }
