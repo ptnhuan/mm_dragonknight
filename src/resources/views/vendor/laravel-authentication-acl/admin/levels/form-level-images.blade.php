@@ -1,14 +1,14 @@
 <?php
 $arr_images = array();
 
-if (!empty($level)) {
-    $arr = $level->level_images;
-    $arr_images = json_decode($level->level_images);
+if (!empty($level_images)) {
+    $arr = $level_images->level_images;
+    $arr_images = json_decode($level_images->level_images);
 }
 ?>
-<!-- TASK IMAGE -->
+<!-- LEVEL IMAGE -->
 <div class="form-group config-images">
-    {!! Form::label('image',trans('re.images'),': *') !!}
+    {!! Form::label('image',trans('levels.level_images'),': *') !!}
     {!! Form::file('image') !!}
     {!! Form::hidden('is_file', !empty(@$level->level_image)?1:0, ['class' => 'is_file']) !!}
 

@@ -8,6 +8,14 @@
 
 <?php
 $level = @$data['level'];
+$level_images = @$data['level'];
+ 
+if (@$data['input']) {
+    $level = new stdClass();
+    $level->level_title = @$level->level_title?$level->level_title:$data['input']['level_title'];
+    $level->level_overview = @$level->level_overview?$level->level_overview:$data['input']['level_overview'];
+    $level->level_description = @$level->level_description?$level->level_description:$data['input']['level_description'];
+}
 ?>
 
 <div class="row">
