@@ -50,7 +50,7 @@ class Levels extends Model {
      */
 
     public function findLevelById($level_id) {
-        
+
         $level = self::where('level_id', $level_id)
                 ->first();
         return $level;
@@ -65,6 +65,12 @@ class Levels extends Model {
         if (!empty($level)) {
 
             $level->level_title = $input['level_title'];
+            $level->level_overview = $input['level_overview'];
+            $level->level_description = $input['level_description'];
+            $level->level_notes = $input['level_notes'];
+            $level->level_points = $input['level_points'];
+            $level->level_image = $input['filename'];
+//            $level->level_images = $level_images;
             $level->save();
         } else {
             
@@ -79,6 +85,11 @@ class Levels extends Model {
 
         $level = self::create([
                     'level_title' => $input['level_title'],
+                    'level_overview' => $input['level_overview'],
+                    'level_description' => $input['level_description'],
+                    'level_points' => $input['level_points'],
+                    'level_image' => $input['filename'],
+//                    'level_images' => $level_images,
         ]);
         return $level;
     }
@@ -88,7 +99,7 @@ class Levels extends Model {
      */
 
     public function deleteLevelById($level_id) {
-        
+
         $level = self::find($level_id);
         return $level->delete();
     }
