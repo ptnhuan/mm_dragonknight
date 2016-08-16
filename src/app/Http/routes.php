@@ -28,7 +28,7 @@ Route::group(['middleware' => ['web']], function () {
             'as' => 'ajax_user.search',
             'uses' => 'UsersController@ajax_search_user'
         ]);
-         Route::get('/ajax/user_search', [
+        Route::get('/ajax/user_search', [
             'as' => 'ajax_user.search',
             'uses' => 'UsersController@ajax_search_user'
         ]);
@@ -154,25 +154,30 @@ Route::group(['middleware' => ['web']], function () {
             'as' => 'posts.delete',
             'uses' => 'PostsController@deletePost'
         ]);
-        
+    });
+});
+
+
+Route::group(['middleware' => ['web']], function () {
+    Route::group(['middleware' => ['admin_logged', 'can_see']], function () {
         /**
          * Users Tasks
          */
-        Route::get('/admin/users-tasks/list', [
-            'as' => 'users_tasks.list',
-            'uses' => 'UsersTasksController@getList'
+        Route::get('/user/tasks/list', [
+            'as' => 'user_tasks.list',
+            'uses' => 'User\UserTasksController@getList'
         ]);
-        Route::get('/admin/users-tasks/edit', [
-            'as' => 'users_tasks.edit',
-            'uses' => 'PostsController@editUserTask'
+        Route::get('/user/tasks/edit', [
+            'as' => 'user_tasks.edit',
+            'uses' => 'User\UserTasksController@editUserTask'
         ]);
-        Route::post('/admin/users-tasks/edit', [
-            'as' => 'users_tasks.edit',
-            'uses' => 'UsersTasksController@postEditUserTask'
+        Route::post('/user/tasks/edit', [
+            'as' => 'user_tasks.edit',
+            'uses' => 'User\UserTasksController@postEditUserTask'
         ]);
-        Route::get('/admin/users-tasks/delete', [
-            'as' => 'users_tasks.delete',
-            'uses' => 'UsersTasksController@deleteUserTask'
+        Route::get('/user/tasks/delete', [
+            'as' => 'user_tasks.delete',
+            'uses' => 'User\UserTasksController@deleteUserTask'
         ]);
     });
 });

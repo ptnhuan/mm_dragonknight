@@ -28,12 +28,12 @@
                     </h3>
                 </div>
                 <div class="panel-body">
-                    @include('laravel-authentication-acl::admin.users_tasks.list-users-tasks-item')
+                    @include('laravel-authentication-acl::user.user_tasks.list-user-tasks-item')
                 </div>
             </div>
         </div>
         <div class="col-md-4">
-            @include('laravel-authentication-acl::admin.users_tasks.search-users-tasks')
+            @include('laravel-authentication-acl::user.user_tasks.search-user-tasks')
         </div>
     </div>
 </div>

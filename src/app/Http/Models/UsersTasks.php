@@ -35,12 +35,13 @@ class UsersTasks extends Model {
      * @status: REVIEWED
      */
 
-    public function getList($params = array()) {
+    public function userGetTasks($params = array()) {
         $this->config_reader = App::make('config');
         $results_per_page = $this->config_reader->get('dragonknight.tasks_admin_per_page');
 
-        $eloquent = self::orderBy('users_tasks.user_task_id', 'DESC');
-
+        $eloquent = self::join('tasks', 'tasks.task_id', '=', 'users_tasks.task_id')
+                        ->select('task_title', 'users_tasks.status_id', 'users_tasks.user_task_id' )
+                        ->where('users_tasks.user_id', '=', $params['current_user']['id']);
 
         //Search by task title
         if (!empty($params['task_title'])) {
@@ -50,8 +51,8 @@ class UsersTasks extends Model {
         //Search by task status
         if (!empty($params['status_id'])) {
             $eloquent->where('tasks.status_id', 'LIKE', '%' . $params['status_id'] . '%');
-        } 
-        
+        }
+
         $users_tasks = $eloquent->paginate($results_per_page);
 
         return $users_tasks;
@@ -92,14 +93,14 @@ class UsersTasks extends Model {
      */
 
     public function assignTask($user_ids, $status_ids, $task_id) {
-        $this->deleteUsreStask($task_id);
+        $this->deleteUsersTasks($task_id);
         if (!empty($user_ids)) {
             foreach ($user_ids as $index => $user_id) {
                 $this->addUserTask(array('user_id' => $user_id, 'task_id' => $task_id, 'status_id' => $status_ids[$index]));
             }
         }
     }
- 
+
     public function updateStatus($user_id, $task_id, $status_id) {
         $user_task = self::where('user_id', '=', $user_id)
                 ->where('task_id', '=', $task_id)
@@ -116,5 +117,79 @@ class UsersTasks extends Model {
                 ->where('task_id', '=', $task_id)
                 ->get();
         return $user_task;
-    }  
+    }
+
+    public function deleteUsersTasks($task_id) {
+
+        $users_tasks = self::where('task_id', '=', $task_id);
+
+        if (!empty($users_tasks)) {
+            return $users_tasks->delete();
+        }
+    }
+
+
+    /*     * *******************************************
+     * updateTask
+     *
+     * @author: Kang
+     * @web: http://tailieuweb.com
+     * @date: 26/6/2016
+     *
+     * @status: REVIEWED
+     */
+
+    public function updateUserTask($input) {
+        $task = self::find($input['id']);
+        if (!empty($task)) {
+
+            $task->task_title = $input['task_title'];
+            $task->status_id = $input['status_id'];
+            $task->task_overview = $input['task_overview'];
+            $task->task_description = $input['task_description'];
+            $task->task_notes = $input['task_notes'];
+            $task->save();
+        } else {
+
+        }
+    }
+
+    /*     * ********************************************
+     * addTask
+     *
+     * @author: Kang
+     * @web: http://tailieuweb.com
+     * @date: 26/6/2016
+     *
+     * @status: REVIEWED
+     */
+
+    public function addUserTask($input) {
+
+        $user_task = self::create([
+                    'user_id' => $input['user_id'],
+                    'task_id' => $input['task_id'],
+                    'status_id' => $input['status_id'],
+        ]);
+        return $user_task;
+    }
+
+    /*     * ********************************************
+     * deleteTaskById
+     *
+     * @author: Kang
+     * @web: http://tailieuweb.com
+     * @date: 26/6/2016
+     *
+     * @status: REVIEWED
+     */
+
+    public function deleteTaskById($task_id) {
+
+        $task = self::find($task_id);
+
+        return $task->delete();
+    }
+
+
 }

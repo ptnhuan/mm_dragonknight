@@ -119,10 +119,10 @@ return [
         ],
 
         [
-            "name" => "Users Tasks",
-            "route" => "users_tasks",
-            "link" => '/admin/users-tasks/list',
-            "permissions" => ["_superadmin", "_users-tasks-admin"]
+            "name" => "User Tasks",
+            "route" => "user_tasks",
+            "link" => '/user/tasks/list',
+            "permissions" => ["_superadmin", "_user-tasks-admin"]
         ],
     ]
 ];

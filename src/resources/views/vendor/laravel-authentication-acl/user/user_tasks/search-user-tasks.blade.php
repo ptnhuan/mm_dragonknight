@@ -6,7 +6,7 @@
     </div>
     <div class="panel-body">
 
-        {!! Form::open(['route' => 'users_tasks.list','method' => 'get']) !!}
+        {!! Form::open(['route' => 'user_tasks.list','method' => 'get']) !!}
 
         <!--TITLE-->
         <div class="form-group">
