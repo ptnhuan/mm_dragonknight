@@ -39,9 +39,14 @@
         @yield('before_footer_scripts')
 
         {!! HTML::script('packages/jacopo/laravel-authentication-acl/js/vendor/jquery-2.1.4.min.js') !!}
+
         {!! HTML::script('packages/jacopo/laravel-authentication-acl/js/vendor/bootstrap.min.js') !!}
 
+        @yield('footer_add_scripts')
+
         @yield('footer_scripts')
+        @yield('footer_scripts_tab1')
+        @yield('footer_scripts_tab2')
         @yield('footer_ajax_scripts')
         @yield('footer_more_scripts')
         {{-- End footer scripts --}}

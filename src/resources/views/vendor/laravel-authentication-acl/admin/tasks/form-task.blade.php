@@ -11,7 +11,7 @@
 <?php
 $task = @$data['task'];
 $task_images = @$data['task'];
- 
+
 if (@$data['input']) {
     $task = new stdClass();
     $task->task_title = @$task->task_title?$task->task_title:$data['input']['task_title'];
@@ -91,6 +91,10 @@ if (@$data['input']) {
         </div>
     </div>
 </div>
+@stop
+
+@section('footer_add_scripts')
+    {!! HTML::script('vendor/laravel-filemanager/js/tinymce.min.js') !!}
 @stop
 
 @section('footer_scripts')
