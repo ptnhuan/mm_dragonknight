@@ -40,8 +40,8 @@ class UsersTasks extends Model {
         $results_per_page = $this->config_reader->get('dragonknight.tasks_admin_per_page');
 
         $eloquent = self::join('tasks', 'tasks.task_id', '=', 'users_tasks.task_id')
-                        ->select('task_title', 'users_tasks.status_id', 'users_tasks.user_task_id' )
-                        ->where('users_tasks.user_id', '=', $params['current_user']['id']);
+                ->select('task_title', 'users_tasks.status_id', 'users_tasks.user_task_id')
+                ->where('users_tasks.user_id', '=', $params['current_user']['id']);
 
         //Search by task title
         if (!empty($params['task_title'])) {
@@ -50,7 +50,7 @@ class UsersTasks extends Model {
 
         //Search by task status
         if (!empty($params['status_id'])) {
-            $eloquent->where('tasks.status_id', 'LIKE', '%' . $params['status_id'] . '%');
+            $eloquent->where('users_tasks.status_id', '=', $params['status_id'] );
         }
 
         $users_tasks = $eloquent->paginate($results_per_page);
@@ -101,15 +101,15 @@ class UsersTasks extends Model {
         }
     }
 
-    public function updateStatus($user_id, $task_id, $status_id) {
-        $user_task = self::where('user_id', '=', $user_id)
-                ->where('task_id', '=', $task_id)
-                ->get();
-        if (!empty($user_task)) {
-            $user_task->status_id = $status_id;
-            $user_task->save();
+    public function updateStatus($params = array()) {
+        if (!empty($params['id'])) {
+            $user_task = self::find($params['id']);
+            if (!empty($user_task)) {
+                $user_task->status_id = @$params['status_id'];
+                $user_task->save();
+            }
+            return $user_task;
         }
-        return $user_task;
     }
 
     public function findUserTask($user_id, $task_id) {
@@ -121,8 +121,9 @@ class UsersTasks extends Model {
 
     public function getUserTaskInfo($user_task_id) {
         $user_task = self::where('user_task_id', '=', $user_task_id)
-                        ->join('tasks', 'tasks.task_id', '=', 'users_tasks.task_id')
-                        ->first();
+                ->join('tasks', 'tasks.task_id', '=', 'users_tasks.task_id')
+                ->select('*', 'users_tasks.status_id as user_task_status')
+                ->first();
         return $user_task;
     }
 
@@ -134,7 +135,6 @@ class UsersTasks extends Model {
             return $users_tasks->delete();
         }
     }
-
 
     /*     * *******************************************
      * updateTask
@@ -197,6 +197,5 @@ class UsersTasks extends Model {
 
         return $task->delete();
     }
-
 
 }

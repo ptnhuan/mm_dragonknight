@@ -124,5 +124,11 @@ return [
             "link" => '/user/tasks/list',
             "permissions" => ["_superadmin", "_user-tasks-admin"]
         ],
+        [
+            "name" => "Comments",
+            "route" => "comments",
+            "link" => '/admin/comments/list',
+            "permissions" => ["_superadmin", "_user-tasks-admin"]
+        ],
     ]
 ];

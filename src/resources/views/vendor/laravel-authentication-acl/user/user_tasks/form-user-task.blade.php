@@ -10,7 +10,6 @@
 
 <?php
 $user_task = @$data['user_task'];
-
 ?>
 
 <div class="row">

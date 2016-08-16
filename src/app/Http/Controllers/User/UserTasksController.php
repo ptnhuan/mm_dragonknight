@@ -88,4 +88,21 @@ class UserTasksController extends Controller {
         return View::make('laravel-authentication-acl::user.user_tasks.form-user-task')->with(['data' => $data]);
     }
 
+    public function postEditUserTask(Request $request) {
+        $obj_user_task = new UsersTasks();
+
+        $input = $request->all();
+
+        $user_task_id = $request->get('id');
+
+        $user_task = $obj_user_task->find($user_task_id);
+        if ($user_task) {
+            //edit
+            $obj_user_task->updateStatus($input);
+            return Redirect::route("user_tasks.list")->withMessage(trans('statuses.status_edit_successful'));
+        } else {
+            //error
+        }
+    }
+
 }

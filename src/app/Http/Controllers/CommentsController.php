@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use App\Http\Models\Tasks;
 use App\Http\Models\UsersTasks;
 use App\Http\Models\Statuses;
+use App\Http\Models\Comments;
 /**
  * Libraries
  */
@@ -28,7 +29,7 @@ use Response;
 use Illuminate\Support\MessageBag as MessageBag;
 use App\Http\Requests\TaskValidator;
 
-class TasksController extends Controller {
+class CommentsController extends Controller {
 
     public $data = array();
 
@@ -37,30 +38,32 @@ class TasksController extends Controller {
      */
     public function getList(Request $request) {
 
-        $obj_tasks = new Tasks();
+        $obj_comments = new Comments();
         $obj_statuses = new Statuses;
 
-        $search = $request->all();
+        $input = $request->all();
 
-        $tasks = $obj_tasks->getList($search);
+        $comments = $obj_comments->getList($input);
 
         $statuses = $obj_statuses->pushSelectBox();
         $configs = config('dragonknight.libfiles');
 
         $data = array_merge($this->data, array(
-            'tasks' => $tasks,
+            'comments' => $comments,
             'statuses' => array_merge(array(0 => trans('tasks.task_select_all')), $statuses->toArray()),
             'request' => $request,
             'configs' => $configs
         ));
 
-        return View::make('laravel-authentication-acl::admin.tasks.list-tasks')->with(['data' => $data]);
+        return View::make('laravel-authentication-acl::admin.comments.list-comments')->with(['data' => $data]);
     }
 
     /**
      *
      */
-    public function editTask(Request $request) {
+    public function editComment(Request $request) {
+        var_dump(23);
+        die();
         $obj_tasks = new Tasks();
         $obj_users_tasks = new UsersTasks();
 
@@ -112,7 +115,9 @@ class TasksController extends Controller {
      * @Check validator
      * @Upload multiple image
      */
-    public function postEditTask(Request $request) {
+    public function postEditComment(Request $request) {
+        var_dump(34);
+        die();
         $libFiles = new LibFiles();
         $validator = new TaskValidator();
 
@@ -198,7 +203,9 @@ class TasksController extends Controller {
     /**
      *
      */
-    public function deleteTask(Request $request) {
+    public function deleteComment(Request $request) {
+        var_dump(54);
+        die();
         $obj_tasks = new Tasks();
 
         $task_id = $request->get('id');

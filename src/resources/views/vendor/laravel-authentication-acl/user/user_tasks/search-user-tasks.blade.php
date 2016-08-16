@@ -18,7 +18,7 @@
         <!-- TASK STATUS -->
         <div class="form-group">
             {!! Form::label('status_id', trans('users_tasks.user_task_status').':') !!}
-            {!! Form::select('status_id', @$data['statuses'], @$request->get('status_id'), ['class' => 'form-control']) !!}
+            {!! Form::select('status_id', array(0 => 'All') + @$data['statuses'], @$request->get('status_id'), ['class' => 'form-control']) !!}
 
             <span class="text-danger">{!! $errors->first('status_id') !!}</span>
         </div>

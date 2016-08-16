@@ -11,12 +11,13 @@ return [
       |
      */
 
-    "tasks_admin_per_page" => 5,
-    "statuses_admin_per_page" => 5,
-    "faqs_admin_per_page" => 5,
-    "category_admin_per_page" => 5,
+    "tasks_admin_per_page" => 15,
+    "statuses_admin_per_page" => 15,
+    "faqs_admin_per_page" => 15,
+    "category_admin_per_page" => 15,
     "levels_admin_per_page" => 15,
-    "ajax_user_search_per_page" => 10,
+    "ajax_user_search_per_page" => 15,
+    "comments_admin_per_page" => 15,
 
 
     'libfiles' => [

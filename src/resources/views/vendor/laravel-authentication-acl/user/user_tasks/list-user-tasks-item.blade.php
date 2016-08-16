@@ -1,6 +1,5 @@
 <?php $user_tasks = @$data['user_tasks']; ?>
 
-
 @if( !$user_tasks->isEmpty() )
 <table class="table table-hover">
     <thead>

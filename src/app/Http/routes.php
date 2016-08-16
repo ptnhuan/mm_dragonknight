@@ -154,6 +154,26 @@ Route::group(['middleware' => ['web']], function () {
             'as' => 'posts.delete',
             'uses' => 'PostsController@deletePost'
         ]);
+
+        /**
+         * Comments
+         */
+        Route::get('/admin/comments/list', [
+            'as' => 'comments.list',
+            'uses' => 'CommentsController@getList'
+        ]);
+        Route::get('/admin/comments/edit', [
+            'as' => 'comments.edit',
+            'uses' => 'CommentsController@editComment'
+        ]);
+        Route::post('/admin/comments/edit', [
+            'as' => 'comments.edit',
+            'uses' => 'CommentsController@postEditComment'
+        ]);
+        Route::get('/admin/comments/delete', [
+            'as' => 'comments.delete',
+            'uses' => 'CommentsController@deleteComment'
+        ]);
     });
 });
 
