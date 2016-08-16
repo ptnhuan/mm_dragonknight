@@ -28,11 +28,11 @@ class StatusesController extends Controller {
 
         $search = $request->all();
 
-        $statuses = $obj_statuses->getList($search); 
+        $statuses = $obj_statuses->getList($search);
 
 
         $data = array_merge($this->data, array(
-            'statuses' => $statuses, 
+            'statuses' => $statuses,
             'request' => $request,
         ));
 
@@ -74,6 +74,7 @@ class StatusesController extends Controller {
         $obj_statuses = new Statuses();
 
         $input = $request->all();
+
 
         $status_id = $request->get('id');
 

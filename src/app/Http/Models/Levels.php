@@ -61,19 +61,18 @@ class Levels extends Model {
      */
 
     public function updateLevel($input) {
-        $level = self::find($input['level_id']);
+        $level = self::find($input['id']);
         if (!empty($level)) {
 
             $level->level_title = $input['level_title'];
             $level->level_overview = $input['level_overview'];
             $level->level_description = $input['level_description'];
-            $level->level_notes = $input['level_notes'];
             $level->level_points = $input['level_points'];
             $level->level_image = $input['filename'];
 //            $level->level_images = $level_images;
             $level->save();
         } else {
-            
+
         }
     }
 

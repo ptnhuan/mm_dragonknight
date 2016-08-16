@@ -42,9 +42,9 @@ class LevelsController extends Controller {
         $search = $request->all();
 
         $levels = $obj_levels->getList($search);
-        
+
         $statuses = $obj_statuses->pushSelectBox();
-        
+
         $data = array_merge($this->data, array(
             'levels' => $levels,
             'request' => $request,
@@ -82,7 +82,7 @@ class LevelsController extends Controller {
                 'errors' => $errors,
                 'input' => $input,
                 'message' => $message,
-                'configs' => $configs, 
+                'configs' => $configs,
             ));
             return View::make('laravel-authentication-acl::admin.levels.form-level')->with(['data' => $data]);
         } else if (is_null($level_id)) {
@@ -113,9 +113,10 @@ class LevelsController extends Controller {
 
         $input = $request->all();
 
-        $level_id = $request->get('level_id');
+        $level_id = $request->get('id');
 
         $level = $obj_levels->findLevelById($level_id);
+
         /**
          * Validator value
          */

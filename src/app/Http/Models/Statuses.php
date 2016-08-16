@@ -38,7 +38,7 @@ class Statuses extends Model {
         if (!empty($params['status_title'])) {
             $eloquent->where('statuses.status_title', 'LIKE', '%'.$params['status_title'].'%');
         }
-        
+
 
         $status = $eloquent->paginate($results_per_page);
 
@@ -82,11 +82,11 @@ class Statuses extends Model {
         if (!empty($status)) {
 
             $status->status_title = $input['status_title'];
-            $status->status_id = $input['status_id'];
+            $status->status_description = $input['status_description'];
 
             $status->save();
         } else {
-            
+
         }
     }
 
@@ -164,7 +164,7 @@ class Statuses extends Model {
     }
 
     public function decodeImages($json_images) {
-        
+
     }
 
     /*     * *************************************************************************

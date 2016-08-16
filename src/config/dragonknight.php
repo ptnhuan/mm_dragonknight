@@ -15,7 +15,7 @@ return [
     "statuses_admin_per_page" => 5,
     "faqs_admin_per_page" => 5,
     "category_admin_per_page" => 5,
-    "levels_admin_per_page" => 5,
+    "levels_admin_per_page" => 15,
     "ajax_user_search_per_page" => 10,
 
 
@@ -77,7 +77,7 @@ return [
             'urlpath' => 'packages/media/posts',
             'prename' => 'p_'
         ],
-        
+
         /**
          * Levels
          */
