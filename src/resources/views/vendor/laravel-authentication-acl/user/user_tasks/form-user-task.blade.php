@@ -55,7 +55,7 @@ $user_task = @$data['user_task'];
 
                             <!--TASK ATTRIBUTES-->
                             <div id="menu1" class="tab-pane fade">
-                               @include('laravel-authentication-acl::user.user_tasks.form-user-task-description')
+                               @include('laravel-authentication-acl::user.user_tasks.form-user-task-attachment')
                             </div>
 
                         </div>

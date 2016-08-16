@@ -119,6 +119,13 @@ class UsersTasks extends Model {
         return $user_task;
     }
 
+    public function getUserTaskInfo($user_task_id) {
+        $user_task = self::where('user_task_id', '=', $user_task_id)
+                        ->join('tasks', 'tasks.task_id', '=', 'users_tasks.task_id')
+                        ->first();
+        return $user_task;
+    }
+
     public function deleteUsersTasks($task_id) {
 
         $users_tasks = self::where('task_id', '=', $task_id);

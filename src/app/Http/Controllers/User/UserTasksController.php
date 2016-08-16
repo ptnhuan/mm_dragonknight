@@ -74,7 +74,7 @@ class UserTasksController extends Controller {
 
         $user_task_id = $request->get('id');
 
-        $user_task = $obj_user_tasks->find($user_task_id);
+        $user_task = $obj_user_tasks->getUserTaskInfo($user_task_id);
 
         $configs = config('dragonknight.libfiles');
         $statuses = $obj_statuses->pushSelectBox();
