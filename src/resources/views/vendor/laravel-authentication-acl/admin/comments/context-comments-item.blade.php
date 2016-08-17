@@ -5,26 +5,8 @@
 @stop
 
 @section('content')
-<?php
-$category = @$data['category'];
-$category_images = @$data['category'];
- 
-if (@$data['input']) {
-    $category = new stdClass();
-    $category->category_title = @$category->category_title?$category->category_title:$data['input']['category_title'];
-    $category->category_overview = @$category->category_overview?$category->category_overview:$data['input']['category_overview'];
-    $category->category_description = @$category->category_description?$category->category_description:$data['input']['category_description'];
-}
-?>
 
-<?php
-$arr_images = array();
-
-if (!empty($category_images)) {
-    $arr = $category_images->category_images;
-    $arr_images = json_decode($category_images->category_images);
-}
-?>
+<?php $comments = @$data['comments']; ?>
 
 
 <div class="row">

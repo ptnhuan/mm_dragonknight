@@ -61,51 +61,26 @@ class CommentsController extends Controller {
     /**
      *
      */
-    public function editComment(Request $request) {
-        var_dump(23);
-        die();
-        $obj_tasks = new Tasks();
-        $obj_users_tasks = new UsersTasks();
+    public function manageContextComments(Request $request) {
 
-        $obj_statuses = new Statuses;
+        $obj_comments = new Comments();
+        $obj_statuses = new Statuses();
 
-        $task_id = $request->get('id');
 
-        $task = $obj_tasks->findTaskId($task_id);
-        $errors = $request->session()->get('errors', null);
-        $message = $request->session()->get('message', FALSE);
-        $input = $request->session()->get('input', null);
+        $comment_id = $request->get('id');
+        $comment = $obj_comments->find($comment_id);
 
-        $request->session()->forget('errors');
-        $request->session()->forget('message');
-        $request->session()->forget('input');
-        $configs = config('dragonknight.libfiles');
-        if ($task) {
+        if ($comment) {
+
+            $context_comments = $obj_comments->getContextComments($comment);
+
             $data = array_merge($this->data, array(
-                'task' => $task,
-                'statuses' => $obj_statuses->pushSelectBox(),
                 'request' => $request,
-                'errors' => $errors,
-                'input' => $input,
-                'message' => $message,
-                'configs' => $configs,
-                'users_tasks' => $obj_users_tasks->getUserByTaskId($task_id)
+                'comments' => $context_comments
             ));
-            return View::make('laravel-authentication-acl::admin.tasks.form-task')->with(['data' => $data]);
-        } else if (is_null($task_id)) {
-            $data = array_merge($this->data, array(
-                'task' => $task,
-                'statuses' => $obj_statuses->pushSelectBox(),
-                'request' => $request,
-                'errors' => $errors,
-                'input' => $input,
-                'message' => $message,
-                'configs' => $configs,
-            ));
-
-            return View::make('laravel-authentication-acl::admin.tasks.form-task')->with(['data' => $data]);
+            return View::make('laravel-authentication-acl::admin.comments.context-comments')->with(['data' => $data]);
         } else {
-            return Redirect::route("tasks.list")->withMessage(trans('re.not_found'));
+            return Redirect::route("comments.list")->withMessage(trans('re.not_found'));
         }
     }
 
@@ -152,7 +127,7 @@ class CommentsController extends Controller {
              * VALID
              */
             if ($task) {
-                 if (empty($fileinfo['filename']) && $input['is_file']) {
+                if (empty($fileinfo['filename']) && $input['is_file']) {
                     $input['filename'] = $task->task_image;
                 }
                 //edit
@@ -190,7 +165,6 @@ class CommentsController extends Controller {
                 $request->session()->put('input', $request->all());
 
                 return Redirect::route("tasks.edit", ["id" => $task_id]);
-
             } else {
                 $request->session()->put('errors', $errors);
                 $request->session()->put('message', true);

@@ -43,7 +43,7 @@
 
             <!--ACTION-->
             <td style="width:10%">
-                <a href="{!! URL::route('comments.edit', ['id' => $comment->comment_id]) !!}">
+                <a href="{!! URL::route('comments.context', ['id' => $comment->comment_id]) !!}">
                     <i class="fa fa-edit fa-2x"></i></a>
                 <a href="{!! URL::route('comments.delete',['id' => $comment->comment_id, '_token' => csrf_token()]) !!}"
                    class="margin-left-5 delete"><i class="fa fa-trash-o fa-2x"></i>

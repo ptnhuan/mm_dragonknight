@@ -122,6 +122,10 @@ Route::group(['middleware' => ['web']], function () {
             'as' => 'faqs.list',
             'uses' => 'FaqsController@getList'
         ]);
+        Route::get('/admin/faqs/view', [
+            'as' => 'faqs.view',
+            'uses' => 'FaqsController@viewFaq'
+        ]);
         Route::get('/admin/faqs/edit', [
             'as' => 'faqs.edit',
             'uses' => 'FaqsController@editFaq'
@@ -162,9 +166,9 @@ Route::group(['middleware' => ['web']], function () {
             'as' => 'comments.list',
             'uses' => 'CommentsController@getList'
         ]);
-        Route::get('/admin/comments/edit', [
-            'as' => 'comments.edit',
-            'uses' => 'CommentsController@editComment'
+        Route::get('/admin/comments/context', [
+            'as' => 'comments.context',
+            'uses' => 'CommentsController@manageContextComments',
         ]);
         Route::post('/admin/comments/edit', [
             'as' => 'comments.edit',

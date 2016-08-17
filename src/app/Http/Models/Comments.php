@@ -12,12 +12,14 @@ class Comments extends Model {
     protected $primaryKey = 'comment_id';
     public $timestamps = false;
     protected $fillable = [
-        "comment_parent_id",
-        "status_id",
+        "comment_id_parent",
+        "item_id",
         "context_id",
         "user_id",
+        "status_id",
         "comment_description",
         "comment_likes",
+        "comment_reports",
         "comment_created_at",
         "comment_updated_at",
         "created_at",
@@ -38,7 +40,7 @@ class Comments extends Model {
         $this->config_reader = App::make('config');
         $results_per_page = $this->config_reader->get('dragonknight.comments_admin_per_page');
 
-        $eloquent = self::orderBy('comment_id', 'DESC');
+        $eloquent = self::orderBy('comment_id');
 
         //Search by category title
         if (!empty($params['keyword'])) {
@@ -50,10 +52,12 @@ class Comments extends Model {
         return $comments;
     }
 
-    public function pushSelectBox() {
-        $categories = self::orderBy('category_title', 'ASC')
-                ->pluck('category_title', 'category_id');
-        return $categories;
+    public function getContextComments($comment) {
+        $context_comments = self::where('context_id', $comment->context_id)
+                                ->where('item_id', $comment->item_id)
+                ->orderBy('comment_id', 'ASC')
+                ->get();
+        return $context_comments;
     }
 
     /*     * ********************************************

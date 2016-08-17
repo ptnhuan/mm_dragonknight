@@ -12,7 +12,8 @@ class Faqs extends Model {
     protected $primaryKey = 'faq_id';
     public $timestamps = false;
     protected $fillable = [
-        "create_by_user_id",
+        "faq_id_parent",
+        "user_id",
         "level_id",
         "status_id",
         "category_id",
@@ -43,7 +44,8 @@ class Faqs extends Model {
         $this->config_reader = App::make('config');
         $results_per_page = $this->config_reader->get('dragonknight.faq_admin_per_page');
 
-        $eloquent = self::orderBy('faqs.faq_id', 'DESC');
+        $eloquent = self::orderBy('faqs.faq_id', 'DESC')
+                        ->whereNull('faq_id_parent');
 
         //Search by faq title
         if (!empty($params['faq_title'])) {
@@ -61,6 +63,13 @@ class Faqs extends Model {
         $faq = $eloquent->paginate($results_per_page);
 
         return $faq;
+    }
+
+    public function getFaqAnswers($faq){
+        $faq_answers = self::where('faq_id_parent', '=', $faq->faq_id)
+                           ->orderBy('faq_id', 'ASC')
+                           ->get();
+        return $faq_answers;
     }
 
     /*     * ********************************************
@@ -100,7 +109,7 @@ class Faqs extends Model {
             $faq->faq_image = $input['filename'];
             $faq->save();
         } else {
-            
+
         }
     }
 
@@ -143,5 +152,5 @@ class Faqs extends Model {
 
         return $faq->delete();
     }
- 
+
 }

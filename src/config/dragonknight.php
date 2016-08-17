@@ -19,6 +19,12 @@ return [
     "ajax_user_search_per_page" => 15,
     "comments_admin_per_page" => 15,
 
+    'context_ids' => [
+        'task'  => 11,
+        'faq'   => 22,
+        'post'  => 33
+    ],
+
 
     'libfiles' => [
         /**

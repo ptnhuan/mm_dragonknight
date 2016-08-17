@@ -37,7 +37,7 @@ class FaqsController extends Controller {
      */
     public function getList(Request $request) {
         $obj_faq = new Faqs();
-        
+
         $obj_statuses = new Statuses;
         $search = $request->all();
         $faq = $obj_faq->getList($search);
@@ -72,7 +72,6 @@ class FaqsController extends Controller {
         $request->session()->forget('input');
         $configs = config('dragonknight.libfiles');
         if ($faq) {
-            //nó sẽ chạy vô trong này tại vì lúc này nó có id, nếu mà khi thêm mới nó k có id nó sẽ làm câu else if phía dưới
             $data = array_merge($this->data, array(
                 'faq' => $faq,
                 'statuses' => $obj_statuses->pushSelectBox(),
@@ -102,15 +101,47 @@ class FaqsController extends Controller {
     /**
      *
      */
+    public function viewFaq(Request $request) {
+        $obj_faq = new Faqs();
+
+        $obj_statuses = new Statuses;
+
+        $faq_id = $request->get('id');
+
+        $faq = $obj_faq->findFaqId($faq_id);
+
+        $configs = config('dragonknight.libfiles');
+
+        if ($faq) {
+
+            $faq_answers = $obj_faq->getFaqAnswers($faq);
+
+            $data = array_merge($this->data, array(
+                'faq'   => $faq,
+                'faq_answers' => $faq_answers,
+                'statuses' => $obj_statuses->pushSelectBox(),
+                'request' => $request,
+                'configs' => $configs,
+            ));
+            return View::make('laravel-authentication-acl::admin.faqs.view-faq-answers')->with(['data' => $data]);
+
+        } else {
+            return Redirect::route("faqs.list")->withMessage(trans('re.not_found'));
+        }
+    }
+
+    /**
+     *
+     */
     public function postEditFaq(Request $request) {
         $libFiles = new LibFiles();
 
         $validator = new FaqValidator;
-        
+
         $obj_faq = new Faqs();
 
         $input = $request->all();
-        
+
         $faq_id = $request->get('id');
 
         $faq = $obj_faq->findFaqId($faq_id);

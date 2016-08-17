@@ -34,6 +34,7 @@
 
             <!--ACTION-->
             <td>
+                <a href="{!! URL::route('faqs.view', ['id' => $faq->faq_id]) !!}"><i class="fa fa-eye fa-2x" aria-hidden="true"></i></i></a>
                 <a href="{!! URL::route('faqs.edit', ['id' => $faq->faq_id]) !!}"><i class="fa fa-edit fa-2x"></i></a>
                 <a href="{!! URL::route('faqs.delete',['id' => $faq->faq_id, '_token' => csrf_token()]) !!}" class="margin-left-5 delete"><i class="fa fa-trash-o fa-2x"></i></a>
                 <span class="clearfix"></span>
