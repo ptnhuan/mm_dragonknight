@@ -8,7 +8,8 @@ Admin area: Groups list
 
 <?php
     $faq = @$data['faq'];
-    $faq_answers = @$data['faq_answers']
+    $faq_answers = @$data['faq_answers'];
+
 ?>
 <div class="row">
     <div class="col-md-12">
