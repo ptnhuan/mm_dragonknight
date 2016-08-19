@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use App\Http\Models\Tasks;
 use App\Http\Models\UsersTasks;
 use App\Http\Models\Statuses;
+use App\Http\Models\Categories;
 /**
  * Libraries
  */
@@ -39,17 +40,20 @@ class TasksController extends Controller {
 
         $obj_tasks = new Tasks();
         $obj_statuses = new Statuses;
+        $obj_categories = new Categories;
 
         $search = $request->all();
 
         $tasks = $obj_tasks->getList($search);
 
         $statuses = $obj_statuses->pushSelectBox();
+        $categories = $obj_categories->pushSelectBox();
         $configs = config('dragonknight.libfiles');
 
         $data = array_merge($this->data, array(
             'tasks' => $tasks,
             'statuses' => array_merge(array(0 => trans('tasks.task_select_all')), $statuses->toArray()),
+            'categories' => array_merge(array(0 => trans('tasks.task_select_all')), $categories->toArray()),
             'request' => $request,
             'configs' => $configs
         ));
@@ -65,6 +69,7 @@ class TasksController extends Controller {
         $obj_users_tasks = new UsersTasks();
 
         $obj_statuses = new Statuses;
+        $obj_categories = new Categories;
 
         $task_id = $request->get('id');
 
@@ -81,6 +86,7 @@ class TasksController extends Controller {
             $data = array_merge($this->data, array(
                 'task' => $task,
                 'statuses' => $obj_statuses->pushSelectBox(),
+                'categories' => $obj_categories->pushSelectBox(),
                 'request' => $request,
                 'errors' => $errors,
                 'input' => $input,
@@ -93,6 +99,7 @@ class TasksController extends Controller {
             $data = array_merge($this->data, array(
                 'task' => $task,
                 'statuses' => $obj_statuses->pushSelectBox(),
+                'categories' => $obj_categories->pushSelectBox(),
                 'request' => $request,
                 'errors' => $errors,
                 'input' => $input,
