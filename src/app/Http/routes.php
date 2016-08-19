@@ -28,11 +28,6 @@ Route::group(['middleware' => ['web']], function () {
             'as' => 'ajax_user.search',
             'uses' => 'UsersController@ajax_search_user'
         ]);
-        Route::get('/ajax/user_search', [
-            'as' => 'ajax_user.search',
-            'uses' => 'UsersController@ajax_search_user'
-        ]);
-
         /**
          * tasks
          */
@@ -203,5 +198,32 @@ Route::group(['middleware' => ['web']], function () {
             'as' => 'user_tasks.delete',
             'uses' => 'User\UserTasksController@deleteUserTask'
         ]);
+    });
+});
+
+
+/**
+ * AJAX
+ */
+Route::group(['middleware' => ['web']], function () {
+    Route::group(['middleware' => ['admin_logged', 'can_see']], function () {
+
+        /**
+         * Search user by ajax
+         */
+        Route::post('/ajax/user_search', [
+            'as' => 'ajax_user.search',
+            'uses' => 'UsersController@ajax_search_user'
+        ]);
+
+        /**
+         * Like faq by ajax
+         */
+        Route::post('/ajax/faq_like', [
+            'as' => 'ajax_faq.like',
+            'uses' => 'FaqsController@ajax_faq_like'
+        ]);
+
+
     });
 });

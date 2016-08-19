@@ -224,4 +224,10 @@ class FaqsController extends Controller {
         }
     }
 
+    public function ajax_faq_like(Request $request) {
+        if ($request->ajax()) {
+            
+        }
+    }
+
 }

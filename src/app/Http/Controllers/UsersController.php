@@ -14,7 +14,7 @@ use App\Http\Models\Users;
 class UsersController extends RootUserController {
 
     public function ajax_search_user(Request $request) {
-//        if ($request->ajax()) {
+        if ($request->ajax()) {
             $obj_users = new Users;
             $params = array();
             $params = array_merge($request->all(), $params);
@@ -25,7 +25,7 @@ class UsersController extends RootUserController {
                 $arr_users[] = $user->toArray();
             }
             return json_encode($arr_users);
-//        }
+        }
     }
 
 }
