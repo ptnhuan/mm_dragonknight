@@ -13,6 +13,14 @@
     <span class="text-danger">{!! $errors->first('status_id') !!}</span>
 </div>
 
+<!-- TASK CATEGORY -->
+<div class="form-group">
+    {!! Form::label('category_id', trans('tasks.task_category').':') !!}
+    {!! Form::select('category_id', @$data['categories'], @$task->category_id, ['class' => 'form-control']) !!}
+
+    <span class="text-danger">{!! $errors->first('status_id') !!}</span>
+</div>
+
 <!-- TASK POINT -->
 <div class="form-group">
     {!! Form::label('task_points', trans('tasks.task_points').':') !!}

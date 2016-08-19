@@ -32,6 +32,7 @@ return [
 
     'task_order' => 'STT',
     'task_status' => 'Trạng thái',
+    'task_category' => 'Danh mục',
     'task_list' => 'Danh sách',
 
     'task_select_all' => 'Tất cả',

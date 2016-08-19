@@ -63,6 +63,7 @@ class PostsController extends Controller {
         $obj_posts = new Posts();
 
         $obj_statuses = new Statuses;
+        $obj_categories = new Categories;
 
         $post_id = $request->get('id');
 
@@ -80,6 +81,7 @@ class PostsController extends Controller {
             $data = array_merge($this->data, array(
                 'post' => $post,
                 'statuses' => $obj_statuses->pushSelectBox(),
+                'categories' => $obj_categories->pushSelectBox(),
                 'request' => $request,
                 'errors' => $errors,
                 'input' => $input,
@@ -91,6 +93,7 @@ class PostsController extends Controller {
             $data = array_merge($this->data, array(
                 'post' => $post,
                 'statuses' => $obj_statuses->pushSelectBox(),
+                'categories' => $obj_categories->pushSelectBox(),
                 'request' => $request,
                 'errors' => $errors,
                 'input' => $input,
