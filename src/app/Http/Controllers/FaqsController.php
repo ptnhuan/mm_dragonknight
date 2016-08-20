@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use App\Http\Models\Statuses;
 use App\Http\Models\Categories;
 use App\Http\Models\Faqs;
+use App\Http\Models\Likes;
 /**
  * Libraries
  */
@@ -110,21 +111,24 @@ class FaqsController extends Controller {
 
         $faq = $obj_faq->findFaqId($faq_id);
 
-        $configs = config('dragonknight.libfiles');
+        $configs = config('dragonknight.context_ids');
 
         if ($faq) {
 
             $faq_answers = $obj_faq->getFaqAnswers($faq);
 
+            $authentication = \App::make('authenticator');
+            $current_user = $authentication->getLoggedUser();
+
             $data = array_merge($this->data, array(
-                'faq'   => $faq,
+                'faq' => $faq,
                 'faq_answers' => $faq_answers,
                 'statuses' => $obj_statuses->pushSelectBox(),
                 'request' => $request,
-                'configs' => $configs,
+                'context_id' => $configs['faq'],
+                'current_user' => $current_user
             ));
             return View::make('laravel-authentication-acl::admin.faqs.view-faq-answers')->with(['data' => $data]);
-
         } else {
             return Redirect::route("faqs.list")->withMessage(trans('re.not_found'));
         }
@@ -154,16 +158,16 @@ class FaqsController extends Controller {
              * Upload file images
              * check: extension, size
              */
-            $fileinfo = array();//cái này thì nó tạo mảng thôi
+            $fileinfo = array(); //cái này thì nó tạo mảng thôi
             if (!empty($input['image'])) {//lúc này nó kiểm tra thử trong $input nó có thông tin của cái hình k , thông tin của cái hình k có nó k vào
                 $configs = config('dragonknight.libfiles');
                 $file = $request->file('image');
                 $fileinfo = $libFiles->upload($configs['faq'], $file);
             } else {
-                $fileinfo['filename'] = '';//lúc này nó gán cho cái filename của mảng $fileinfo giá trị k có j hết =)), khúc này t cũng k hỉu lắm
+                $fileinfo['filename'] = ''; //lúc này nó gán cho cái filename của mảng $fileinfo giá trị k có j hết =)), khúc này t cũng k hỉu lắm
             }
             //TODO: Check
-            $input = array_merge($input, $fileinfo);//nó gộp 2 mảng lại với nhau, mảng $fininof thi k biết nó ntn nên giờ vardump xem thử
+            $input = array_merge($input, $fileinfo); //nó gộp 2 mảng lại với nhau, mảng $fininof thi k biết nó ntn nên giờ vardump xem thử
             /**
              * VALID
              */
@@ -189,7 +193,7 @@ class FaqsController extends Controller {
              */
             //nó chạy xuống đây,ở trên đó có nghĩa là nó yêu cầu đầy đủ giá trị rồi nó mới vào
             //lúc này nó k đầy đủ, có nghĩa là trong 3 cái giá trị đó chưa nhập xong
-            $errors = $validator->getErrors();//cái này nó trả giá trị lỗi nè, nos trar giá trị lúc này là tiêu đề
+            $errors = $validator->getErrors(); //cái này nó trả giá trị lỗi nè, nos trar giá trị lúc này là tiêu đề
             if (!empty($faq_id)) {//lúc này nó rỗng
                 $request->session()->put('errors', $errors);
                 $request->session()->put('message', true);
@@ -224,10 +228,22 @@ class FaqsController extends Controller {
         }
     }
 
+    /**
+     *
+     * @param Request $request
+     */
     public function ajax_faq_like(Request $request) {
         if ($request->ajax()) {
-            
+            $input = $request->all();
+            $obj_likes = new Likes();
+            $obj_faq = new Faqs();
+            $obj_faq->likeItem($input);
+            $likes = $obj_likes->likeItem($input);
+            if ($likes) {
+                return json_encode(TRUE);
+            }
         }
+        return json_encode(FALSE);
     }
 
 }

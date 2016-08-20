@@ -153,4 +153,13 @@ class Faqs extends Model {
         return $faq->delete();
     }
 
+    public function likeItem($input){
+        $faq = self::find($input['item_id']);
+
+        if ($faq) {
+            $faq->faq_likes++;
+            $faq->save();
+        }
+        return $faq;
+    }
 }
