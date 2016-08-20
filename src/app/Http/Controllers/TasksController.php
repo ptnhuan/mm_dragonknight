@@ -17,6 +17,7 @@ use App\Http\Models\Tasks;
 use App\Http\Models\UsersTasks;
 use App\Http\Models\Statuses;
 use App\Http\Models\Categories;
+use App\Http\Models\Levels;
 /**
  * Libraries
  */
@@ -41,6 +42,7 @@ class TasksController extends Controller {
         $obj_tasks = new Tasks();
         $obj_statuses = new Statuses;
         $obj_categories = new Categories;
+        $obj_levels = new Levels();
 
         $search = $request->all();
 
@@ -48,12 +50,14 @@ class TasksController extends Controller {
 
         $statuses = $obj_statuses->pushSelectBox();
         $categories = $obj_categories->pushSelectBox();
+        $levels = $obj_levels->pushSelectBox();
         $configs = config('dragonknight.libfiles');
 
         $data = array_merge($this->data, array(
             'tasks' => $tasks,
             'statuses' => array_merge(array(0 => trans('tasks.task_select_all')), $statuses->toArray()),
             'categories' => array_merge(array(0 => trans('tasks.task_select_all')), $categories->toArray()),
+            'levels' => array_merge(array(0 => trans('tasks.task_select_all')), $levels->toArray()),
             'request' => $request,
             'configs' => $configs
         ));
@@ -70,6 +74,7 @@ class TasksController extends Controller {
 
         $obj_statuses = new Statuses;
         $obj_categories = new Categories;
+        $obj_levels = new Levels();
 
         $task_id = $request->get('id');
 
@@ -87,6 +92,7 @@ class TasksController extends Controller {
                 'task' => $task,
                 'statuses' => $obj_statuses->pushSelectBox(),
                 'categories' => $obj_categories->pushSelectBox(),
+                'levels' => $obj_levels->pushSelectBox(),
                 'request' => $request,
                 'errors' => $errors,
                 'input' => $input,
@@ -100,6 +106,7 @@ class TasksController extends Controller {
                 'task' => $task,
                 'statuses' => $obj_statuses->pushSelectBox(),
                 'categories' => $obj_categories->pushSelectBox(),
+                'levels' => $obj_levels->pushSelectBox(),
                 'request' => $request,
                 'errors' => $errors,
                 'input' => $input,
@@ -154,7 +161,7 @@ class TasksController extends Controller {
              * VALID
              */
             if ($task) {
-                 if (empty($fileinfo['filename']) && $input['is_file']) {
+                if (empty($fileinfo['filename']) && $input['is_file']) {
                     $input['filename'] = $task->task_image;
                 }
                 //edit
@@ -192,7 +199,6 @@ class TasksController extends Controller {
                 $request->session()->put('input', $request->all());
 
                 return Redirect::route("tasks.edit", ["id" => $task_id]);
-
             } else {
                 $request->session()->put('errors', $errors);
                 $request->session()->put('message', true);

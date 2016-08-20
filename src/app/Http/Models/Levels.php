@@ -102,5 +102,15 @@ class Levels extends Model {
         $level = self::find($level_id);
         return $level->delete();
     }
+    
+    
+    /**
+     * push select
+     */
 
+    public function pushSelectBox() {
+        $levels = self::orderBy('level_title', 'ASC')
+                ->pluck('level_title', 'level_id');
+        return $levels;
+    }
 }

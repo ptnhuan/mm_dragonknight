@@ -99,6 +99,7 @@ class Posts extends Model {
             $post->post_title = $input['post_title'];
             $post->status_id = $input['status_id'];
             $post->category_id = $input['category_id'];
+            $post->level_id = $input['level_id'];
             $post->post_overview = $input['post_overview'];
             $post->post_description = $input['post_description'];
             $post->post_image = $input['filename'];
@@ -127,6 +128,7 @@ class Posts extends Model {
                     'post_title' => $input['post_title'],
                     'status_id' => $input['status_id'],
                     'category_id' => $input['category_id'],
+                    'level_id' => $input['level_id'],   
                     'post_overview' => $input['post_overview'],
                     'post_description' => $input['post_description'],
                     'post_image' => $input['filename'],

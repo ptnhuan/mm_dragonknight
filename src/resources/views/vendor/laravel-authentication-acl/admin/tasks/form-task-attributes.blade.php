@@ -21,6 +21,14 @@
     <span class="text-danger">{!! $errors->first('status_id') !!}</span>
 </div>
 
+<!-- TASK LEVEL -->
+<div class="form-group">
+    {!! Form::label('level_id', trans('tasks.task_level').':') !!}
+    {!! Form::select('level_id', @$data['levels'], @$task->level_id, ['class' => 'form-control']) !!}
+
+    <span class="text-danger">{!! $errors->first('status_id') !!}</span>
+</div>
+
 <!-- TASK POINT -->
 <div class="form-group">
     {!! Form::label('task_points', trans('tasks.task_points').':') !!}

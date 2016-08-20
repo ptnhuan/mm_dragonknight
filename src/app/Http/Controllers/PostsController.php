@@ -16,6 +16,8 @@ use Illuminate\Http\Request;
 use App\Http\Models\Statuses;
 use App\Http\Models\Categories;
 use App\Http\Models\Posts;
+use App\Http\Models\Levels;
+use App\Http\Models\Users;
 /**
  * Libraries
  */
@@ -38,18 +40,25 @@ class PostsController extends Controller {
     public function getList(Request $request) {
 
         $obj_posts = new Posts();
+
         $obj_statuses = new Statuses;
+        $obj_categories = new Categories;
+        $obj_levels = new Levels;
 
         $search = $request->all();
 
         $posts = $obj_posts->getList($search);
 
         $statuses = $obj_statuses->pushSelectBox();
+        $categories = $obj_categories->pushSelectBox();
+        $levels = $obj_levels->pushSelectBox();
 
 
         $data = array_merge($this->data, array(
             'posts' => $posts,
             'statuses' => array_merge(array(0 => 'None'), $statuses->toArray()),
+            'categories' => array_merge(array(0 => 'None'), $categories->toArray()),
+            'levels' => array_merge(array(0 => 'None'), $levels->toArray()),
             'request' => $request,
         ));
 
@@ -64,7 +73,14 @@ class PostsController extends Controller {
 
         $obj_statuses = new Statuses;
         $obj_categories = new Categories;
+        $obj_levels = new Levels;
 
+        $authentication = \App::make('authenticator');
+        $current_user = $authentication->getLoggedUser()->toArray();
+        $this->data = array(
+            'current_user' => $current_user,
+        );
+        
         $post_id = $request->get('id');
 
         $post = $obj_posts->findPostId($post_id);
@@ -82,6 +98,7 @@ class PostsController extends Controller {
                 'post' => $post,
                 'statuses' => $obj_statuses->pushSelectBox(),
                 'categories' => $obj_categories->pushSelectBox(),
+                'levels' => $obj_levels->pushSelectBox(),
                 'request' => $request,
                 'errors' => $errors,
                 'input' => $input,
@@ -94,6 +111,7 @@ class PostsController extends Controller {
                 'post' => $post,
                 'statuses' => $obj_statuses->pushSelectBox(),
                 'categories' => $obj_categories->pushSelectBox(),
+                'levels' => $obj_levels->pushSelectBox(),
                 'request' => $request,
                 'errors' => $errors,
                 'input' => $input,

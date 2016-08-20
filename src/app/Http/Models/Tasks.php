@@ -97,6 +97,7 @@ class Tasks extends Model {
 
             $task->task_title = $input['task_title'];
             $task->status_id = $input['status_id'];
+            $task->level_id = $input['level_id'];
             $task->category_id = $input['category_id'];
             $task->category_id = $input['category_id'];
             $task->task_overview = $input['task_overview'];
@@ -128,6 +129,7 @@ class Tasks extends Model {
 
                     'task_title' => $input['task_title'],
                     'status_id' => $input['status_id'],
+                    'level_id' => $input['level_id'],
                     'category_id' => $input['category_id'],
                     'task_overview' => $input['task_overview'],
                     'task_description' => $input['task_description'],

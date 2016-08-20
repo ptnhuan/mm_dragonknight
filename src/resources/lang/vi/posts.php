@@ -33,6 +33,9 @@ return [
     'post_order' => 'STT',
     'post_status' => 'Trạng thái',
     'post_list' => 'Danh sách',
+    'post_category' => 'Danh mục',
+    'post_user_post' => 'Người post',
+    'post_level' => 'Cấp độ',
 
     'post_select_all' => 'Tất cả',
     'post_images' => 'Hình ảnh',
