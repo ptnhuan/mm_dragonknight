@@ -75,12 +75,7 @@ class PostsController extends Controller {
         $obj_categories = new Categories;
         $obj_levels = new Levels;
 
-        $authentication = \App::make('authenticator');
-        $current_user = $authentication->getLoggedUser()->toArray();
-        $this->data = array(
-            'current_user' => $current_user,
-        );
-        
+
         $post_id = $request->get('id');
 
         $post = $obj_posts->findPostId($post_id);
@@ -172,7 +167,11 @@ class PostsController extends Controller {
                 return Redirect::route("posts.list")->withMessage(trans('posts.post_edit_successful'));
             } elseif (empty($post_id)) {
                 //add
-                $params = array_merge($input, $fileinfo);
+                $authentication = \App::make('authenticator');
+                $current_user = $authentication->getLoggedUser()->toArray();
+
+                $params = array_merge($input, $fileinfo,$current_user);
+
                 $post = $obj_posts->addPost($params);
                 return Redirect::route("posts.edit", ["id" => $post->post_id])->withMessage(trans('posts.post_add_successful'));
             } else {

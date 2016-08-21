@@ -22,10 +22,3 @@
     <span class="text-danger">{!! $errors->first('level_id') !!}</span>
 </div>
 
-<!-- POST USER POST -->
-<div class="form-group">
-    {!! Form::label('user_id', trans('posts.post_user_post').':') !!}
-    {!! Form::select('user_id', @$data['current_user'], @$post->user_id, ['class' => 'form-control']) !!}
-
-    <span class="text-danger">{!! $errors->first('user_id') !!}</span>
-</div>

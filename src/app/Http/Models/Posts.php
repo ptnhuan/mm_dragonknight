@@ -127,6 +127,7 @@ class Posts extends Model {
 
                     'post_title' => $input['post_title'],
                     'status_id' => $input['status_id'],
+                    'user_id' => $input['id'],
                     'category_id' => $input['category_id'],
                     'level_id' => $input['level_id'],   
                     'post_overview' => $input['post_overview'],
