@@ -15,7 +15,7 @@ class LibFiles {
 
         //destination path
         $filepath = realpath(base_path($configs['filepath'])); // upload path
-
+            
         $extension = $file->getClientOriginalExtension(); // getting image extension
 
         $filename = $configs['prename'].time() . '.' . $extension; // renameing image

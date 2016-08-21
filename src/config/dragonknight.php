@@ -1,4 +1,4 @@
-<?php
+    <?php
 
 return [
     /*
@@ -98,6 +98,21 @@ return [
             'filepath' => 'public/packages/media/levels',
             'urlpath' => 'packages/media/levels',
             'prename' => 'l_'
+        ],
+
+        /**
+         * Statuses
+         */
+        'status' => [
+            'filetype' => [
+                'jpg', 'png', 'gif'
+            ],
+            'filesize' => [
+                'max' => 3
+            ],
+            'filepath' => 'public/packages/media/statuses',
+            'urlpath' => 'packages/media/statuses',
+            'prename' => 'st_'
         ],
     ]
 ];

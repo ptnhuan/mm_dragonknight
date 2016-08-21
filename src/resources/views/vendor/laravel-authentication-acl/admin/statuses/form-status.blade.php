@@ -36,7 +36,7 @@ $status = @$data['status'];
 
                         {{-- group base form --}}
 
-                        {!! Form::model($status, [ 'url' => [URL::route('statuses.edit'), @$status->status_id], 'method' => 'post'] ) !!}
+                        {!! Form::open(['route'=>['statuses.edit'],  'files'=>true, 'method' => 'post'])  !!}
 
                         <!-- STATUSES TITLE -->
                         <div class="form-group">
@@ -51,6 +51,33 @@ $status = @$data['status'];
                             {!! Form::text('status_description', @$status->status_description, ['class' => 'form-control', 'placeholder' => trans('statuses.status_description').'']) !!}
                             <span class="text-danger">{!! $errors->first('status_description') !!}</span>
                         </div> 
+
+                        <!-- STATUS IMAGE -->
+                        <div class="form-group config-images">
+                            {!! Form::label('image',trans('statuses.status_image'),': *') !!}
+                            {!! Form::file('image') !!}
+                            {!! Form::hidden('is_file', !empty(@$status->status_image)?1:0, ['class' => 'is_file']) !!} 
+                        </div>
+
+
+                        @if(@$status->status_image)
+                        <div class="img-thumb">
+                            <img src="{!! url($data['configs']['status']['urlpath'].'/'.$status->status_image) !!}">
+                        </div>
+
+
+                        <div class="showfile">
+                            <i class=" fa fa-file-excel-o" aria-hidden="true"></i>
+                            <span class="filename">{!! $status->status_image !!}</span>
+                            <div class="clearfix"></div>
+
+                            <div class="control-file">
+                                <span class="del">Delete</span>
+                                <span class="undo" style="display: none">Undo</span>
+                            </div>
+                        </div>
+                        @endif
+
 
                         <!-- STATUSES ID HIDDEN -->
                         {!! Form::hidden('id',@$status->status_id) !!}
@@ -67,10 +94,33 @@ $status = @$data['status'];
 </div>
 @stop
 
+
+
+
 @section('footer_scripts')
 <script>
     $(".delete").click(function () {
-        return confirm("<?php  echo trans('statuses.status_delete_confirm')?>");
+        return confirm("<?php echo trans('statuses.status_delete_confirm') ?>");
     });
+    var _is_file = $('.is_file').val();
+    $('.showfile .del').click(function () {
+        $('.showfile .fa').removeClass('fa-file-excel-o');
+        $('.showfile .fa').addClass('fa-file-image-o');
+        $('.showfile .fa').css({'color': '#f0ad4e'});
+        $('.showfile .undo').show();
+        $('.showfile .filename').hide();
+        $('.is_file').val(0);
+        $(this).hide();
+    });
+
+    $('.showfile .undo').click(function () {
+        $('.showfile .fa').removeClass('fa-file-image-o');
+        $('.showfile .fa').addClass('fa-file-excel-o');
+        $('.showfile .fa').css({'color': '#1fa67a'});
+        $(this).hide();
+        $('.is_file').val(_is_file);
+        $('.showfile .filename').show();
+        $('.showfile .del').show();
+    }); 
 </script>
-@stop
+@stop 

@@ -80,9 +80,9 @@ class Statuses extends Model {
     public function updateStatus($input) {
         $status = self::find($input['id']);
         if (!empty($status)) {
-
             $status->status_title = $input['status_title'];
             $status->status_description = $input['status_description'];
+            $status->status_image = $input['filename'];
 
             $status->save();
         } else {
@@ -104,6 +104,8 @@ class Statuses extends Model {
 
         $status = self::create([
                     'status_title' => $input['status_title'],
+                    'status_description' => $input['status_description'],
+                    'status_image' => $input['status_image'],
         ]);
         return $status;
     }

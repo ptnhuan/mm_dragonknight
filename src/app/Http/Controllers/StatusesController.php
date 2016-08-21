@@ -15,6 +15,14 @@ use Illuminate\Http\Request;
  */
 use App\Http\Models\Tasks;
 use App\Http\Models\Statuses;
+/**
+ * Validator
+ */
+use App\Http\Requests\StatusValidator;
+/**
+ * Libraries
+ */
+use App\Http\Libraries\LibFiles;
 
 class StatusesController extends Controller {
 
@@ -46,11 +54,27 @@ class StatusesController extends Controller {
         $obj_statuses = new Statuses();
 
         $status_id = $request->get('id');
+        
         $status = $obj_statuses->findStatusId($status_id);
+
+
+        $errors = $request->session()->get('errors', null);
+        $message = $request->session()->get('message', FALSE);
+        $input = $request->session()->get('input', null);
+
+        $request->session()->forget('errors');
+        $request->session()->forget('message');
+        $request->session()->forget('input');
+        $configs = config('dragonknight.libfiles');
+
         if ($status) {
             $data = array_merge($this->data, array(
                 'status' => $status,
                 'request' => $request,
+                'errors' => $errors,
+                'input' => $input,
+                'message' => $message,
+                'configs' => $configs,
             ));
             return View::make('laravel-authentication-acl::admin.statuses.form-status')->with(['data' => $data]);
         } else if (is_null($status_id)) {
@@ -59,6 +83,10 @@ class StatusesController extends Controller {
                 'status' => null,
                 'statuses' => $obj_statuses->pushSelectBox(),
                 'request' => $request,
+                'errors' => $errors,
+                'input' => $input,
+                'message' => $message,
+                'configs' => $configs,
             ));
             return View::make('laravel-authentication-acl::admin.statuses.form-status')->with(['data' => $data]);
         } else {
@@ -71,25 +99,77 @@ class StatusesController extends Controller {
      *
      */
     public function postEditStatus(Request $request) {
+        $libFiles = new LibFiles();
+        
+        $validator = new StatusValidator();
+
         $obj_statuses = new Statuses();
 
         $input = $request->all();
 
-
         $status_id = $request->get('id');
 
         $status = $obj_statuses->findStatusId($status_id);
+        /**
+         * Validator value
+         */
+        if (!empty($validator->validate($input))) {
+            /**
+             * Upload file image
+             * @Check: extension, size
+             */
+            $fileinfo = array();
+            if (!empty($input['image'])) {
+                $configs = config('dragonknight.libfiles');
+                $file = $request->file('image');
+                $fileinfo = $libFiles->upload($configs['status'], $file);
+            } else {
+                $fileinfo['filename'] = '';
+            }
+            //TODO: check
+            $input = array_merge($input, $fileinfo);
 
-        if ($status) {
-            //edit
-            $obj_statuses->updateStatus($input);
-            return Redirect::route("statuses.list")->withMessage(trans('statuses.status_edit_successful'));
-        } elseif (empty($status_id)) {
-            //add
-            $obj_statuses->addStatus($input);
-            return Redirect::route("statuses.list")->withMessage(trans('statuses.status_edit_successful'));
+            /**
+             * VALID
+             */
+            if ($status) {
+                if (empty($fileinfo['filename']) && $input['is_file']) {
+                    $input['filename'] = $status->status_image;
+                } 
+                //edit
+                $params = array_merge($fileinfo, $input);
+
+                $obj_statuses->updateStatus($params);
+
+                return Redirect::route("statuses.list")->withMessage(trans('statuses.status_edit_successful'));
+            } elseif (empty($status_id)) {
+                //add
+                $params = array_merge($input, $fileinfo);
+               
+                $status = $obj_statuses->addStatus($params);
+
+                return Redirect::route("statuses.edit", ["id" => $status->status_id])->withMessage(trans('statuses.status_add_successful'));
+            } else {
+                //error
+            }
         } else {
-            //error
+            /**
+             * UNVALID
+             */
+            $errors = $validator->getErrors();
+            if (!empty($status_id)) {
+
+                $request->session()->put('errors', $errors);
+                $request->session()->put('message', true);
+                $request->session()->put('input', $request->all());
+
+                return Redirect::route("statuses.edit", ["id" => $status_id]);
+            } else {
+                $request->session()->put('errors', $errors);
+                $request->session()->put('message', true);
+                $request->session()->put('input', $request->all());
+                return Redirect::route("statuses.edit");
+            }
         }
     }
 

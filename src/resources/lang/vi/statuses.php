@@ -26,6 +26,7 @@ return [
     'status_delete' => 'Xóa',
     'status_edit' => 'Chỉnh sửa',
     'status_create' => 'Tạo mới',
+    'status_image' => 'Hình ảnh',
 
     'status_order' => 'STT',
     'status_status' => 'Trạng thái',
